@@ -10,7 +10,21 @@ public class ThymeleafController {
 
     @GetMapping
     public String runIndex() {
-        return "index.html";
+        return "index";
     }
 
+    @GetMapping("/monitoring")
+    public String runMonitoring() {
+        return "monitoring";
+    }
+
+    @GetMapping("/devices")
+    public String runDevices() {
+        return "devices";
+    }
+
+    @GetMapping("/about")
+    public String runAbout() {
+        return "about";
+    }
 }

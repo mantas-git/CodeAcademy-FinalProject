@@ -1,0 +1,91 @@
+:root {
+    --topMenuHeight: 70px;
+}
+
+body {
+    /*height: 100%;*/
+    display: grid;
+    grid-template-rows: var(--topMenuHeight) auto 30px;
+    grid-gap: 3px;
+    grid-template-areas:
+        "h"
+        "m"
+        "f";
+    /*background-image: linear-gradient(to bottom right, #1d84d0, #0d51a9, #106aab);*/
+    /*background: green;*/
+}
+
+header {
+    grid-area: h;
+}
+
+header nav{
+    text-align: center;
+}
+
+header ul {
+    display: inline-block;
+}
+
+header li {
+    display: inline;
+    vertical-align: middle;
+    line-height: var(--topMenuHeight);
+    margin: 50px;
+}
+
+.topMenuElement {
+    position: relative;
+}
+
+.topMenuElement a {
+    text-decoration: none;
+    font-family: 'Brush Script MT', cursive;
+    color: rgba(0, 0, 0, 0.7);
+    font-size: 1.15em;
+}
+
+.topMenuElement::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    transform-origin: center;
+    transition: transform 0.25s ease-out;
+}
+
+.topMenuElement:hover::after {
+    transform: scaleX(1);
+    transform-origin: center;
+}
+
+.activeMenuElement::after {
+    content: '';
+    width: 100%;
+    transform: scaleX(1);
+    height: 2px;
+    left: 0;
+}
+
+main {
+    grid-area: m;
+    margin: 10px;
+    min-height: 500px;
+}
+
+footer {
+    grid-area: f;
+    padding-bottom: 0;
+}
+
+footer div {
+    text-align: center;
+}
+
+
+
+
