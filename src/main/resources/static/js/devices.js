@@ -1,5 +1,5 @@
 
-// const main = document.getElementsByTagName('main');
+const main = document.getElementsByTagName('main');
 
 let mainDiv = document.createElement('div');
 mainDiv.setAttribute('th:each','device: *{devices}');

@@ -1,7 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.dao.DeviceDao;
-import com.codeacademy.spring_and_thymeleaf.module.Device;
+import com.codeacademy.spring_and_thymeleaf.model.Device;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,7 +29,7 @@ public class ThymeleafController {
         return "monitoring";
     }
 
-    @GetMapping("/devices")
+    @GetMapping("/devices-dao")
     public String runDevices(Model model) {
         List<Device> devices = deviceDao.getAllTopics();
         model.addAttribute("devices", devices);

@@ -1,10 +1,12 @@
 package com.codeacademy.spring_and_thymeleaf.dao;
 
-import com.codeacademy.spring_and_thymeleaf.module.Device;
+import com.codeacademy.spring_and_thymeleaf.model.Device;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.*;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +33,7 @@ public class DeviceDao {
                 Integer id = resultSet.getInt("id");
                 String vnr = resultSet.getString("vnr");
                 String comment = resultSet.getString("comment");
-                Date createDate = resultSet.getDate("createDate");
+                LocalDate createDate = resultSet.getDate("create_date").toLocalDate();
                 devices.add(new Device(id, vnr, comment, createDate));
             }
         } catch (SQLException e) {
