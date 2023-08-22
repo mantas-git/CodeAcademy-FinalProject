@@ -79,7 +79,9 @@ main {
 
 footer {
     grid-area: f;
-    padding-bottom: 0;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 footer div {
@@ -88,6 +90,7 @@ footer div {
 
 .tb {
     border-collapse: collapse;
+    width: auto;
 }
 
 .tb th, .tb td {

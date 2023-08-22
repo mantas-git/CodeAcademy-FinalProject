@@ -4,10 +4,11 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
-import java.sql.*;
-import java.time.Instant;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,8 @@ public class DeviceDao {
                 String vnr = resultSet.getString("vnr");
                 String comment = resultSet.getString("comment");
                 LocalDate createDate = resultSet.getDate("create_date").toLocalDate();
-                devices.add(new Device(id, vnr, comment, createDate));
+                Integer userId = resultSet.getInt("user_id");
+                devices.add(new Device(id, vnr, comment, createDate, userId));
             }
         } catch (SQLException e) {
             e.printStackTrace();

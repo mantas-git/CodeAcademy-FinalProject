@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 @Controller
@@ -19,29 +20,21 @@ public class DeviceController {
     }
 
     @GetMapping
-    public String runDevices(Model model) {
+    public String showAllDevices(Model model) {
         List<Device> devices = deviceService.getAllDevices();
         model.addAttribute("devices", devices);
         return "devices";
     }
 
-//    @GetMapping
-//    public String getTopics(Model model) {
-//
-////        List<Topic> topics = List.of(
-////                new Topic("Most popular films", "More info"),
-////                new Topic("Top rated films", "More info"),
-////                new Topic("Latest movies", "More info"),
-////                new Topic("Most expensive movies", "More info")
-////        );
-//
-//        List<Device> topics = deviceService.getAllDevices();
-//
-//        model.addAttribute("topics", topics);
-//        model.addAttribute("newTopic", new Device());
-//
-//        return "topics";
-//    }
+    @GetMapping("/search")
+    public String showFilteredDevices(@RequestParam String searchText, Model model) {
+        List<Device> devices = deviceService.getFilteredDevices(searchText);
+        model.addAttribute("devices", devices);
+        return "devices";
+    }
+
+
+
 
     @PostMapping
     public String postTopics(Device newDevice, Model model) {
@@ -50,6 +43,6 @@ public class DeviceController {
 
         Device savedDevice = deviceService.addNewDevice(newDevice);
         model.addAttribute("newTopic", savedDevice);
-        return "topic";
+        return "devices";
     }
 }
