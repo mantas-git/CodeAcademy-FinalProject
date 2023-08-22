@@ -9,8 +9,10 @@ const body = document.querySelector('body');
 
 const header = document.createElement('header');
 
+const main = document.createElement('main');
+
 createTopMenu();
-createMain();
+// createMain();
 createFooter();
 markActive();
 
@@ -32,8 +34,6 @@ function createTopMenu(){
 }
 
 function createMain(){
-    const main = document.createElement('main');
-
     body.append(main);
 }
 

@@ -5,8 +5,30 @@
     <title>Devices</title>
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
+<!--    <script type="text/javascript" th:src="@{/js/devices.js}" defer></script>-->
 </head>
 <body>
-
+<main>
+    <table class="tb" style="width:400px;">
+        <tr>
+            <th>id</th>
+            <th>vnr</th>
+            <th>komentaras</th>
+            <th>data</th>
+        </tr>
+        <tr th:each="device: *{devices}">
+            <td th:text="${device.id}"></td>
+            <td th:text="${device.vnr}"></td>
+            <td th:text="${device.comment}"></td>
+            <td th:text="${device.createDate}"></td>
+        </tr>
+    </table>
+<!--    <div th:each="device: *{devices}">-->
+<!--        <h3 th:text="${device.id}"></h3>-->
+<!--        <section th:text="${device.vnr}"></section>-->
+<!--        <section th:text="${device.comment}"></section>-->
+<!--        <section th:text="${device.createDate}"></section>-->
+<!--    </div>-->
+</main>
 </body>
 </html>

@@ -3,9 +3,9 @@
 }
 
 body {
-    /*height: 100%;*/
+    height: 100%;
     display: grid;
-    grid-template-rows: var(--topMenuHeight) auto 30px;
+    grid-template-rows: var(--topMenuHeight) 70% 30px;
     grid-gap: 3px;
     grid-template-areas:
         "h"
@@ -19,7 +19,7 @@ header {
     grid-area: h;
 }
 
-header nav{
+header nav {
     text-align: center;
 }
 
@@ -84,6 +84,19 @@ footer {
 
 footer div {
     text-align: center;
+}
+
+.tb {
+    border-collapse: collapse;
+}
+
+.tb th, .tb td {
+    padding: 5px;
+    border: solid 1px #777;
+}
+
+.tb th {
+    background-color: lightblue;
 }
 
 
