@@ -8,6 +8,11 @@ create table devices
     user_id  INT
 );
 
+alter table if exists positions
+    add constraint FK97ner1k7p4y2j0dunn7kh6hje
+        foreign key (device_id)
+            references devices;
+
 create table positions
 (
     id  INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
@@ -17,6 +22,7 @@ create table positions
     longitude DOUBLE PRECISION NOT NULL,
     speed  INT
 );
+
 
 create table users
 (

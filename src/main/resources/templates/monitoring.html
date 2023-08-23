@@ -7,6 +7,26 @@
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
-<main>Stebejimas</main>
+<main>
+    <div th:text="${device.transportNr}"></div>
+    <table class="tb">
+        <tr>
+            <th>id</th>
+            <th>irenginio id</th>
+            <th>data</th>
+            <th>latitude</th>
+            <th>longitude</th>
+            <th>greitis</th>
+        </tr>
+        <tr th:each="position: *{device.positions}">
+            <td th:text="${position.id}"></td>
+            <td th:text="${position.deviceId}"></td>
+            <td th:text="${position.date}"></td>
+            <td th:text="${position.latitude}"></td>
+            <td th:text="${position.longitude}"></td>
+            <td th:text="${position.speed}"></td>
+        </tr>
+    </table>
+</main>
 </body>
 </html>

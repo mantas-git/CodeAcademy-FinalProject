@@ -44,9 +44,13 @@
             <td th:text="${device.comment}"></td>
             <td th:text="${device.createDate}"></td>
             <td th:text="${device.userId}"></td>
-            <td><button onclick="alert('Redaguoti')">Redaguoti</button></td>
-            <td><button onclick="alert('Ištrinti')">Ištrinti</button></td>
-            <td><button onclick="alert('Stebėti')">Stebėti</button></td>
+            <td><button th:id="${device.id}" onclick="alert('Redaguoti' + id)">Redaguoti</button></td>
+            <td><button th:id="${device.id}" onclick="console.log('Ištrinti' + id)">Ištrinti</button></td>
+            <td>
+                <form th:id="${device.id}" th:action="@{devices/monitoring}" th:object='${device.id}' method="get">
+                        <input type="submit" value="Stebėti" />
+                </form>
+            </td>
         </tr>
     </table>
 </main>

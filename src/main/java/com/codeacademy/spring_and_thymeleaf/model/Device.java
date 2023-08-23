@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,13 +20,18 @@ public class Device {
     private LocalDate createDate;
     private Integer userId;
 
-    public Device(Long id, String transportNr, String comment, LocalDate createDate, Integer userId) {
-        this.id = id;
-        this.transportNr = transportNr;
-        this.comment = comment;
-        this.createDate = createDate;
-        this.userId = userId;
-    }
+    @OneToMany(mappedBy = "device", orphanRemoval = true)
+    private List<Position> positions = new ArrayList<>();
+
+//    public Device(Long id, Long deviceId, String transportNr, String comment, LocalDate createDate, Integer userId, List<Position> positions) {
+//        this.id = id;
+//        this.deviceId = deviceId;
+//        this.transportNr = transportNr;
+//        this.comment = comment;
+//        this.createDate = createDate;
+//        this.userId = userId;
+//        this.positions = positions;
+//    }
 
     public Device() {
 

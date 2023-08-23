@@ -1,13 +1,11 @@
 package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
+import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @Controller
@@ -34,15 +32,27 @@ public class DeviceController {
         return "devices";
     }
 
-
-
-
     @PostMapping
     public String postDevice(Device newDevice, Model model, Model modelNew) {
         deviceService.addNewDevice(newDevice);
-//        List<Device> devices = deviceService.getAllDevices();
-//        model.addAttribute("devices", devices);
-//        modelNew.addAttribute("newDevice", new Device());
         return showAllDevices(model, modelNew);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public String deleteDevice(@PathVariable Long id, Model model, Model modelNew) {
+        deviceService.deleteDevice(id);
+        List<Device> devices = deviceService.getAllDevices();
+        model.addAttribute("devices", devices);
+        modelNew.addAttribute("newDevice", new Device());
+        return "devices";
+    }
+
+    @GetMapping("monitoring/{id}")
+    public String showMonitoring(@PathVariable Long id, Model model) {
+        Device device = deviceService.getDevice(id);
+//        List<Position> positions = device.getPositions();
+        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + device);
+        model.addAttribute("device", device);
+        return "monitoring";
     }
 }

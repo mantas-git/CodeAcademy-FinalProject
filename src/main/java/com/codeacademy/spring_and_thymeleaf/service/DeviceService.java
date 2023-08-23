@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DeviceService {
@@ -29,9 +31,15 @@ public class DeviceService {
         return deviceRepository.save(newDevice);
     }
 
-    public List<Device> getFilteredDevices(String searchText) {
-        List<Device> devices = new ArrayList<Device>();
-        return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(searchText, searchText);
+    public Device getDevice(Long id) {
+        return deviceRepository.findAllById(Collections.singleton(id)).get(0);
+    }
 
+    public List<Device> getFilteredDevices(String searchText) {
+        return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(searchText, searchText);
+    }
+
+    public void deleteDevice(Long id) {
+        deviceRepository.deleteById(id);
     }
 }
