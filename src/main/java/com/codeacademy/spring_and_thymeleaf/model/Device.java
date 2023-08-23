@@ -11,15 +11,16 @@ import java.time.LocalDate;
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-    private String vnr;
+    private Long id;
+    private Long deviceId;
+    private String transportNr;
     private String comment;
     private LocalDate createDate;
     private Integer userId;
 
-    public Device(Integer id, String vnr, String comment, LocalDate createDate, Integer userId) {
+    public Device(Long id, String transportNr, String comment, LocalDate createDate, Integer userId) {
         this.id = id;
-        this.vnr = vnr;
+        this.transportNr = transportNr;
         this.comment = comment;
         this.createDate = createDate;
         this.userId = userId;

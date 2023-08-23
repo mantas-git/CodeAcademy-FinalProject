@@ -31,7 +31,7 @@ public class DeviceService {
 
     public List<Device> getFilteredDevices(String searchText) {
         List<Device> devices = new ArrayList<Device>();
-        return deviceRepository.findByCommentContainingIgnoreCaseOrVnrContainingIgnoreCaseOrderByVnrAsc(searchText, searchText);
+        return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(searchText, searchText);
 
     }
 }

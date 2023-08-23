@@ -11,10 +11,16 @@
 <main>
     <div>
         <form th:action="@{/devices}" th:object="${newDevice}" method="post">
-            <label for="vnr">Numeris:</label>
-            <input name="vnr" type="text" id="vnr" th:field="*{vnr}" required/>
-            <label for="comment">Komentaras:</label>
-            <input name="comment" type="text" id="comment" th:field="*{comment}" required/>
+            <label>Įrenginio ID:
+                <input type="text" th:field="*{deviceId}" required/>
+            </label>
+            <label>Transporto numeris:
+                <input type="text" th:field="*{transportNr}"/>
+            </label>
+            <label>Komentaras:
+                <input type="text" th:field="*{comment}"/>
+            </label>
+
             <input value="Pridėti" type="submit"/>
         </form>
     </div>
@@ -22,17 +28,25 @@
     <table class="tb">
         <tr>
             <th>id</th>
-            <th>numeris</th>
+            <th>irenginio id</th>
+            <th>transporto numeris</th>
             <th>komentaras</th>
             <th>data</th>
-            <th>klientas</th>
+            <th>kliento id</th>
+            <th></th>
+            <th></th>
+            <th></th>
         </tr>
         <tr th:each="device: *{devices}">
             <td th:text="${device.id}"></td>
-            <td th:text="${device.vnr}"></td>
+            <td th:text="${device.deviceId}"></td>
+            <td th:text="${device.transportNr}"></td>
             <td th:text="${device.comment}"></td>
             <td th:text="${device.createDate}"></td>
             <td th:text="${device.userId}"></td>
+            <td><button onclick="alert('Redaguoti')">Redaguoti</button></td>
+            <td><button onclick="alert('Ištrinti')">Ištrinti</button></td>
+            <td><button onclick="alert('Stebėti')">Stebėti</button></td>
         </tr>
     </table>
 </main>

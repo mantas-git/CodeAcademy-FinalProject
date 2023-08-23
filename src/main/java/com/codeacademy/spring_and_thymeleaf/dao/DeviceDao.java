@@ -31,7 +31,7 @@ public class DeviceDao {
 
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
-                Integer id = resultSet.getInt("id");
+                Long id = resultSet.getLong("id");
                 String vnr = resultSet.getString("vnr");
                 String comment = resultSet.getString("comment");
                 LocalDate createDate = resultSet.getDate("create_date").toLocalDate();
