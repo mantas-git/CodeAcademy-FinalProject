@@ -5,15 +5,20 @@
     <title>Devices</title>
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
-<!--    <script type="text/javascript" th:src="@{/js/devices.js}" defer></script>-->
+    <!--    <script type="text/javascript" th:src="@{/js/devices.js}" defer></script>-->
 </head>
 <body>
 <main>
     <div>
-        <form>
-            <input>
+        <form th:action="@{/devices}" th:object="${newDevice}" method="post">
+            <label for="vnr">Numeris:</label>
+            <input name="vnr" type="text" id="vnr" th:field="*{vnr}" required/>
+            <label for="comment">Komentaras:</label>
+            <input name="comment" type="text" id="comment" th:field="*{comment}" required/>
+            <input value="Pridėti" type="submit"/>
         </form>
     </div>
+    <hr>
     <table class="tb">
         <tr>
             <th>id</th>

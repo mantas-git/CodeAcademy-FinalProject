@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class DeviceService {
     }
 
     public Device addNewDevice(Device newDevice) {
+        newDevice.setCreateDate(LocalDate.now());
+        newDevice.setUserId(0);
         return deviceRepository.save(newDevice);
     }
 

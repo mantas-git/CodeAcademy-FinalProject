@@ -12,7 +12,7 @@ const header = document.createElement('header');
 const main = document.createElement('main');
 
 createTopMenu();
-createMain();
+// createMain();
 createFooter();
 markActive();
 
@@ -58,7 +58,7 @@ function markActive() {
             element.classList.add('activeMenuElement');
         }
     }
-
 }
+
 
 

@@ -20,9 +20,10 @@ public class DeviceController {
     }
 
     @GetMapping
-    public String showAllDevices(Model model) {
+    public String showAllDevices(Model model, Model modelNew) {
         List<Device> devices = deviceService.getAllDevices();
         model.addAttribute("devices", devices);
+        modelNew.addAttribute("newDevice", new Device());
         return "devices";
     }
 
@@ -37,12 +38,11 @@ public class DeviceController {
 
 
     @PostMapping
-    public String postTopics(Device newDevice, Model model) {
-
-        System.out.println(newDevice);
-
-        Device savedDevice = deviceService.addNewDevice(newDevice);
-        model.addAttribute("newTopic", savedDevice);
-        return "devices";
+    public String postDevice(Device newDevice, Model model, Model modelNew) {
+        deviceService.addNewDevice(newDevice);
+//        List<Device> devices = deviceService.getAllDevices();
+//        model.addAttribute("devices", devices);
+//        modelNew.addAttribute("newDevice", new Device());
+        return showAllDevices(model, modelNew);
     }
 }

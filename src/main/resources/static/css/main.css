@@ -4,6 +4,7 @@
 
 body {
     height: 100%;
+    width: 100%;
     display: grid;
     grid-template-rows: var(--topMenuHeight) 70% 30px;
     grid-gap: 3px;
@@ -81,6 +82,7 @@ footer {
     grid-area: f;
     position: absolute;
     bottom: 0;
+    height: 30px;
     width: 100%;
 }
 
@@ -90,7 +92,7 @@ footer div {
 
 .tb {
     border-collapse: collapse;
-    width: auto;
+    min-width: 500px;
 }
 
 .tb th, .tb td {
