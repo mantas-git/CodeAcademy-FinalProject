@@ -5,7 +5,6 @@
     <title>Devices</title>
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
-    <!--    <script type="text/javascript" th:src="@{/js/devices.js}" defer></script>-->
 </head>
 <body>
 <main>
@@ -47,7 +46,7 @@
             <td><button th:id="${device.id}" onclick="alert('Redaguoti' + id)">Redaguoti</button></td>
             <td><button th:id="${device.id}" onclick="console.log('Ištrinti' + id)">Ištrinti</button></td>
             <td>
-                <form th:id="${device.id}" th:action="@{devices/monitoring}" th:object='${device.id}' method="get">
+                <form th:id="${device.id}" th:action="@{devices/monitoring/}" th:object='${device.id}' method="get">
                         <input type="submit" value="Stebėti" />
                 </form>
             </td>

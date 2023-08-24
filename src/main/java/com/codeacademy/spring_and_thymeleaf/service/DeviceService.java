@@ -1,6 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
+import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -28,11 +30,16 @@ public class DeviceService {
     public Device addNewDevice(Device newDevice) {
         newDevice.setCreateDate(LocalDate.now());
         newDevice.setUserId(0);
+        List<Position> positions = List.of(new Position(LocalDateTime.now(), 48.20147, 6.3930183, 555, newDevice));
+        newDevice.setPositions(positions);
         return deviceRepository.save(newDevice);
     }
 
     public Device getDevice(Long id) {
-        return deviceRepository.findAllById(Collections.singleton(id)).get(0);
+        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " + id);
+        Device device = deviceRepository.findById(id).get();
+        System.out.println(device);
+        return device;
     }
 
     public List<Device> getFilteredDevices(String searchText) {

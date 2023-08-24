@@ -1,8 +1,10 @@
 insert into devices (device_id, transport_nr, comment, create_date, user_id)
-values ('1000', 'AAA 111', 'Volvo', '2023-01-01', 0),
-       ('1001', 'BBB 222', 'Audi', '2023-02-20', 0),
-       ('1002', 'CCC 333', 'BMW', '2023-02-20', 0),
-       ('1003', 'DDD 444', 'Volvo', '2023-03-05', 0);
+values (1, 'FFF 555', 'Volvo', '2023-03-05', 0),
+       (1000, 'AAA 111', 'Volvo', '2023-01-01', 0),
+       (1001, 'BBB 222', 'Audi', '2023-02-20', 0),
+       (1002, 'CCC 333', 'BMW', '2023-02-20', 0),
+       (1003, 'DDD 444', 'Volvo', '2023-03-05', 0);
+
 
 insert into positions (device_id, date, latitude, longitude, speed)
 values (1000, '2023-08-23 15:06:20.783', 50.9528066, 4.597415, 48),

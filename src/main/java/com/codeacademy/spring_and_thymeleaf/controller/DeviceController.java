@@ -50,8 +50,6 @@ public class DeviceController {
     @GetMapping("monitoring/{id}")
     public String showMonitoring(@PathVariable Long id, Model model) {
         Device device = deviceService.getDevice(id);
-//        List<Position> positions = device.getPositions();
-        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + device);
         model.addAttribute("device", device);
         return "monitoring";
     }
