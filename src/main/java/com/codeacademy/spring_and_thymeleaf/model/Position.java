@@ -39,6 +39,9 @@ public class Position {
         this.device = device;
     }
 
+    public Device getDevice() {
+        return device;
+    }
 
     @Override
     public String toString() {

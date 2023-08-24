@@ -47,24 +47,23 @@ function createFooter() {
 
 function markActive() {
     let url = window.location.pathname;
-    let href = url.split("/").reverse()[0];
     let menuElements = document.getElementsByClassName('topMenuElement');
-
-    for (let i = 0; i < menuElements.length; i++) {
-        let element = menuElements[i];
-        let child = element.children;
-        let elementHref = child[0].href.split("/").reverse()[0];
-        if (elementHref === href) {
-            element.classList.add('activeMenuElement');
+    let splitUrl = url.split("/").reverse();
+    let marked = false;
+    let hrefNr = 0;
+    while(!marked && hrefNr < splitUrl.length) {
+        let href = splitUrl[hrefNr++];
+        for (let i = 0; i < menuElements.length; i++) {
+            let element = menuElements[i];
+            let child = element.children;
+            let elementHref = child[0].href.split("/").reverse()[0];
+            if (elementHref === href) {
+                element.classList.add('activeMenuElement');
+                marked = true;
+            }
         }
     }
 }
-
-// function addHref(id) {
-//     // let aHref = document.getElementById(id)
-//     // aHref.href = "monitoring/id"
-//     return "minotirng/" + id;
-// }
 
 
 

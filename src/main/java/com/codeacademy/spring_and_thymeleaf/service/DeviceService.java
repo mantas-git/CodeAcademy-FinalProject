@@ -36,10 +36,7 @@ public class DeviceService {
     }
 
     public Device getDevice(Long id) {
-        System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< " + id);
-        Device device = deviceRepository.findById(id).get();
-        System.out.println(device);
-        return device;
+        return deviceRepository.findById(id).get();
     }
 
     public List<Device> getFilteredDevices(String searchText) {
@@ -48,5 +45,9 @@ public class DeviceService {
 
     public void deleteDevice(Long id) {
         deviceRepository.deleteById(id);
+    }
+
+    public Device getDeviceByDeviceId(Long deviceId) {
+        return deviceRepository.findByDeviceId(deviceId).get(0);
     }
 }
