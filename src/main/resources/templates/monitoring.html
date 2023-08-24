@@ -8,7 +8,16 @@
 </head>
 <body>
 <main>
-    <div th:text="${device.transportNr}"></div>
+    <div>
+        <form th:action="@{/monitoring/run}" method="get" >
+            <label>Įrenginio ID:
+                <input type="text" th:name="deviceId" required/>
+            </label>
+            <input value="Stebėti" type="submit"/>
+        </form>
+    </div>
+    <hr>
+    <div th:text="${device.transportNr} != null ? 'Stebimas transposrto numeris ' + ${device.transportNr} : ''"></div>
     <table class="tb">
         <tr>
             <th>id</th>

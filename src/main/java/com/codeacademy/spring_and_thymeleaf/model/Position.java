@@ -11,24 +11,18 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-//@Data
+@Data
 @Table(name = "positions")
 public class Position {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Getter
     private LocalDateTime date;
-    @Getter
     private Double latitude;
-    @Getter
     private Double longitude;
-    @Getter
     private Integer speed;
-
-    @ManyToOne
-    @JoinColumn(name = "device_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "deviceId", referencedColumnName = "deviceId")
     private Device device;
 
     public Position(LocalDateTime date, Double latitude, Double longitude, Integer speed, Device device) {
@@ -37,10 +31,6 @@ public class Position {
         this.longitude = longitude;
         this.speed = speed;
         this.device = device;
-    }
-
-    public Device getDevice() {
-        return device;
     }
 
     @Override

@@ -1,7 +1,7 @@
 create table devices
 (
     id           INT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-    device_id    INT,
+    device_id    INT UNIQUE ,
     transport_nr varchar(255) NOT NULL,
     comment      varchar(255) NOT NULL,
     create_date  DATE,

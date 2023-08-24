@@ -24,22 +24,33 @@ public class ThymeleafController {
     }
 
     @GetMapping("/monitoring")
-    public String runMonitoring() {
+    public String runMonitoring(Model model) {
+        model.addAttribute("device", new Device());
+        model.addAttribute("newDevice", new Device());
         return "monitoring";
     }
 
-    @GetMapping("monitoring/{deviceId}")
-    public String showMonitoring(@PathVariable Long deviceId, Model model) {
+//    @GetMapping("monitoring/{deviceId}")
+//    public String showMonitoring(@PathVariable Long deviceId, Model model) {
+//        Device device = deviceService.getDeviceByDeviceId(deviceId);
+//        model.addAttribute("device", device);
+//        model.addAttribute("newDevice", new Device());
+//        return "monitoring";
+//    }
+
+    @GetMapping("/monitoring/run")
+    public String showMonitoringByParam(@RequestParam Long deviceId, Model model) {
         Device device = deviceService.getDeviceByDeviceId(deviceId);
         model.addAttribute("device", device);
+        model.addAttribute("newDevice", new Device());
         return "monitoring";
     }
 
     @GetMapping("/devices")
-    public String showAllDevices(Model model, Model modelNew) {
+    public String showAllDevices(Model model) {
         List<Device> devices = deviceService.getAllDevices();
         model.addAttribute("devices", devices);
-        modelNew.addAttribute("newDevice", new Device());
+        model.addAttribute("newDevice", new Device());
         return "devices";
     }
 
@@ -51,17 +62,17 @@ public class ThymeleafController {
     }
 
     @PostMapping("/devices")
-    public String postDevice(Device newDevice, Model model, Model modelNew) {
+    public String postDevice(Device newDevice, Model model) {
         deviceService.addNewDevice(newDevice);
-        return showAllDevices(model, modelNew);
+        return showAllDevices(model);
     }
 
     @DeleteMapping("/devices/delete/{id}")
-    public String deleteDevice(@PathVariable Long id, Model model, Model modelNew) {
+    public String deleteDevice(@PathVariable Long id, Model model) {
         deviceService.deleteDevice(id);
         List<Device> devices = deviceService.getAllDevices();
         model.addAttribute("devices", devices);
-        modelNew.addAttribute("newDevice", new Device());
+        model.addAttribute("newDevice", new Device());
         return "devices";
     }
     @GetMapping("/about")
