@@ -1,7 +1,9 @@
 package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
+import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping
@@ -66,8 +71,8 @@ public class ThymeleafController {
     }
 
     @PostMapping("/devices")
-    public String postDevice(Device newDevice, Model model) {
-        deviceService.addNewDevice(newDevice);
+    public String addDevice(Device device, Model model) {
+        deviceService.addDevice(device);
         return showAllDevices(model);
     }
 
@@ -79,6 +84,25 @@ public class ThymeleafController {
     @GetMapping("/about")
     public String runAbout() {
         return "about";
+    }
+
+    @PostMapping("/positions/add")
+    public ResponseEntity<?> addPosition(@RequestParam("deviceId") Long deviceId,
+                                         @RequestParam("latitude") Double latitude,
+                                         @RequestParam("longitude") Double longitude,
+                                         @RequestParam("speed") Integer speed) {
+        Device device = deviceService.getDeviceByDeviceId(deviceId);
+        Position position = new Position();
+        position.setDevice(device);
+        position.setDate(LocalDateTime.now());
+        position.setLatitude(latitude);
+        position.setLongitude(longitude);
+        position.setSpeed(speed);
+        deviceService.addPosition(position, device);
+        Map<String, Object> responseMap = new HashMap<>();
+        responseMap.put("error", false);
+        responseMap.put("message", "Position created successfully");
+        return ResponseEntity.ok(responseMap);
     }
 
 }

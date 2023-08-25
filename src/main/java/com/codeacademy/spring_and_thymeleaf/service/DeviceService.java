@@ -27,12 +27,10 @@ public class DeviceService {
         return deviceRepository.findAll();
     }
 
-    public Device addNewDevice(Device newDevice) {
-        newDevice.setCreateDate(LocalDate.now());
-        newDevice.setUserId(0);
-        List<Position> positions = List.of(new Position(LocalDateTime.now(), 48.20147, 6.3930183, 555, newDevice));
-        newDevice.setPositions(positions);
-        return deviceRepository.save(newDevice);
+    public Device addDevice(Device device) {
+        device.setCreateDate(LocalDate.now());
+        device.setUserId(0);
+        return deviceRepository.save(device);
     }
 
     public Device getDevice(Long id) {
@@ -49,5 +47,10 @@ public class DeviceService {
 
     public Device getDeviceByDeviceId(Long deviceId) {
         return deviceRepository.findByDeviceId(deviceId).get(0);
+    }
+
+    public Device addPosition(Position position, Device device) {
+        device.getPositions().add(position);
+        return deviceRepository.save(device);
     }
 }

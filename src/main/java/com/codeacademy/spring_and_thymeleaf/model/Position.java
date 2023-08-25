@@ -23,14 +23,6 @@ public class Position {
     @JoinColumn(name = "deviceId", referencedColumnName = "deviceId")
     private Device device;
 
-    public Position(LocalDateTime date, Double latitude, Double longitude, Integer speed, Device device) {
-        this.date = date;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.speed = speed;
-        this.device = device;
-    }
-
     @Override
     public String toString() {
         return "Position{" +

@@ -16,6 +16,7 @@ body {
     /*background: green;*/
 }
 
+
 header {
     grid-area: h;
 }
@@ -76,6 +77,10 @@ main {
     grid-area: m;
     margin: 10px;
     min-height: 500px;
+}
+
+h3 {
+    text-align: center;
 }
 
 footer {
