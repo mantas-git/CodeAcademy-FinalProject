@@ -19,12 +19,12 @@ public class ThymeleafController {
     }
 
     @GetMapping
-    public String runIndex() {
+    public String showIndex() {
         return "index";
     }
 
     @GetMapping("/monitoring")
-    public String runMonitoring(Model model) {
+    public String showMonitoring(Model model) {
         model.addAttribute("device", new Device());
         model.addAttribute("newDevice", new Device());
         return "monitoring";
@@ -67,13 +67,10 @@ public class ThymeleafController {
         return showAllDevices(model);
     }
 
-    @DeleteMapping("/devices/delete/{id}")
-    public String deleteDevice(@PathVariable Long id, Model model) {
+    @PostMapping("/devices/delete")
+    public String deleteDevice(@RequestParam Long id, Model model) {
         deviceService.deleteDevice(id);
-        List<Device> devices = deviceService.getAllDevices();
-        model.addAttribute("devices", devices);
-        model.addAttribute("newDevice", new Device());
-        return "devices";
+        return showAllDevices(model);
     }
     @GetMapping("/about")
     public String runAbout() {

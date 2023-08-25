@@ -42,8 +42,14 @@
             <td th:text="${device.comment}"></td>
             <td th:text="${device.createDate}"></td>
             <td th:text="${device.userId}"></td>
-            <td><button th:id="${device.id}" onclick="alert('Redaguoti' + id)">Redaguoti</button></td>
-            <td><button th:id="${device.id}" onclick="console.log('Ištrinti' + id)">Ištrinti</button></td>
+            <td><button th:id="${device.id}" onclick="alert('Redaguoti id: ' + id)">Redaguoti</button></td>
+<!--            <td><button th:id="${device.id}" onclick="deleteDevice(this.id)">Ištrinti</button></td>-->
+            <td>
+                <form th:action="@{/devices/delete}"  method="post">
+                    <input type="hidden" th:name = "id" th:value = "${device.id}" />
+                    <input value="Ištrinti" type="submit"/>
+                </form>
+            </td>
 <!--            <td><button th:id="${device.deviceId}" onclick="openMonitoringOnButtonClick(this.id)">Stebėti</button></td>-->
             <td>
                 <form th:action="@{/monitoring/run}"  method="get">
@@ -67,6 +73,19 @@
 <!--        })-->
 <!--    }-->
 <!--</script>-->
+
+<script type="text/javascript">
+    function deleteDevice(id){
+        let url = window.location.pathname;
+        let splitURL = url.split("/")[0];
+        url = splitURL + '/devices/delete/' + id;
+        window.open(`${url}`, '_self');
+        $.ajax({
+            url: url,
+            type: 'DELETE',
+        })
+    }
+</script>
 
 </body>
 </html>
