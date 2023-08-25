@@ -29,4 +29,6 @@ public class Device {
     private List<Position> positions = new ArrayList<>();
 
 
+    public Device(long deviceId) {
+    }
 }
