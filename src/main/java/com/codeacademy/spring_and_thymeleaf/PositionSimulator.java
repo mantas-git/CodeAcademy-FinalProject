@@ -34,7 +34,7 @@ public class PositionSimulator {
         double lastLongitude = position.getLongitude() != null ? position.getLongitude() : 0;
         newPosition.setLongitude(lastLongitude + getRandomDouble(-0.01, 0.01));
         int lastSpeed = position.getSpeed() != null ? position.getSpeed() : 0;
-        newPosition.setSpeed(lastSpeed + getRandomInt(-12, 12));
+        newPosition.setSpeed(Math.max(lastSpeed + getRandomInt(-12, 12), 0));
        return newPosition;
     }
 
@@ -45,7 +45,7 @@ public class PositionSimulator {
                 Statement stmt = conn.createStatement();
                 String query = (String.format("insert into positions (device_id, date, latitude, longitude, speed)" +
                         "values (%s, '%s', %s, %s, %s)", deviceId, position.getDate(), position.getLatitude(), position.getLongitude(), position.getSpeed()));
-//                System.out.println(query);
+                System.out.println(query);
                 stmt.executeUpdate(query);
             }
         }

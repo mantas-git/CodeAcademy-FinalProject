@@ -4,7 +4,10 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -39,6 +42,7 @@ public class ThymeleafController {
 //    }
 
     @GetMapping("/monitoring/run")
+//    @PostMapping("/monitoring")
     public String showMonitoringByParam(@RequestParam Long deviceId, Model model) {
         Device device = deviceService.getDeviceByDeviceId(deviceId);
         model.addAttribute("device", device);

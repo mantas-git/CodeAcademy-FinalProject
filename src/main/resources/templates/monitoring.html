@@ -30,9 +30,9 @@
         <tr th:each="position: *{device.positions}">
             <td th:text="${position.id}"></td>
             <td th:text="${position.device.getDeviceId()}"></td>
-            <td th:text="${position.date}"></td>
-            <td th:text="${position.latitude}"></td>
-            <td th:text="${position.longitude}"></td>
+            <td th:text="${#temporals.format(position.date, 'yyyy-MM-dd HH:mm:ss:SSS')}"></td>
+            <td th:text="${#numbers.formatDecimal(position.latitude, 1, 6)}"></td>
+            <td th:text="${#numbers.formatDecimal(position.longitude, 1, 6)}"></td>
             <td th:text="${position.speed}"></td>
         </tr>
     </table>

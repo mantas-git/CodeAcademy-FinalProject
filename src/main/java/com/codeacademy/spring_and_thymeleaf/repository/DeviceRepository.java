@@ -9,5 +9,5 @@ import java.util.Optional;
 public interface DeviceRepository extends JpaRepository<Device, Long> {
     List<Device> findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(String searchText, String searchText1);
 
-    List<Device> findByDeviceId(Long deviceid);
+    List<Device> findByDeviceId(Long deviceId);
 }

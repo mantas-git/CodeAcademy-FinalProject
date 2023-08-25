@@ -27,8 +27,4 @@ public class Device {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "device", orphanRemoval = true)
     private List<Position> positions = new ArrayList<>();
-
-
-    public Device(long deviceId) {
-    }
 }
