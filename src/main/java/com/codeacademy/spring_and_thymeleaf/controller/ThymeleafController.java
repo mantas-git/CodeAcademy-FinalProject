@@ -3,6 +3,7 @@ package com.codeacademy.spring_and_thymeleaf.controller;
 import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
+import com.codeacademy.spring_and_thymeleaf.service.PositionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +22,11 @@ import java.util.Map;
 public class ThymeleafController {
 
     private final DeviceService deviceService;
+    private  final PositionService positionService;
 
-    public ThymeleafController(DeviceService deviceService) {
+    public ThymeleafController(DeviceService deviceService, PositionService positionService) {
         this.deviceService = deviceService;
+        this.positionService = positionService;
     }
 
     @GetMapping
@@ -98,7 +101,7 @@ public class ThymeleafController {
         position.setLatitude(latitude);
         position.setLongitude(longitude);
         position.setSpeed(speed);
-        deviceService.addPosition(position, device);
+        positionService.addPostion(position);
         Map<String, Object> responseMap = new HashMap<>();
         responseMap.put("error", false);
         responseMap.put("message", "Position created successfully");

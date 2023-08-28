@@ -49,8 +49,4 @@ public class DeviceService {
         return deviceRepository.findByDeviceId(deviceId).get(0);
     }
 
-    public Device addPosition(Position position, Device device) {
-        device.getPositions().add(position);
-        return deviceRepository.save(device);
-    }
 }
