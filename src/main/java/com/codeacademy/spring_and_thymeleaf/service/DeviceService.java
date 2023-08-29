@@ -49,4 +49,8 @@ public class DeviceService {
         return deviceRepository.findByDeviceId(deviceId).get(0);
     }
 
+    public Device updateDevice(Device device) {
+        System.out.println(device);
+        return deviceRepository.save(device);
+    }
 }

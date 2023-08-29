@@ -9,23 +9,27 @@
 
 <body>
 
-<div id="deviceEditForm" class="modal">
+<div id="deviceEditDiv" class="modal">
     <div class="modal-content">
-        <div class="contact-form">
+        <div class="edit-form">
             <span class="close">&times;</span>
-            <form class="deviceEditForm" action="/">
+            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${newDevice}" method="post">
                 <h2>Įrenginio informacijos redagavimas</h2>
                 <div>
-                    <input type="text" id="deviceId" name="deviceId" placeholder="Įrenginio ID"/>
-                    <input type="text" id="trasportNr" name="transportNr" placeholder="Transporto numeris"/>
+                    <input type="hidden" id="id" name="id"/>
+                    <input type="hidden" id="userId" name="userId"/>
+                    <span>Įrenginio ID:</span>
+                    <input type="text" id="deviceId" name="deviceId" placeholder="Įrenginio nr"/>
+                    <span>Transporto numeris:</span>
+                    <input type="text" id="transportNr" name="transportNr" placeholder="Transporto numeris"/>
+                    <span>Sukūrimo data:</span>
                     <input type="text" id="createDate" name="createDate" placeholder="Įvedimo data"/>
                 </div>
                 <span>Komentaras</span>
                 <div>
                     <textarea id="comment" rows="2" name="comment"></textarea>
                 </div>
-
-                <button type="submit" href="/">Išsaugoti</button>
+                <button type="submit">Išsaugoti</button>
             </form>
         </div>
     </div>
@@ -66,7 +70,13 @@
             <td th:text="${device.userId}"></td>
             <!--            <td><button th:id="${device.id}" onclick="alert('Redaguoti id: ' + id)">Redaguoti</button></td>-->
             <td>
-                <button th:id="${device.id}" class="deviceEditButton" data-modal="deviceEditForm">Redaguoti</button>
+                <button th:id="${device.id}" class="deviceEditButton" data-modal="deviceEditDiv"
+                        th:paramDeviceId='${device.deviceId}'
+                        th:paramTransportNr='${device.transportNr}'
+                        th:paramCreateDate='${device.createDate}'
+                        th:paramComment='${device.comment}'
+                        th:paramUserId='${device.userId}'>
+                    Redaguoti</button>
             </td>
             <!--            <td><button th:id="${device.id}" onclick="deleteDevice(this.id)">Ištrinti</button></td>-->
             <td>
@@ -86,49 +96,19 @@
     </table>
 </main>
 
-<!--<script type="text/javascript">-->
-<!--    function openMonitoringOnButtonClick(id){-->
-<!--        let url = window.location.pathname;-->
-<!--        let splitURL = url.split("/")[0];-->
-<!--        url = splitURL + '/monitoring/' + id;-->
-<!--        window.open(`${url}`, '_self');-->
-<!--        $.ajax({-->
-<!--            url: url,-->
-<!--            type: 'POST',-->
-<!--        })-->
-<!--    }-->
-<!--</script>-->
-
-<!--<script type="text/javascript">-->
-<!--    function deleteDevice(id){-->
-<!--        let url = window.location.pathname;-->
-<!--        let splitURL = url.split("/")[0];-->
-<!--        url = splitURL + '/devices/delete/' + id;-->
-<!--        window.open(`${url}`, '_self');-->
-<!--        $.ajax({-->
-<!--            url: url,-->
-<!--            type: 'DELETE',-->
-<!--        })-->
-<!--    }-->
-<!--</script>-->
 
 <script th:inline="javascript">
-    let modalBtns = [...document.querySelectorAll(".deviceEditButton")];
-    modalBtns.forEach(function (btn) {
+    let modalButton = [...document.querySelectorAll(".deviceEditButton")];
+    modalButton.forEach(function (btn) {
         btn.onclick = function () {
             let modal = btn.getAttribute("data-modal");
-            // let testForm = document.getElementById(modal);
-            let abc = this.id;
-            console.log("${devices[0].id}");
-            // document.getElementById("deviceId").setAttribute("th:value", "Vienas");
-            // document.getElementById("trasportNr").setAttribute("value", "Du");
-            // document.getElementById("createDate").textContent = "Trys";
-            // let aaa = document.getElementById("comment");
-            // aaa.setAttribute("th:value", "Labas");
-            // document.getElementById("comment").setAttribute("th:text", "Labas");
-
-            // th:let =
-            // console.log(abc + " " + th:text="${devices[0]}");
+            let elementId = this.id;
+            document.getElementById("id").setAttribute("value", elementId);
+            document.getElementById("deviceId").setAttribute("value", document.getElementById(elementId).getAttribute('paramDeviceId'));
+            document.getElementById("transportNr").setAttribute("value", document.getElementById(elementId).getAttribute('paramTransportNr'));
+            document.getElementById("createDate").setAttribute("value", document.getElementById(elementId).getAttribute('paramCreateDate'));
+            document.getElementById("comment").textContent = document.getElementById(elementId).getAttribute('paramComment');
+            document.getElementById("userId").setAttribute("value", document.getElementById(elementId).getAttribute('paramUserId'));
             document.getElementById(modal).style.display = "block";
         };
     });

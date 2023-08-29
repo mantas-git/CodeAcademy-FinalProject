@@ -79,10 +79,16 @@ public class ThymeleafController {
         return showAllDevices(model);
     }
 
+    @PostMapping("/devices/update")
+    public String updateDevice(Device device, Model model) {
+        deviceService.updateDevice(device);
+        return "redirect:/devices";
+    }
+
     @PostMapping("/devices/delete")
     public String deleteDevice(@RequestParam Long id, Model model) {
         deviceService.deleteDevice(id);
-        return showAllDevices(model);
+        return "redirect:/devices";
     }
     @GetMapping("/about")
     public String runAbout() {

@@ -124,8 +124,9 @@ footer div {
 }
 .modal-content {
     margin: 50px auto;
-    border: 1px solid #999;
+    /*border: 1px solid #999;*/
     width: 20%;
+    min-width: 300px;
 }
 
 h2 {
@@ -152,7 +153,7 @@ textarea {
     border: 1px solid #1c87c9;
     outline: none;
 }
-.contact-form button {
+.edit-form button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -161,18 +162,18 @@ textarea {
     font-weight: 400;
     color: #fff;
 }
-.contact-form button:hover {
+.edit-form button:hover {
     background: #2371a0;
 }
 span.close {
-    color: #696969;
+    color: #1c87c9;
     float: right;
-    font-size: 28px;
+    font-size: 36px;
     font-weight: bold;
 }
 span.close:hover,
 span.close:focus {
-    color: black;
+    color: #2371a0;
     text-decoration: none;
     cursor: pointer;
 }
