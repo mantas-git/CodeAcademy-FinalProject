@@ -1,8 +1,8 @@
 const menuElementList = [
-    {href: '/', title: 'Pradžia'},
-    {href: '/monitoring', title: 'Stebėjimas'},
+    {href: '/', title: 'Info'},
     {href: '/devices', title: 'Įrenginiai'},
-    {href: '/about', title: 'Apie'},
+    {href: '/monitoring', title: 'Stebėjimas'},
+    // {href: '/about', title: 'Apie'},
 ];
 
 const body = document.querySelector('body');

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -41,14 +42,6 @@ public class ThymeleafController {
         return "monitoring";
     }
 
-//    @GetMapping("monitoring/{deviceId}")
-//    public String showMonitoring(@PathVariable Long deviceId, Model model) {
-//        Device device = deviceService.getDeviceByDeviceId(deviceId);
-//        model.addAttribute("device", device);
-//        model.addAttribute("newDevice", new Device());
-//        return "monitoring";
-//    }
-
     @GetMapping("/monitoring/run")
 //    @PostMapping("/monitoring")
     public String showMonitoringByParam(@RequestParam Long deviceId, Model model) {
@@ -74,19 +67,19 @@ public class ThymeleafController {
     }
 
     @PostMapping("/devices")
-    public String addDevice(Device device, Model model) {
-        deviceService.addDevice(device);
-        return showAllDevices(model);
+    public String addDevice(Device device, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
+        return "redirect:/devices";
     }
 
     @PostMapping("/devices/update")
-    public String updateDevice(Device device, Model model) {
-        deviceService.updateDevice(device);
+    public String updateDevice(Device device, RedirectAttributes redirectAttributes) {
+        redirectAttributes.addFlashAttribute("infoMessage", deviceService.updateDevice(device));
         return "redirect:/devices";
     }
 
     @PostMapping("/devices/delete")
-    public String deleteDevice(@RequestParam Long id, Model model) {
+    public String deleteDevice(@RequestParam Long id) {
         deviceService.deleteDevice(id);
         return "redirect:/devices";
     }

@@ -1,6 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
+import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
 import org.springframework.http.HttpStatus;
@@ -27,10 +28,22 @@ public class DeviceService {
         return deviceRepository.findAll();
     }
 
-    public Device addDevice(Device device) {
-        device.setCreateDate(LocalDate.now());
-        device.setUserId(0);
-        return deviceRepository.save(device);
+    public InfoMessage addDevice(Device device) {
+        InfoMessage infoMessage = new InfoMessage();
+        if(deviceRepository.existsDeviceByDeviceId(device.getDeviceId())) {
+            infoMessage.setError(true);
+            infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nPridėjimas negalimas.");
+        }
+        else {
+            device.setCreateDate(LocalDate.now());
+            device.setUserId(0);
+            deviceRepository.save(device);
+            infoMessage.setError(false);
+            infoMessage.setMessageText("Pridėtas naujas įrenginys");
+        }
+        System.out.println(infoMessage);
+        return infoMessage;
+
     }
 
     public Device getDevice(Long id) {
@@ -49,8 +62,18 @@ public class DeviceService {
         return deviceRepository.findByDeviceId(deviceId).get(0);
     }
 
-    public Device updateDevice(Device device) {
-        System.out.println(device);
-        return deviceRepository.save(device);
+    public InfoMessage updateDevice(Device device) {
+        InfoMessage infoMessage = new InfoMessage();
+        if(deviceRepository.existsDeviceByDeviceId(device.getDeviceId())) {
+            infoMessage.setError(true);
+            infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nAtnaujinimas negalimas.");
+
+        }
+        else {
+            deviceRepository.save(device);
+            infoMessage.setError(false);
+            infoMessage.setMessageText("Įrenginys atnaujintas");
+        }
+        return infoMessage;
     }
 }
