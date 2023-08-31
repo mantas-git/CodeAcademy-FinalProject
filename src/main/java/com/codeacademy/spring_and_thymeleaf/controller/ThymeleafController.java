@@ -4,6 +4,10 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import com.codeacademy.spring_and_thymeleaf.service.PositionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +21,8 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping
@@ -39,15 +45,31 @@ public class ThymeleafController {
     public String showMonitoring(Model model) {
         model.addAttribute("device", new Device());
         model.addAttribute("newDevice", new Device());
+        model.addAttribute("positions", null);
         return "monitoring";
     }
 
+
     @GetMapping("/monitoring/run")
-//    @PostMapping("/monitoring")
-    public String showMonitoringByParam(@RequestParam Long deviceId, Model model) {
+    public String listTopics(@RequestParam Long deviceId, Model model,
+                             @PageableDefault(sort = { "date"}, direction = Sort.Direction.DESC, size = 10, page = 0)
+                             Pageable pageable)
+    {
         Device device = deviceService.getDeviceByDeviceId(deviceId);
+        Page<Position> positions = positionService.findPaginated(device, pageable);
+
         model.addAttribute("device", device);
         model.addAttribute("newDevice", new Device());
+        model.addAttribute("positions", positions);
+
+        int totalPages = positions.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages-1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
         return "monitoring";
     }
 

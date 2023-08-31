@@ -1,7 +1,10 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
+import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.repository.PositionRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 @Service
 public class PositionService {
@@ -13,5 +16,9 @@ public class PositionService {
 
     public Position addPostion(Position position) {
         return positionRepository.save(position);
+    }
+
+    public Page<Position> findPaginated(Device device, Pageable pageable) {
+        return positionRepository.findByDevice(device, pageable);
     }
 }

@@ -26,6 +26,10 @@ main {
     margin: 10px;
 }
 
+main div {
+    display: inline-block;
+}
+
 footer {
     grid-area: f;
     position: static;

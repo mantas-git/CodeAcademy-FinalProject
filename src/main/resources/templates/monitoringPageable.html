@@ -2,16 +2,20 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Monitoring</title>
+
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="internationalization.js"></script>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
 <main>
     <div>
         <form th:action="@{/monitoring/run}" method="get">
-            <span th:text="#{deviceId} + ':'"></span>
-            <input type="text" th:name="deviceId" required/>
-            <button type="submit" th:text="#{watch}"></button>
+            <label>Įrenginio ID:
+                <input type="text" th:name="deviceId" required/>
+            </label>
+            <input value="Stebėti" type="submit"/>
         </form>
     </div>
     <hr>

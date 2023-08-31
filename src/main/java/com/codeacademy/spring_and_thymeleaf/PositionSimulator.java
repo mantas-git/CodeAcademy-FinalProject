@@ -18,8 +18,9 @@ public class PositionSimulator {
 
     private class RunSimulator extends TimerTask {
         public void run() {
-            List<Long> deviceIdList = getDeviceIdList();
-            Long randomDeviceId = deviceIdList.get(random.nextInt(deviceIdList.size()));
+//            List<Long> deviceIdList = getDeviceIdList();
+//            Long randomDeviceId = deviceIdList.get(random.nextInt(deviceIdList.size()));
+            Long randomDeviceId = 1000L;
             Position lastPosition = getLastPosition(randomDeviceId);
             Position newPosition = createNewPosition(lastPosition);
             insertNewPosition(newPosition, randomDeviceId);
