@@ -1,12 +1,15 @@
 <!DOCTYPE html>
+<html lang="lt">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Devices</title>
+    <link rel="shortcut icon" href="#">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 
 <body>
+<header th:insert="fragments/fragments.html :: header"></header>
 
 <div id="deviceEditDiv" class="modal">
     <div class="modal-content">
@@ -47,15 +50,17 @@
 </div>
 
 <main>
-    <form class="deviceEditForm" th:action="@{/devices}" th:object="${newDevice}" method="post">
-        <span th:text="#{deviceId}"></span>
-        <input type="text" th:field="*{deviceId}" required/>
-        <span th:text="#{vehicleNr}"></span>
-        <input type="text" th:field="*{transportNr}"/>
-        <span th:text="#{comment}"></span>
-        <input type="text" th:field="*{comment}"/>
-        <button type="submit" th:text="#{add}"></button>
-    </form>
+    <div class="upperDiv">
+        <form class="upperForm" th:action="@{/devices}" th:object="${newDevice}" method="post">
+            <span th:text="#{deviceId}"></span>
+            <input type="text" th:field="*{deviceId}" required/>
+            <span th:text="#{vehicleNr}"></span>
+            <input type="text" th:field="*{transportNr}"/>
+            <span th:text="#{comment}"></span>
+            <input type="text" th:field="*{comment}"/>
+            <button type="submit" th:text="#{add}"></button>
+        </form>
+    </div>
     <hr>
     <table class="tb">
         <tr>
@@ -100,10 +105,14 @@
             </td>
         </tr>
     </table>
+    <hr>
 </main>
 
 
 <script th:inline="javascript">
+    // console.log(document.getElementById("activeLanguage").value);
+    // console.log(document.getElementById("activeLang").getAttribute("locale"));
+
     let modalButton = [...document.querySelectorAll(".deviceEditButton")];
     modalButton.forEach(function (btn) {
         btn.onclick = function () {

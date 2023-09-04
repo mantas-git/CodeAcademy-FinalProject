@@ -4,6 +4,7 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import com.codeacademy.spring_and_thymeleaf.service.PositionService;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -37,7 +38,8 @@ public class ThymeleafController {
     }
 
     @GetMapping
-    public String showIndex() {
+    public String showIndex(Model model) {
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "index";
     }
 
@@ -46,6 +48,7 @@ public class ThymeleafController {
         model.addAttribute("device", new Device());
         model.addAttribute("newDevice", new Device());
         model.addAttribute("positions", null);
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "monitoring";
     }
 
@@ -69,15 +72,18 @@ public class ThymeleafController {
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
         }
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
 
         return "monitoring";
     }
 
     @GetMapping("/devices")
     public String showAllDevices(Model model) {
+//        System.out.println(LocaleContextHolder.getLocale());
         List<Device> devices = deviceService.getAllDevices();
         model.addAttribute("devices", devices);
         model.addAttribute("newDevice", new Device());
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "devices";
     }
 
@@ -85,6 +91,7 @@ public class ThymeleafController {
     public String showFilteredDevices(@RequestParam String searchText, Model model) {
         List<Device> devices = deviceService.getFilteredDevices(searchText);
         model.addAttribute("devices", devices);
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "devices";
     }
 
@@ -105,10 +112,10 @@ public class ThymeleafController {
         deviceService.deleteDevice(id);
         return "redirect:/devices";
     }
-    @GetMapping("/about")
-    public String runAbout() {
-        return "about";
-    }
+//    @GetMapping("/about")
+//    public String runAbout() {
+//        return "about";
+//    }
 
     @PostMapping("/positions/add")
     public ResponseEntity<?> addPosition(@RequestParam("deviceId") Long deviceId,

@@ -1,41 +1,9 @@
-const menuElementList = [
-    {href: '/', title: 'Info'},
-    {href: '/devices', title: 'Įrenginiai'},
-    {href: '/monitoring', title: 'Stebėjimas'},
-    // {href: '/about', title: 'Apie'},
-];
-
 const body = document.querySelector('body');
 
-const header = document.createElement('header');
-
-const main = document.createElement('main');
-
-createTopMenu();
-// createMain();
 createFooter();
 markActive();
-
-function createTopMenu() {
-    const nav = document.createElement('nav');
-    const ul = document.createElement('ul');
-    for (let i = 0; i < menuElementList.length; i++) {
-        let li = document.createElement('li');
-        li.className = 'topMenuElement';
-        let a = document.createElement('a');
-        a.href = menuElementList[i].href;
-        a.textContent = menuElementList[i].title;
-        li.append(a);
-        ul.append(li);
-    }
-    nav.append(ul);
-    header.append(nav);
-    body.prepend(header);
-}
-
-function createMain() {
-    body.append(main);
-}
+addLangToHref();
+markActiveLang()
 
 function createFooter() {
     const footer = document.createElement('footer');
@@ -63,6 +31,30 @@ function markActive() {
             }
         }
     }
+}
+
+function markActiveLang() {
+    let localeNow = document.getElementById("activeLang").getAttribute("locale");
+    let makeActive = 'lang' + localeNow.toUpperCase();
+    document.getElementById(makeActive).parentElement.classList.add('activeMenuElement');
+}
+
+function addLangToHref(){
+    let lang = "lang=";
+    let path = window.location.origin + window.location.pathname;
+    let search = window.location.search;
+    let newUrl;
+    if (!search.length) {
+        newUrl = path + "?" + lang;
+    }
+    else if (search.includes("lang=")) {
+        newUrl = path + search.replace(/lang=[a-zA-Z]*/, lang);
+    }
+    else {
+        newUrl = path + search + "&" + lang;
+    }
+    document.getElementById('langLT').href = newUrl + 'lt';
+    document.getElementById('langEN').href = newUrl + 'en';
 }
 
 

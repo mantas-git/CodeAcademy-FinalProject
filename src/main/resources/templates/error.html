@@ -2,7 +2,7 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Main</title>
+    <title>Error Page</title>
     <link rel="shortcut icon" href="#">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
@@ -12,10 +12,8 @@
 
 <main>
     <hr>
-    <h3>Čia bus prisijungimo langas arba kažkokia informacija</h3>
+    <h3 th:text="#{errorPage}"></h3>
     <hr>
 </main>
-
-<!--<footer th:insert="fragments/fragments.html :: footer"> </footer>-->
 </body>
 </html>

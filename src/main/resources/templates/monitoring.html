@@ -1,14 +1,18 @@
 <!DOCTYPE html>
+<html lang="lt">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Monitoring</title>
+    <link rel="shortcut icon" href="#">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
+<header th:insert="fragments/fragments.html :: header"></header>
+
 <main>
-    <div>
-        <form th:action="@{/monitoring/run}" method="get">
+    <div class="upperDiv">
+        <form class="upperForm" th:action="@{/monitoring/run}" method="get">
             <span th:text="#{deviceId} + ':'"></span>
             <input type="text" th:name="deviceId" required/>
             <button type="submit" th:text="#{watch}"></button>
@@ -35,11 +39,11 @@
         </tr>
     </table>
     <hr>
-    <div th:if="${positions.totalPages > 0}" class="pagination"
+    <div th:if="${positions.totalPages > 1}" class="pagination"
          th:each="pageNumber : ${pageNumbers}">
-        <a th:href="@{/monitoring/list(deviceId=${device.deviceId}, size=${positions.size}, page=${pageNumber})}"
+        <a th:href="@{/monitoring/run(deviceId=${device.deviceId}, size=${positions.size}, page=${pageNumber})}"
            th:text="${pageNumber + 1}"
-           th:class="${pageNumber==positions.number - 1} ? active"></a>
+           th:class="${pageNumber==positions.number} ? active"></a>
     </div>
 </main>
 </body>

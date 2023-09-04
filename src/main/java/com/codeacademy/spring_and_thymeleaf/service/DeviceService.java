@@ -2,21 +2,11 @@ package com.codeacademy.spring_and_thymeleaf.service;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
-import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class DeviceService {
@@ -32,11 +22,10 @@ public class DeviceService {
 
     public InfoMessage addDevice(Device device) {
         InfoMessage infoMessage = new InfoMessage();
-        if(deviceRepository.existsDeviceByDeviceId(device.getDeviceId())) {
+        if (deviceRepository.existsDeviceByDeviceId(device.getDeviceId())) {
             infoMessage.setError(true);
             infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nPridėjimas negalimas.");
-        }
-        else {
+        } else {
             device.setCreateDate(LocalDate.now());
             device.setUserId(0);
             deviceRepository.save(device);
@@ -66,12 +55,10 @@ public class DeviceService {
 
     public InfoMessage updateDevice(Device device) {
         InfoMessage infoMessage = new InfoMessage();
-        if(deviceRepository.existsDeviceByDeviceId(device.getDeviceId())) {
+        if (!device.getId().equals(deviceRepository.findByDeviceId(device.getDeviceId()).get(0).getId())) {
             infoMessage.setError(true);
             infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nAtnaujinimas negalimas.");
-
-        }
-        else {
+        } else {
             deviceRepository.save(device);
             infoMessage.setError(false);
             infoMessage.setMessageText("Įrenginys atnaujintas");
