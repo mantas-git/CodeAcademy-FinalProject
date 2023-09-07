@@ -4,6 +4,7 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import com.codeacademy.spring_and_thymeleaf.service.PositionService;
+import jakarta.validation.Valid;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -55,7 +57,7 @@ public class ThymeleafController {
 
     @GetMapping("/monitoring/run")
     public String listTopics(@RequestParam Long deviceId, Model model,
-                             @PageableDefault(sort = { "date"}, direction = Sort.Direction.DESC, size = 10, page = 0)
+                             @PageableDefault(sort = { "date"}, direction = Sort.Direction.DESC, size = 15, page = 0)
                              Pageable pageable)
     {
         Device device = deviceService.getDeviceByDeviceId(deviceId);
@@ -78,11 +80,9 @@ public class ThymeleafController {
     }
 
     @GetMapping("/devices")
-    public String showAllDevices(Model model) {
-//        System.out.println(LocaleContextHolder.getLocale());
+    public String showAllDevices(Device device, Model model) {
         List<Device> devices = deviceService.getAllDevices();
         model.addAttribute("devices", devices);
-        model.addAttribute("newDevice", new Device());
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "devices";
     }
@@ -95,11 +95,27 @@ public class ThymeleafController {
         return "devices";
     }
 
+
     @PostMapping("/devices")
-    public String addDevice(Device device, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
-        return "redirect:/devices";
+    public String addDevice(@Valid Device device,
+                            BindingResult errors,
+                            RedirectAttributes redirectAttributes,
+                            Model model) {
+        if (errors.hasErrors()) {
+            List<Device> devices = deviceService.getAllDevices();
+            model.addAttribute("devices", devices);
+            model.addAttribute("locale", LocaleContextHolder.getLocale());
+            return "devices";
+        }
+            redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
+            return "redirect:/devices";
     }
+
+//    @PostMapping("/devices/add")
+//    public String addDevice(Device device, RedirectAttributes redirectAttributes) {
+//        redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
+//        return "redirect:/devices";
+//    }
 
     @PostMapping("/devices/update")
     public String updateDevice(Device device, RedirectAttributes redirectAttributes) {

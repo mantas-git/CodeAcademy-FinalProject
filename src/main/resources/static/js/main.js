@@ -1,17 +1,6 @@
-const body = document.querySelector('body');
-
-createFooter();
 markActive();
 addLangToHref();
-markActiveLang()
-
-function createFooter() {
-    const footer = document.createElement('footer');
-    const div = document.createElement('div');
-    div.textContent = 'Sukurta 2023 \u00A9';
-    footer.append(div);
-    body.append(footer);
-}
+markActiveLang();
 
 function markActive() {
     let url = window.location.pathname;
@@ -56,6 +45,7 @@ function addLangToHref(){
     document.getElementById('langLT').href = newUrl + 'lt';
     document.getElementById('langEN').href = newUrl + 'en';
 }
+
 
 
 

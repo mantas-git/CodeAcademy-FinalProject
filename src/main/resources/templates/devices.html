@@ -2,7 +2,7 @@
 <html lang="lt">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Devices</title>
+    <title>Main</title>
     <link rel="shortcut icon" href="#">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
@@ -15,7 +15,12 @@
     <div class="modal-content">
         <div class="edit-form">
             <span class="close">&times;</span>
-            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${newDevice}" method="post">
+            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" method="post">
+                <div class="formPhoto">
+<!--                    <img th:src="@{/img/logo.png}" alt="LOGO">-->
+<!--                    <button>Įkelti</button>-->
+                </div>
+
                 <h2 th:with="original_text=#{deviceInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
                 <div>
                     <input type="hidden" id="id" name="id"/>
@@ -51,13 +56,22 @@
 
 <main>
     <div class="upperDiv">
-        <form class="upperForm" th:action="@{/devices}" th:object="${newDevice}" method="post">
+        <form  action="#" class="upperForm" th:action="@{/devices}" th:object="${device}"
+               method="post">
             <span th:text="#{deviceId}"></span>
-            <input type="text" th:field="*{deviceId}" required/>
+            <input type="text" th:field="*{deviceId}"/>
             <span th:text="#{vehicleNr}"></span>
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
+
+            <h3>All errors in place:</h3>
+            <div th:if="${#fields.hasAnyErrors()}">
+                <ul>
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                </ul>
+            </div>
+
             <button type="submit" th:text="#{add}"></button>
         </form>
     </div>
@@ -108,11 +122,10 @@
     <hr>
 </main>
 
+<footer th:insert="fragments/fragments.html :: footer"> </footer>
+
 
 <script th:inline="javascript">
-    // console.log(document.getElementById("activeLanguage").value);
-    // console.log(document.getElementById("activeLang").getAttribute("locale"));
-
     let modalButton = [...document.querySelectorAll(".deviceEditButton")];
     modalButton.forEach(function (btn) {
         btn.onclick = function () {
