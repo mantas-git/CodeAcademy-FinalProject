@@ -1,0 +1,86 @@
+# Can set active profile using ... application.yaml
+#spring.profiles.active=prodProfile2,myCustomProfile
+
+---
+spring:
+  config:
+    activate:
+      on-profile: default
+
+  # kelias į DB (in memory, ram'uose).
+  datasource:
+    url: "jdbc:h2:mem:h2_db"
+    # default user
+    username: admin
+    # default password
+    password:
+
+  # schemos iniciavimo scripto vieta
+  sql:
+    init:
+      schema-locations: classpath:db/schema.sql
+      data-locations: classpath:db/data.sql
+  # jeigu kas nors netinka duombazeje - tegu Hibernate pataiso automatiskai. Jei viskas OK - tegu neliecia
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+        format_sql: true
+    show-sql: true
+
+  # įjungti H2 WEB konsolę
+  h2:
+    console:
+      enabled: true
+      # H2 web konsolės adresas (URL)
+      path: /h2
+
+# Disable whitelabel error pages
+server:
+  error:
+    whitelabel:
+      enabled: false
+custom:
+  properties:
+    email: my@email.com
+    age: 30
+
+my.custom.environment.property: "default property value"
+
+logging:
+  level:
+    root: info
+---
+spring:
+  config:
+    activate:
+      on-profile: testProfile
+my.custom.environment.property: "testProfile property value"
+
+---
+spring:
+  config:
+    activate:
+      on-profile: in_docker
+
+  # kelias į DB (in memory, ram'uose).
+  datasource:
+    url: "${DATABASE_URL}"
+    # default user
+    username: "${DATABASE_USERNAME}"
+    # default password
+    password: "${DATABASE_PASSWORD}"
+
+  # nurodom kita DB dialekta
+  jpa:
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true

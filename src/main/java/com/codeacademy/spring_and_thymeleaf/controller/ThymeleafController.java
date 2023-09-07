@@ -57,7 +57,7 @@ public class ThymeleafController {
 
     @GetMapping("/monitoring/run")
     public String listTopics(@RequestParam Long deviceId, Model model,
-                             @PageableDefault(sort = { "date"}, direction = Sort.Direction.DESC, size = 15, page = 0)
+                             @PageableDefault(sort = { "date"}, direction = Sort.Direction.DESC, size = 15)
                              Pageable pageable)
     {
         Device device = deviceService.getDeviceByDeviceId(deviceId);
