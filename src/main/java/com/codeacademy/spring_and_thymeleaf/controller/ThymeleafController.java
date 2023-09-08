@@ -5,6 +5,8 @@ import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import com.codeacademy.spring_and_thymeleaf.service.PositionService;
 import jakarta.validation.Valid;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +33,7 @@ import java.util.stream.IntStream;
 @RequestMapping
 public class ThymeleafController {
 
+    private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
     private final DeviceService deviceService;
     private  final PositionService positionService;
 
@@ -105,6 +108,7 @@ public class ThymeleafController {
             List<Device> devices = deviceService.getAllDevices();
             model.addAttribute("devices", devices);
             model.addAttribute("locale", LocaleContextHolder.getLocale());
+            logger.info("BindingResult errors: {}", errors);
             return "devices";
         }
             redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
@@ -128,10 +132,10 @@ public class ThymeleafController {
         deviceService.deleteDevice(id);
         return "redirect:/devices";
     }
-//    @GetMapping("/about")
-//    public String runAbout() {
-//        return "about";
-//    }
+    @GetMapping("/about")
+    public String runAbout() {
+        return "about";
+    }
 
     @PostMapping("/positions/add")
     public ResponseEntity<?> addPosition(@RequestParam("deviceId") Long deviceId,

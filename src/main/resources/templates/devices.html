@@ -4,6 +4,7 @@
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Main</title>
     <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
@@ -15,28 +16,32 @@
     <div class="modal-content">
         <div class="edit-form">
             <span class="close">&times;</span>
-            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" method="post">
-                <div class="formPhoto">
-<!--                    <img th:src="@{/img/logo.png}" alt="LOGO">-->
-<!--                    <button>Įkelti</button>-->
-                </div>
 
-                <h2 th:with="original_text=#{deviceInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
-                <div>
-                    <input type="hidden" id="id" name="id"/>
-                    <input type="hidden" id="userId" name="userId"/>
-                    <span th:text="#{deviceId} + ':'"></span>
-                    <input type="text" id="deviceId" name="deviceId" placeholder="Įrenginio nr"/>
-                    <span th:text="#{vehicleNr} + ':'"></span>
-                    <input type="text" id="transportNr" name="transportNr" placeholder="Transporto numeris"/>
-                    <span th:text="#{createDate} + ':'"></span>
-                    <input type="text" id="createDate" name="createDate" placeholder="Įvedimo data"/>
+            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" method="post">
+                <div class="column">
+                    <div class="formPhotoDiv">
+                        <img th:src="@{/img/logo.png}" alt="LOGO">
+                    </div>
+                    <button>Įkelti</button>
                 </div>
-                <span th:text="#{comment} + ':'"></span>
-                <div>
-                    <textarea id="comment" rows="2" name="comment"></textarea>
+                <div class="column">
+                    <h2 th:with="original_text=#{deviceInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
+                    <div>
+                        <input type="hidden" id="id" name="id"/>
+                        <input type="hidden" id="userId" name="userId"/>
+                        <span th:text="#{deviceId} + ':'"></span>
+                        <input type="text" id="deviceId" name="deviceId" placeholder="Įrenginio nr"/>
+                        <span th:text="#{vehicleNr} + ':'"></span>
+                        <input type="text" id="transportNr" name="transportNr" placeholder="Transporto numeris"/>
+                        <span th:text="#{createDate} + ':'"></span>
+                        <input type="text" id="createDate" name="createDate" placeholder="Įvedimo data"/>
+                    </div>
+                    <span th:text="#{comment} + ':'"></span>
+                    <div>
+                        <textarea id="comment" rows="2" name="comment"></textarea>
+                    </div>
+                    <button type="submit" th:text="#{save}"></button>
                 </div>
-                <button type="submit" th:text="#{save}"></button>
             </form>
         </div>
     </div>
@@ -56,23 +61,22 @@
 
 <main>
     <div class="upperDiv">
-        <form  action="#" class="upperForm" th:action="@{/devices}" th:object="${device}"
-               method="post">
+        <form action="#" class="upperForm" th:action="@{/devices}" th:object="${device}"
+              method="post">
             <span th:text="#{deviceId}"></span>
             <input type="text" th:field="*{deviceId}"/>
             <span th:text="#{vehicleNr}"></span>
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
+            <button type="submit" th:text="#{add}"></button>
 
             <h3>All errors in place:</h3>
             <div th:if="${#fields.hasAnyErrors()}">
                 <ul>
-                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}" />
+                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
                 </ul>
             </div>
-
-            <button type="submit" th:text="#{add}"></button>
         </form>
     </div>
     <hr>
@@ -122,7 +126,7 @@
     <hr>
 </main>
 
-<footer th:insert="fragments/fragments.html :: footer"> </footer>
+<footer th:insert="fragments/fragments.html :: footer"></footer>
 
 
 <script th:inline="javascript">

@@ -6,6 +6,10 @@
     font-family: sans-serif;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     height: 100vh;
     /*overflow: hidden;*/
@@ -138,13 +142,6 @@ table tr:nth-of-type(even) td {
 /* End of Table */
 
 /* Popup FORM */
-.formPhoto {
-    border: 1px red solid;
-}
-
-.edit-form {
-    display: inline;
-}
 .modal {
     display: none;
     position: fixed;
@@ -154,14 +151,14 @@ table tr:nth-of-type(even) td {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0, 0, 0);
+    /*background-color: rgb(0, 0, 0);*/
     background-color: rgba(0, 0, 0, 0.4);
 }
 
 .modal-content {
-    margin: 15% auto;
+    margin: 10% auto;
     width: 20%;
-    min-width: 300px;
+    min-width: 600px;
 }
 
 h2 {
@@ -170,13 +167,28 @@ h2 {
     color: #999;
 }
 
-.upperDiv {
-    height: auto;
-    vert-align: middle;
-    display: inline;
-    vertical-align: middle;
+.deviceEditForm {
+    display: flex;
+    padding: 25px;
+    margin: 25px;
+    box-shadow: 0 2px 5px #f5f5f5;
+    background: #eee;
 }
 
+.column {
+    float: left;
+    width: 50%;
+    padding: 10px;
+    /*height: 300px; !* Should be removed. Only for demonstration *!*/
+}
+
+/*.formPhoto {*/
+/*    left: 0;*/
+/*}*/
+
+/*.formFields {*/
+/*    right: 0;*/
+/*}*/
 
 .deviceEditForm span {
     color: #666;
@@ -184,11 +196,16 @@ h2 {
     padding: 0 0 5px;
 }
 
-.deviceEditForm {
-    padding: 25px;
-    margin: 25px;
+.formPhotoDiv {
+    margin-top: 50%;
+    margin-bottom: 5%;
+    /*border: 2px solid #999;*/
     box-shadow: 0 2px 5px #f5f5f5;
-    background: #eee;
+}
+
+.formPhotoDiv img {
+    height: 100%;
+    width: 100%;
 }
 
 input,
@@ -231,7 +248,19 @@ span.close:focus {
 }
 
 /* End of Popup FORM */
+.upperDiv {
+    /*height: auto;*/
+    /*vert-align: middle;*/
+    display: inline;
+    /*position: relative;*/
+}
 
+
+.upperDiv form {
+    /*height: 80%;*/
+    margin: auto;
+    /*top: 50%;*/
+}
 .upperForm input {
     width: 10%;
 }

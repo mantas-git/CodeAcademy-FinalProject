@@ -3,12 +3,86 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>About</title>
-    <link th:href="@{/css/main.css}" rel="stylesheet"/>
-    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
+    <link th:href="@{/css/styles.css}" rel="stylesheet"/>
+<!--    <link th:href="@{/css/main.css}" rel="stylesheet"/>-->
+<!--    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>-->
 </head>
 <body>
 <main>
-    <h3>Čia bus informacija apie programą arba apie vartotoją</h3>
+    <div id="deviceEditDivTest" class="modal">
+        <form>
+            <div>
+                <label for="name">Name</label>
+                <input id="name" type="text"/>
+            </div>
+            <div>
+                <label for="email">Email</label>
+                <input id="email" type="email"/>
+            </div>
+            <div>
+                <label for="comp">Favorite CSS Compiler</label>
+                <select id="comp">
+                    <option value="sass">Sass</option>
+                    <option value="less">Less</option>
+                    <option value="stylus">Stylus</option>
+                    <option value="postcss">PostCSS</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div>
+                <fieldset>
+                    <legend>Are you familiar with CSS Grid?</legend>
+                    <input type="radio" name="grid" id="yes" value="yes"/>
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="grid" id="no" value="no"/>
+                    <label for="no">No</label>
+                </fieldset>
+            </div>
+            <div class="full-width">
+                <label for="message">Message</label>
+                <textarea id="message"></textarea>
+            </div>
+            <div class="full-width">
+                <input type="checkbox" id="newsletter"/>
+                <label for="newsletter">Receive our newsletter?</label>
+            </div>
+            <div class="full-width">
+                <button type="submit">Send Response</button>
+                <button type="reset">Clear Form</button>
+            </div>
+        </form>
+    </div>
+
+    <div id="deviceEditDiv" class="modal">
+        <div class="modal-content">
+            <div class="edit-form">
+                <span class="close">&times;</span>
+                <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" method="post">
+                    <div class="formPhoto">
+                        <img th:src="@{/img/logo.png}" alt="LOGO">
+                        <button>Įkelti</button>
+                    </div>
+
+                    <h2 th:with="original_text=#{deviceInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
+                    <div>
+                        <input type="hidden" id="id" name="id"/>
+                        <input type="hidden" id="userId" name="userId"/>
+                        <span th:text="#{deviceId} + ':'"></span>
+                        <input type="text" id="deviceId" name="deviceId" placeholder="Įrenginio nr"/>
+                        <span th:text="#{vehicleNr} + ':'"></span>
+                        <input type="text" id="transportNr" name="transportNr" placeholder="Transporto numeris"/>
+                        <span th:text="#{createDate} + ':'"></span>
+                        <input type="text" id="createDate" name="createDate" placeholder="Įvedimo data"/>
+                    </div>
+                    <span th:text="#{comment} + ':'"></span>
+                    <div>
+                        <textarea id="comment" rows="2" name="comment"></textarea>
+                    </div>
+                    <button type="submit" th:text="#{save}"></button>
+                </form>
+            </div>
+        </div>
+    </div>
 </main>
 </body>
 </html>

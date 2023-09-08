@@ -50,9 +50,9 @@ custom:
 
 my.custom.environment.property: "default property value"
 
-logging:
-  level:
-    root: info
+#logging:
+#  level:
+#    root: info
 ---
 spring:
   config:

@@ -1,8 +1,11 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
+import com.codeacademy.spring_and_thymeleaf.controller.ThymeleafController;
 import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,6 +13,8 @@ import java.util.List;
 
 @Service
 public class DeviceService {
+
+    private static final Logger logger = LoggerFactory.getLogger(DeviceService.class);
     private DeviceRepository deviceRepository;
 
     public DeviceService(DeviceRepository deviceRepository) {
@@ -54,6 +59,7 @@ public class DeviceService {
     }
 
     public InfoMessage updateDevice(Device device) {
+        logger.info("Device update. Data for device update: {}", device);
         InfoMessage infoMessage = new InfoMessage();
         if (!device.getId().equals(deviceRepository.findByDeviceId(device.getDeviceId()).get(0).getId())) {
             infoMessage.setError(true);
