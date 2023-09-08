@@ -4,7 +4,8 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import com.codeacademy.spring_and_thymeleaf.service.PositionService;
-import jakarta.validation.Valid;
+//import jakarta.validation.Valid;
+import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -85,6 +86,7 @@ public class ThymeleafController {
     @GetMapping("/devices")
     public String showAllDevices(Device device, Model model) {
         List<Device> devices = deviceService.getAllDevices();
+        logger.info("Loaded Devices: {}", devices);
         model.addAttribute("devices", devices);
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "devices";
