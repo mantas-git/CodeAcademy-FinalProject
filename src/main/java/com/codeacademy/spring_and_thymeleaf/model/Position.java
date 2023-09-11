@@ -1,6 +1,5 @@
 package com.codeacademy.spring_and_thymeleaf.model;
 
-//import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
