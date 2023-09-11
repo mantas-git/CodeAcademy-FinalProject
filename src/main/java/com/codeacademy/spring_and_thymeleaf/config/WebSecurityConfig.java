@@ -16,6 +16,7 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+<<<<<<< HEAD
         http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
@@ -33,6 +34,29 @@ public class WebSecurityConfig {
 //                .permitAll()
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 //                .logoutSuccessUrl("/login");
+=======
+
+        http.authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/css/**").permitAll()
+                .antMatchers("/img/**").permitAll()
+                .antMatchers("/js/**").permitAll()
+                .antMatchers("/h2/**").permitAll()
+                .antMatchers("/devices").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .formLogin()
+                .loginPage("/login")
+                .permitAll()
+                .successForwardUrl("/hello")
+                .and()
+                .logout()
+                .permitAll()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login");
+        http.csrf().disable();
+        http.headers().frameOptions().disable();
+>>>>>>> origin/master
         return http.build();
     }
 
@@ -41,7 +65,11 @@ public class WebSecurityConfig {
     public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
         auth.inMemoryAuthentication()
                 .withUser("user")
+<<<<<<< HEAD
                 .password(passwordEncoder.encode("password"))
+=======
+                .password(passwordEncoder.encode("pass"))
+>>>>>>> origin/master
                 .roles("USER")
                 .and()
                 .withUser("admin")
