@@ -65,7 +65,12 @@ public class DeviceService {
             infoMessage.setError(true);
             infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nAtnaujinimas negalimas.");
         } else {
-            deviceRepository.save(device);
+            Device existingDevice = getDevice(device.getId());
+            existingDevice.setDeviceId(device.getDeviceId());
+            existingDevice.setTransportNr(device.getTransportNr());
+            existingDevice.setComment(device.getComment());
+            existingDevice.setCreateDate(device.getCreateDate());
+            deviceRepository.save(existingDevice);
             infoMessage.setError(false);
             infoMessage.setMessageText("Įrenginys atnaujintas");
         }
