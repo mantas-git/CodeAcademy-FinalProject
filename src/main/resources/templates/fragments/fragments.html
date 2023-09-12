@@ -9,22 +9,14 @@
     <div class="setLanguage">
         <ul>
             <li th:if="${locale != null}" class="activeLanguage" id="activeLang" th:locale="${locale}"></li>
-        </ul>
-        <ul>
             <li class="setLanguageElement"><a id="langLT">LT</a></li>
-        </ul>
-        <ul>
             <li class="setLanguageElement"><a id="langEN">EN</a></li>
         </ul>
     </div>
     <nav class="topMenu">
         <ul>
             <li class="topMenuElement"><a href="/" th:text="#{info}"></a></li>
-        </ul>
-        <ul>
             <li class="topMenuElement"><a href="/devices" th:text="#{devices}"></a></li>
-        </ul>
-        <ul>
             <li class="topMenuElement"><a href="/monitoring" th:text="#{monitoring}"></a></li>
         </ul>
     </nav>
