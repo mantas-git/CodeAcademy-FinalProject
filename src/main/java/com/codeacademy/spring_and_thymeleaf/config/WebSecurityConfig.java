@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -42,8 +43,8 @@ public class WebSecurityConfig {
 //                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
 //                .logoutSuccessUrl("/login");
 
-        http.csrf(csrf -> csrf.disable());
-        http.headers((headers) -> headers.disable());
+        http.csrf(AbstractHttpConfigurer::disable);
+        http.headers(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
@@ -61,9 +62,9 @@ public class WebSecurityConfig {
 //                .roles("ADMIN");
 //    }
 
-    @Autowired
-    public void configure(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
-        auth.userDetailsService(userService)
-                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-    }
+//    @Autowired
+//    public void configure(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
+//        auth.userDetailsService(userService)
+//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
+//    }
 }

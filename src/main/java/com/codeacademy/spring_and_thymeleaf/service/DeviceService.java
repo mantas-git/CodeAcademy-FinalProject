@@ -1,6 +1,5 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
-import com.codeacademy.spring_and_thymeleaf.controller.ThymeleafController;
 import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
