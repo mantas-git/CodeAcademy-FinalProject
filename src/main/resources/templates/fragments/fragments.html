@@ -1,13 +1,17 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
+    <title></title>
 </head>
 <body>
 
 <header th:fragment="header">
     <div class="setLanguage">
         <ul>
+            <li sec:authorize="isAuthenticated()" class="setLanguageElement"><a href="/logout" th:text="#{logout}"></a></li>
+            <li sec:authorize="!isAuthenticated()" class="setLanguageElement"><a href="/login" th:text="#{login}"></a></li>
+            <li><a>|</a></li>
             <li th:if="${locale != null}" class="activeLanguage" id="activeLang" th:locale="${locale}"></li>
             <li class="setLanguageElement"><a id="langLT">LT</a></li>
             <li class="setLanguageElement"><a id="langEN">EN</a></li>

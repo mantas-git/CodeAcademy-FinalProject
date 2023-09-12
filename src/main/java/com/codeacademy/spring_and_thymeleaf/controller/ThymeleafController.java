@@ -42,7 +42,7 @@ public class ThymeleafController {
         this.positionService = positionService;
     }
 
-    @GetMapping
+    @GetMapping("/")
     public String showIndex(Model model) {
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "index";

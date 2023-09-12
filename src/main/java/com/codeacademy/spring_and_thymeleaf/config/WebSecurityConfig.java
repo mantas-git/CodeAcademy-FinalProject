@@ -8,7 +8,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -27,6 +26,7 @@ public class WebSecurityConfig {
         http
                 .authorizeHttpRequests(requests -> requests
                         .requestMatchers(new AntPathRequestMatcher("/")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll()
@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
-                        .successForwardUrl("/hello")
+                        .successForwardUrl("/welcome")
                 );
 //                .and()
 //                .logout()
@@ -62,9 +62,9 @@ public class WebSecurityConfig {
 //                .roles("ADMIN");
 //    }
 
-//    @Autowired
-//    public void configure(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
-//        auth.userDetailsService(userService)
-//                .passwordEncoder(NoOpPasswordEncoder.getInstance());
-//    }
+    @Autowired
+    public void configure(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
+        auth.userDetailsService(userService)
+                .passwordEncoder(passwordEncoder);
+    }
 }

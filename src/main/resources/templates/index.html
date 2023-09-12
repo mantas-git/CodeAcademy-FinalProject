@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="lt">
+<html lang="lt" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Main</title>
@@ -14,6 +14,13 @@
 <main>
     <hr>
     <h3>Čia bus prisijungimo langas arba kažkokia informacija</h3>
+    <div sec:authorize="isAuthenticated()">
+        <h2>Welcome</h2>
+        Authenticated username:
+        <div sec:authentication="name"></div>
+        Authenticated user roles:
+        <div sec:authentication="principal.authorities"></div>
+    </div>
     <hr>
 </main>
 

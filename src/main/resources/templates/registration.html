@@ -13,36 +13,38 @@
 
 <main>
     <hr>
-    <div th:if="${param.error}">
-        Invalid username and password.
-    </div>
-    <div th:if="${param.logout}">
-        You have been logged out.
-    </div>
-    <form action="#" th:action="@{/registration}" th:object="${user}"
-          method="post" class="form">
-        <section th:text="${usernameError}"></section>
-        <div>
-            <label for="username">User Name:</label> <input type="text"
-                                                            th:field="*{username}" id="username"
-                                                            placeholder="Enter username">
-            <ul>
-                <li th:each="err : ${#fields.errors('username')}" th:text="${err}"
-                    class="error"/>
-            </ul>
+    <div class="loginDiv">
+        <div th:if="${param.error}">
+            Invalid username and password.
         </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="text"
-                   th:field="*{password}" id="password" placeholder="Enter password">
-            <ul>
-                <li th:each="err : ${#fields.errors('password')}" th:text="${err}"
-                    class="error"/>
-            </ul>
+        <div th:if="${param.logout}">
+            You have been logged out.
         </div>
+        <form class="loginForm" action="#" th:action="@{/registration}" th:object="${user}"
+              method="post">
+            <section th:text="${usernameError}"></section>
+            <div>
+                <label for="username">User Name:</label> <input type="text"
+                                                                th:field="*{username}" id="username"
+                                                                placeholder="Enter username">
+                <ul>
+                    <li th:each="err : ${#fields.errors('username')}" th:text="${err}"
+                        class="error"/>
+                </ul>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="text"
+                       th:field="*{password}" id="password" placeholder="Enter password">
+                <ul>
+                    <li th:each="err : ${#fields.errors('password')}" th:text="${err}"
+                        class="error"/>
+                </ul>
+            </div>
 
-        <div><input type="submit" value="Register"/></div>
-    </form>
+            <div><input type="submit" value="Register"/></div>
+        </form>
+    </div>
     <hr>
 </main>
 

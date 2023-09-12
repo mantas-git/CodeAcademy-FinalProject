@@ -21,15 +21,14 @@ public class TestController {
 //        return "index";
 //    }
 
-    @PostMapping("/hello")
+    @PostMapping("/welcome")
     public String hello(Model model) {
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
-        return "hello";
+        return "redirect:/";
     }
 
-    @GetMapping("/hello")
-    public String helloTest(Model model) {
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
-        return "hello";
-    }
+//    @GetMapping("/hello")
+//    public String helloTest(Model model) {
+//        model.addAttribute("locale", LocaleContextHolder.getLocale());
+//        return "hello";
+//    }
 }

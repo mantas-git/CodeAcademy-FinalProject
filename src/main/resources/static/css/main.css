@@ -65,14 +65,14 @@ li {
     position: relative;
 }
 
-a {
+ a {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.7);
-    font-size: 1.5em;
+    font-size: 1em;
 }
 
-.setLanguageElement a {
-    font-size: 1em;
+.topMenuElement a {
+    font-size: 1.5em;
 }
 
 .topMenuElement::after,
@@ -319,6 +319,12 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 0.2rem;
+}
+
+.loginDiv {
+    margin: auto;
+    width: 30%;
+    min-width: 300px;
 }
 
 
