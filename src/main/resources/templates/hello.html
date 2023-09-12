@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Welvcome</title>
+    <title>Welcome</title>
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
@@ -13,7 +13,7 @@
 <header th:insert="fragments/fragments.html :: header"></header>
 
 <main>
-
+    <hr>
     <h1 th:inline="text">Hello <span th:remove="tag" sec:authentication="name">thymeleaf</span>!</h1>
     <h2>Welcome</h2>
     <p>Spring Security Thymeleaf tutorial</p>
@@ -39,14 +39,9 @@
     <form th:action="@{/logout}" method="post">
         <input type="submit" value="Sign Out"/>
     </form>
-
+    <hr>
 </main>
 
 <footer th:insert="fragments/fragments.html :: footer"></footer>
 </body>
 </html>
-=======
-</body>
-</html>
-
->>>>>>> origin/master

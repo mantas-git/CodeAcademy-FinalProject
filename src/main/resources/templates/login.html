@@ -12,7 +12,7 @@
 <header th:insert="fragments/fragments.html :: header"></header>
 
 <main>
-
+    <hr>
     <div th:if="${param.error}">
         Invalid username and password.
     </div>
@@ -24,7 +24,8 @@
         <div><label> Password: <input type="password" name="password"/> </label></div>
         <div><input type="submit" value="Sign In"/></div>
     </form>
-
+    <p>Registration <a th:href="@{/registration}">here</a></p>
+    <hr>
 </main>
 
 <footer th:insert="fragments/fragments.html :: footer"></footer>

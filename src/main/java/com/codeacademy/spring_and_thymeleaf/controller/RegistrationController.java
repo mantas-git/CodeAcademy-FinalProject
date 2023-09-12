@@ -3,6 +3,7 @@ package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.UserService;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,13 +23,14 @@ public class RegistrationController {
     }
 
     @GetMapping
-    public String registration(User user) {
-
+    public String registration(User user, Model model) {
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "registration";
     }
     @PostMapping
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (!userService.addUser(user)) {
+            model.addAttribute("locale", LocaleContextHolder.getLocale());
             model.addAttribute("usernameError", "User exists!");
             return "registration";
         }

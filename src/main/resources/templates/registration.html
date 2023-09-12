@@ -1,38 +1,51 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html lang="lt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
 <head>
-    <title>Spring Security Example </title>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Registration</title>
+    <link rel="shortcut icon" href="#">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form action="#" th:action="@{/registration}" th:object="${user}"
-      method="post" class="form">
-    <section th:text="${usernameError}"></section>
-    <div>
-        <label for="username">User Name:</label> <input type="text"
-                                                        th:field="*{username}" id="username"
-                                                        placeholder="Enter username">
-        <ul>
-            <li th:each="err : ${#fields.errors('username')}" th:text="${err}"
-                class="error"/>
-        </ul>
+<header th:insert="fragments/fragments.html :: header"></header>
+
+<main>
+    <hr>
+    <div th:if="${param.error}">
+        Invalid username and password.
     </div>
-    <div>
-        <label for="password">Password:</label>
+    <div th:if="${param.logout}">
+        You have been logged out.
+    </div>
+    <form action="#" th:action="@{/registration}" th:object="${user}"
+          method="post" class="form">
+        <section th:text="${usernameError}"></section>
+        <div>
+            <label for="username">User Name:</label> <input type="text"
+                                                            th:field="*{username}" id="username"
+                                                            placeholder="Enter username">
+            <ul>
+                <li th:each="err : ${#fields.errors('username')}" th:text="${err}"
+                    class="error"/>
+            </ul>
+        </div>
+        <div>
+            <label for="password">Password:</label>
             <input type="text"
                    th:field="*{password}" id="password" placeholder="Enter password">
             <ul>
                 <li th:each="err : ${#fields.errors('password')}" th:text="${err}"
                     class="error"/>
             </ul>
-    </div>
+        </div>
 
-    <div><input type="submit" value="Register"/></div>
-</form>
+        <div><input type="submit" value="Register"/></div>
+    </form>
+    <hr>
+</main>
+
+<footer th:insert="fragments/fragments.html :: footer"></footer>
 </body>
 </html>
