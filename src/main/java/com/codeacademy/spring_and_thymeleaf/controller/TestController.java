@@ -22,7 +22,7 @@ public class TestController {
 //    }
 
     @PostMapping("/welcome")
-    public String hello(Model model) {
+    public String welcome() {
         return "redirect:/";
     }
 

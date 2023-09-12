@@ -6,6 +6,10 @@ spring:
   config:
     activate:
       on-profile: default
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
 
   # kelias į DB (in memory, ram'uose).
   datasource:

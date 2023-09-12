@@ -16,10 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.LocalDateTime;
@@ -128,11 +125,13 @@ public class ThymeleafController {
         return "redirect:/devices";
     }
 
-    @PostMapping("/devices/delete")
-    public String deleteDevice(@RequestParam Long id) {
+    @DeleteMapping("/devices/delete/{id}")
+    public String deleteDevicePath(@PathVariable Long id) {
+        logger.info(">>>>> Trying delte Device with ID {}", id);
         deviceService.deleteDevice(id);
         return "redirect:/devices";
     }
+
     @GetMapping("/about")
     public String runAbout() {
         return "about";
