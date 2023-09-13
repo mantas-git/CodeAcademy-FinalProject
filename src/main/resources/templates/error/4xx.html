@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="lt">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Error Page</title>
+    <link rel="shortcut icon" href="#">
+    <link th:href="@{/css/main.css}" rel="stylesheet"/>
+    <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
+</head>
+<body>
+<header th:insert="fragments/fragments.html :: header"> </header>
+
+<main>
+    <hr>
+    <h3 th:text="#{errorPage}"></h3>
+    <h3>4xx</h3>
+    <hr>
+</main>
+</body>
+</html>
