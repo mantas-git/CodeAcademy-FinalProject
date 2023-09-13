@@ -2,13 +2,17 @@ package com.codeacademy.spring_and_thymeleaf.service;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
+import com.codeacademy.spring_and_thymeleaf.model.Role;
+import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class DeviceService {
@@ -73,5 +77,14 @@ public class DeviceService {
             infoMessage.setMessageText("Įrenginys atnaujintas");
         }
         return infoMessage;
+    }
+
+    public List<Device> getAllDevicesByUser(User user) {
+        Set<Role> roles = user.getRoles();
+        for (Role role : roles) {
+            if (role.toString().equals("ADMIN"))
+                return getAllDevices();
+        }
+        return deviceRepository.findByUserId(user.getId());
     }
 }
