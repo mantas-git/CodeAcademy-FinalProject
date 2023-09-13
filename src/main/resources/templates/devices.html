@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="lt">
+<html lang="lt" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Main</title>
@@ -69,7 +69,10 @@
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
+<!--            <span th:text="${#authentication.getPrincipal().id}"></span>-->
+            <input type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>
             <button type="submit" th:text="#{add}"></button>
+
 
             <h3>All errors in place:</h3>
             <div th:if="${#fields.hasAnyErrors()}">

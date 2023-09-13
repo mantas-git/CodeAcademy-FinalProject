@@ -9,9 +9,9 @@
 }
 
 body {
-    margin: 0;
+    margin: 5px;
     padding: 0;
-    width: 100%;
+    width: 99%;
     height: 100%;
     /*overflow: hidden;*/
 
@@ -26,6 +26,7 @@ body {
 
 header {
     grid-area: h;
+
     display: block;
     /*height: var(--topMenuHeight);*/
 }

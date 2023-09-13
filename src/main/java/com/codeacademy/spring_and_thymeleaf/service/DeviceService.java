@@ -31,7 +31,7 @@ public class DeviceService {
             infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nPridėjimas negalimas.");
         } else {
             device.setCreateDate(LocalDate.now());
-            device.setUserId(0);
+//            device.setUserId(0);
             deviceRepository.save(device);
             infoMessage.setError(false);
             infoMessage.setMessageText("Pridėtas naujas įrenginys");

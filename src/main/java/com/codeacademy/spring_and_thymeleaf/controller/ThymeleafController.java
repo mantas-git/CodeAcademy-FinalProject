@@ -156,4 +156,10 @@ public class ThymeleafController {
         return ResponseEntity.ok(responseMap);
     }
 
+    @GetMapping("/users")
+    public String showUsers(Model model) {
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
+        return "users";
+    }
+
 }

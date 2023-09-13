@@ -2,7 +2,7 @@
 <html lang="lt" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
-    <title>Main</title>
+    <title>Users</title>
     <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
@@ -13,16 +13,8 @@
 
 <main>
     <hr>
-    <h3>Čia bus prisijungimo langas arba kažkokia informacija</h3>
-    <div sec:authorize="isAuthenticated()">
-        <h2>Welcome</h2>
-        Authenticated id:
-        <div sec:authentication="principal.id"></div>
-        Authenticated username:
-        <div sec:authentication="name"></div>
-        Authenticated user roles:
-        <div sec:authentication="principal.authorities"></div>
-    </div>
+    <h3>Čia bus visi vartotojai</h3>
+
     <hr>
 </main>
 
