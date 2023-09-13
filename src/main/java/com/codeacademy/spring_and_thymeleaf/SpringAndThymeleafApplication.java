@@ -9,8 +9,8 @@ public class SpringAndThymeleafApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SpringAndThymeleafApplication.class, args);
 
-//		PositionSimulator positionSimulator = new PositionSimulator();
-//		positionSimulator.runSimulator();
+		PositionSimulator positionSimulator = new PositionSimulator();
+		positionSimulator.runSimulator();
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
+import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.repository.UserRepository;
 import com.codeacademy.spring_and_thymeleaf.model.Role;
 import com.codeacademy.spring_and_thymeleaf.model.User;
@@ -10,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -22,6 +24,9 @@ public class UserService implements UserDetailsService {
         this.passwordEncoder = passwordEncoder;
     }
 
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -42,7 +47,6 @@ public class UserService implements UserDetailsService {
 
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
-//        user.setPassword(user.getPassword());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         userRepository.save(user);

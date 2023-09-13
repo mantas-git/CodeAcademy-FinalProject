@@ -2,8 +2,10 @@ package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Position;
+import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import com.codeacademy.spring_and_thymeleaf.service.PositionService;
+import com.codeacademy.spring_and_thymeleaf.service.UserService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,10 +35,12 @@ public class ThymeleafController {
     private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
     private final DeviceService deviceService;
     private  final PositionService positionService;
+    private final UserService userService;
 
-    public ThymeleafController(DeviceService deviceService, PositionService positionService) {
+    public ThymeleafController(DeviceService deviceService, PositionService positionService, UserService userService) {
         this.deviceService = deviceService;
         this.positionService = positionService;
+        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -158,6 +162,8 @@ public class ThymeleafController {
 
     @GetMapping("/users")
     public String showUsers(Model model) {
+        List<User> users = userService.getAllUsers();
+        model.addAttribute("users", users);
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "users";
     }

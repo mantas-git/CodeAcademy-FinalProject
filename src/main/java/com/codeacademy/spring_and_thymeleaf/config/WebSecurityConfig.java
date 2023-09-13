@@ -31,36 +31,19 @@ public class WebSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/registration")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/users")).hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
                         .permitAll()
                         .successForwardUrl("/welcome")
                 );
-//                .and()
-//                .logout()
-//                .permitAll()
-//                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-//                .logoutSuccessUrl("/login");
 
         http.csrf(AbstractHttpConfigurer::disable);
         http.headers(AbstractHttpConfigurer::disable);
 
         return http.build();
     }
-
-
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {
-//        auth.inMemoryAuthentication()
-//                .withUser("user")
-//                .password(passwordEncoder.encode("password"))
-//                .roles("USER")
-//                .and()
-//                .withUser("admin")
-//                .password(passwordEncoder.encode("admin"))
-//                .roles("ADMIN");
-//    }
 
     @Autowired
     public void configure(AuthenticationManagerBuilder auth, PasswordEncoder passwordEncoder) throws Exception {

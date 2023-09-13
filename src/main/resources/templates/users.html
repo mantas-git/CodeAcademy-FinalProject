@@ -13,8 +13,30 @@
 
 <main>
     <hr>
-    <h3>Čia bus visi vartotojai</h3>
-
+    <table class="tb">
+        <tr>
+            <th th:text="#{id}"></th>
+            <th th:text="#{name}"></th>
+            <th th:text="#{role}"></th>
+            <th colspan="2" th:text="#{functions}"></th>
+        </tr>
+        <tr th:each="user: *{users}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.roles}"></td>
+            <td>
+                <button th:id="${user.id}" th:text="#{edit}" class="deviceEditButton" data-modal="deviceEditDiv"
+                        th:paramName='${user.username}'>
+                </button>
+            </td>
+            <td>
+                <form action="#" th:action="@{'/user/delete/{id}' (id=${user.id})}" th:method="delete">
+                    <input type="hidden" name="_method" value="delete">
+                    <button type="submit" th:text="#{delete}"></button>
+                </form>
+            </td>
+        </tr>
+    </table>
     <hr>
 </main>
 
