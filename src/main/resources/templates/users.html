@@ -30,7 +30,7 @@
                 </button>
             </td>
             <td>
-                <form action="#" th:action="@{'/user/delete/{id}' (id=${user.id})}" th:method="delete">
+                <form action="#" th:action="@{'/users/delete/{id}' (id=${user.id})}" th:method="delete">
                     <input type="hidden" name="_method" value="delete">
                     <button type="submit" th:text="#{delete}"></button>
                 </form>

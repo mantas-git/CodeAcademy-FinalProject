@@ -25,7 +25,9 @@ public class UserService implements UserDetailsService {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+        users.remove(0);
+        return users;
     }
 
     @Override
@@ -54,4 +56,7 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
 }

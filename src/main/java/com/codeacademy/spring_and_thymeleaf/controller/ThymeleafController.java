@@ -141,8 +141,8 @@ public class ThymeleafController {
     }
 
     @DeleteMapping("/devices/delete/{id}")
-    public String deleteDevicePath(@PathVariable Long id) {
-        logger.info(">>>>> Trying delte Device with ID {}", id);
+    public String deleteDevice(@PathVariable Long id) {
+        logger.info(">>>>> Trying delete Device with ID {}", id);
         deviceService.deleteDevice(id);
         return "redirect:/devices";
     }
@@ -179,4 +179,10 @@ public class ThymeleafController {
         return "users";
     }
 
+    @DeleteMapping("/users/delete/{id}")
+    public String detelteUser(@PathVariable Long id) {
+        logger.info(">>>>> Trying delete User with ID {}", id);
+        userService.deleteUser(id);
+        return "redirect:/users";
+    }
 }
