@@ -31,6 +31,8 @@ public class WebSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/img/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/registration")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/devices")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/monitoring/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users")).hasAuthority("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/h2")).hasAuthority("ADMIN")
                         .anyRequest().authenticated())

@@ -80,11 +80,17 @@ public class DeviceService {
     }
 
     public List<Device> getAllDevicesByUser(User user) {
-        Set<Role> roles = user.getRoles();
-        for (Role role : roles) {
-            if (role.toString().equals("ADMIN"))
-                return getAllDevices();
+        Long id = user != null ? user.getId() : 0;
+        if(id == 0) {
+            return deviceRepository.findByUserId(id);
         }
-        return deviceRepository.findByUserId(user.getId());
+        else {
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                if (role.toString().equals("ADMIN"))
+                    return getAllDevices();
+            }
+            return deviceRepository.findByUserId(id);
+        }
     }
 }

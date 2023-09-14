@@ -9,7 +9,7 @@
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
-<header th:insert="fragments/fragments.html :: header"></header>
+<header th:replace="fragments/fragments.html :: header"></header>
 
 <main>
     <hr>
@@ -26,6 +26,6 @@
     <hr>
 </main>
 
-<footer th:insert="fragments/fragments.html :: footer"></footer>
+<footer th:replace="fragments/fragments.html :: footer"></footer>
 </body>
 </html>

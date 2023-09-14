@@ -95,7 +95,7 @@ public class ThymeleafController {
 
     @GetMapping("/devices")
     public String showAllUsersDevices(Device device, Model model, @AuthenticationPrincipal User user) {
-        logger.info("User ID: {}", user.getId());
+        logger.info("User: {}", user);
         List<Device> devices = deviceService.getAllDevicesByUser(user);
         logger.info("Loaded Devices: {}", devices);
         model.addAttribute("devices", devices);

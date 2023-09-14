@@ -10,7 +10,7 @@
 </head>
 
 <body>
-<header th:insert="fragments/fragments.html :: header"></header>
+<header th:replace="fragments/fragments.html :: header"></header>
 
 <div id="deviceEditDiv" class="modal">
     <div class="modal-content">
@@ -70,7 +70,7 @@
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
 <!--            <span th:text="${#authentication.getPrincipal().id}"></span>-->
-            <input type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>
+<!--            <input type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>-->
             <button type="submit" th:text="#{add}"></button>
 
 
@@ -126,7 +126,7 @@
     <hr>
 </main>
 
-<footer th:insert="fragments/fragments.html :: footer"></footer>
+<footer th:replace="fragments/fragments.html :: footer"></footer>
 
 
 <script th:inline="javascript">

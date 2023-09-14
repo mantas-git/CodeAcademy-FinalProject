@@ -8,12 +8,14 @@
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
 </head>
 <body>
-<header th:insert="fragments/fragments.html :: header"> </header>
+<header th:replace="fragments/fragments.html :: header"> </header>
 
 <main>
     <hr>
     <h3 th:text="#{errorPage}"></h3>
     <hr>
 </main>
+
+<footer th:replace="fragments/fragments.html :: footer"></footer>
 </body>
 </html>
