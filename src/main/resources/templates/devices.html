@@ -61,7 +61,7 @@
 
 <main>
     <div class="upperDiv">
-        <form action="#" class="upperForm" th:action="@{/devices}" th:object="${device}"
+        <form action="#" class="upperForm" th:action="@{/devices/add}" th:object="${device}"
               method="post">
             <span th:text="#{deviceId}"></span>
             <input type="text" th:field="*{deviceId}"/>
@@ -69,8 +69,7 @@
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
-            <!--            <span th:text="${#authentication.getPrincipal().id}"></span>-->
-            <!--            <input type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>-->
+            <input sec:authorize="isAuthenticated()" type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>
             <button type="submit" th:text="#{add}"></button>
 
 

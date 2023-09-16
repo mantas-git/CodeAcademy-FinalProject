@@ -15,19 +15,9 @@ public class LoginController {
         return "login";
     }
 
-//    @RequestMapping({ "/home", "/" })
-//    public String home() {
-//        return "index";
-//    }
-
     @PostMapping("/welcome")
     public String welcome() {
         return "redirect:/";
     }
 
-//    @GetMapping("/hello")
-//    public String helloTest(Model model) {
-//        model.addAttribute("locale", LocaleContextHolder.getLocale());
-//        return "hello";
-//    }
 }
