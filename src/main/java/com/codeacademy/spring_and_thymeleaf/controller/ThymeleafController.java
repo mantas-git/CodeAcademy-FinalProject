@@ -104,8 +104,8 @@ public class ThymeleafController {
     }
 
     @GetMapping("/devices/search")
-    public String showFilteredDevices(@RequestParam String searchText, Model model) {
-        List<Device> devices = deviceService.getFilteredDevices(searchText);
+    public String showFilteredDevices(@RequestParam String search, Device device, Model model) {
+        List<Device> devices = deviceService.getFilteredDevices(search);
         model.addAttribute("devices", devices);
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "devices";
@@ -134,7 +134,7 @@ public class ThymeleafController {
 //        return "redirect:/devices";
 //    }
 
-    @PostMapping("/devices/update")
+    @PutMapping("/devices/update")
     public String updateDevice(Device device, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("infoMessage", deviceService.updateDevice(device));
         return "redirect:/devices";

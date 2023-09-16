@@ -184,14 +184,6 @@ h2 {
     /*height: 300px; !* Should be removed. Only for demonstration *!*/
 }
 
-/*.formPhoto {*/
-/*    left: 0;*/
-/*}*/
-
-/*.formFields {*/
-/*    right: 0;*/
-/*}*/
-
 .deviceEditForm span {
     color: #666;
     display: block;
@@ -250,26 +242,37 @@ span.close:focus {
 }
 
 /* End of Popup FORM */
+
 .upperDiv {
-    /*height: auto;*/
-    /*vert-align: middle;*/
+    display: inline-block;
+    width: 100%;
+}
+
+
+.upperDiv input,
+.upperDiv button {
+    width: 15%;
+}
+.upperForm {
+    float: left;
+    width: 70%;
     display: inline;
-    /*position: relative;*/
 }
 
+.searchForm {
+    width: 30%;
+    float: right;
+    text-align: right;
 
-.upperDiv form {
-    /*height: 80%;*/
-    margin: auto;
-    /*top: 50%;*/
-}
-.upperForm input {
-    width: 10%;
+    & input {
+        width: 50%;
+    }
+
+    & button {
+        width: 15%;
+    }
 }
 
-.upperForm button {
-    width: 10%;
-}
 
 /* Messages */
 h2.true {
@@ -327,5 +330,6 @@ footer {
     width: 30%;
     min-width: 300px;
 }
+
 
 

@@ -23,7 +23,6 @@
             <li class="topMenuElement"><a href="/devices" th:text="#{devices}"></a></li>
             <li class="topMenuElement"><a href="/monitoring" th:text="#{monitoring}"></a></li>
             <li sec:authorize="hasAuthority('ADMIN')" class="topMenuElement"><a href="/users" th:text="#{users}"></a></li>
-            <li sec:authorize="hasAuthority('ADMIN')" class="topMenuElement"><a href="/h2" th:text="h2"></a></li>
         </ul>
     </nav>
 </header>

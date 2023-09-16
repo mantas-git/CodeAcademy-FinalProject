@@ -17,7 +17,7 @@
         <div class="edit-form">
             <span class="close">&times;</span>
 
-            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" method="post">
+            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" th:method="put">
                 <div class="column">
                     <div class="formPhotoDiv">
                         <img th:src="@{/img/logo.png}" alt="LOGO">
@@ -69,37 +69,41 @@
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
-<!--            <span th:text="${#authentication.getPrincipal().id}"></span>-->
-<!--            <input type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>-->
+            <!--            <span th:text="${#authentication.getPrincipal().id}"></span>-->
+            <!--            <input type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>-->
             <button type="submit" th:text="#{add}"></button>
 
 
-            <h3>All errors in place:</h3>
-            <div th:if="${#fields.hasAnyErrors()}">
-                <ul>
-                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>
-                </ul>
-            </div>
+<!--            <h3>All errors in place:</h3>-->
+<!--            <div th:if="${#fields.hasAnyErrors()}">-->
+<!--                <ul>-->
+<!--                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>-->
+<!--                </ul>-->
+<!--            </div>-->
+        </form>
+        <form class="searchForm" th:action="@{/devices/search}" method="get">
+            <input type="text" placeholder="Search.." th:name="search" th:value="${search}">
+            <button type="submit">Rasti</button>
         </form>
     </div>
     <hr>
     <table class="tb">
         <tr>
-            <th th:text="#{id}"></th>
+            <th sec:authorize="hasAuthority('ADMIN')" th:text="#{id}"></th>
             <th th:text="#{deviceId}"></th>
             <th th:text="#{vehicleNr}"></th>
             <th th:text="#{comment}"></th>
             <th th:text="#{date}"></th>
-            <th th:text="#{clientId}"></th>
+            <th sec:authorize="hasAuthority('ADMIN')" th:text="#{clientId}"></th>
             <th colspan="3" th:text="#{functions}"></th>
         </tr>
         <tr th:each="device: *{devices}">
-            <td th:text="${device.id}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')" th:text="${device.id}"></td>
             <td th:text="${device.deviceId}"></td>
             <td th:text="${device.transportNr}"></td>
             <td th:text="${device.comment}"></td>
             <td th:text="${device.createDate}"></td>
-            <td th:text="${device.userId}"></td>
+            <td sec:authorize="hasAuthority('ADMIN')" th:text="${device.userId}"></td>
             <td>
                 <button th:id="${device.id}" th:text="#{edit}" class="deviceEditButton" data-modal="deviceEditDiv"
                         th:paramDeviceId='${device.deviceId}'
