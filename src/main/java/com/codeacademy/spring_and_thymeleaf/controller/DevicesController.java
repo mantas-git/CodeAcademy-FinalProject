@@ -1,7 +1,6 @@
 package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
-import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import jakarta.validation.Valid;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;

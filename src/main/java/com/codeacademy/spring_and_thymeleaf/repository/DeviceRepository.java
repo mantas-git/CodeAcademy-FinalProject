@@ -17,8 +17,9 @@ public interface DeviceRepository extends JpaRepository<Device, Long>, PagingAnd
 
     boolean existsDeviceByDeviceId(Long deviceId);
 
-    List<Device> findByUserId(Long id);
+//    List<Device> findByUserId(Long id);
 
     Page<Device> findByUserId(Long id, Pageable pageable);
 
+    List<Device> findByDeviceIdAndUserId(Long deviceId, Long userId);
 }

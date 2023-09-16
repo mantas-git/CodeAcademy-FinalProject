@@ -35,7 +35,7 @@ public class ThymeleafController {
 
     private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
     private final DeviceService deviceService;
-    private  final PositionService positionService;
+    private final PositionService positionService;
     private final UserService userService;
 
     public ThymeleafController(DeviceService deviceService, PositionService positionService, UserService userService) {
@@ -51,37 +51,40 @@ public class ThymeleafController {
     }
 
     @GetMapping("/monitoring")
-    public String showMonitoring(Model model) {
-        model.addAttribute("device", new Device());
-        model.addAttribute("newDevice", new Device());
-        model.addAttribute("positions", null);
+    public String showMonitoring(Device device, Position position, Model model) {
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "monitoring";
     }
 
 
     @GetMapping("/monitoring/run")
-    public String listTopics(@RequestParam Long deviceId, Model model,
-                             @PageableDefault(sort = { "date"}, direction = Sort.Direction.DESC, size = 15)
-                             Pageable pageable)
-    {
-        Device device = deviceService.getDeviceByDeviceId(deviceId);
-        Page<Position> positions = positionService.findPaginated(device, pageable);
+    public String showPositions(@RequestParam Long deviceId, Model model, @AuthenticationPrincipal User user,
+                                @PageableDefault(sort = {"date"}, direction = Sort.Direction.DESC, size = 15)
+                                Pageable pageable) {
+        logger.info("Monitoring for Device ID {}", deviceId);
+        Device device = deviceService.getDeviceByDeviceIdAndUser(deviceId, user);
+        logger.info("Founded device {}", device);
+        if (device != null) {
+            Page<Position> positions = positionService.findPaginated(device, pageable);
 
-        model.addAttribute("device", device);
-        model.addAttribute("newDevice", new Device()); //?
-        model.addAttribute("positions", positions);
+            model.addAttribute("device", device);
+            model.addAttribute("positions", positions);
 
-        int totalPages = positions.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages-1)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
+            int totalPages = positions.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
+                        .boxed()
+                        .collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
+
+            model.addAttribute("locale", LocaleContextHolder.getLocale());
+
+            return "monitoring";
+        } else {
+            return "redirect:/monitoring";
         }
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
 
-        return "monitoring";
     }
 
     @PostMapping("/positions/add")

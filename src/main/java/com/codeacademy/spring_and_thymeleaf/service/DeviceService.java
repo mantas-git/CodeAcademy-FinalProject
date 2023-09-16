@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.Iterator;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -62,6 +62,22 @@ public class DeviceService {
         return deviceRepository.findByDeviceId(deviceId).get(0);
     }
 
+    public Device getDeviceByDeviceIdAndUser(Long deviceId, User user) {
+        Long userId = getUserId(user);
+        List<Device> devices = new ArrayList<>();
+        if(userId == -1) {
+            devices = deviceRepository.findByDeviceId(deviceId);
+        }
+        else {
+            devices = deviceRepository.findByDeviceIdAndUserId(deviceId, userId);
+        }
+        if (!devices.isEmpty()) {
+            return devices.get(0);
+        } else {
+            return null;
+        }
+    }
+
     public InfoMessage updateDevice(Device device) {
         logger.info("Device update. Data for device update: {}", device);
         InfoMessage infoMessage = new InfoMessage();
@@ -81,34 +97,40 @@ public class DeviceService {
         return infoMessage;
     }
 
-    public List<Device> getAllDevicesByUser(User user) {
-        Long id = user != null ? user.getId() : 0;
-        if(id == 0) {
-            return deviceRepository.findByUserId(id);
-        }
-        else {
-            Set<Role> roles = user.getRoles();
-            for (Role role : roles) {
-                if (role.toString().equals("ADMIN"))
-                    return getAllDevices();
-            }
-            return deviceRepository.findByUserId(id);
+//    public List<Device> getAllDevicesByUser(User user) {
+//        Long id = user != null ? user.getId() : 0;
+//        if (id == 0) {
+//            return deviceRepository.findByUserId(id);
+//        } else {
+//            Set<Role> roles = user.getRoles();
+//            for (Role role : roles) {
+//                if (role.toString().equals("ADMIN"))
+//                    return getAllDevices();
+//            }
+//            return deviceRepository.findByUserId(id);
+//        }
+//    }
+
+    public Page<Device> findPaginated(User user, Pageable pageable) {
+        Long id = getUserId(user);
+        if (id == -1) {
+            return deviceRepository.findAll(pageable);
+        } else {
+            return deviceRepository.findByUserId(id, pageable);
         }
     }
 
-    public Page<Device> findPaginated(User user, Pageable pageable) {
-        Long id = user != null ? user.getId() : 0;
-        if(id == 0) {
-            return deviceRepository.findByUserId(id, pageable);
-        }
-        else {
+    private Long getUserId(User user) {
+        Long id = 0L;
+        if (user != null) {
+            id = user.getId();
             Set<Role> roles = user.getRoles();
             for (Role role : roles) {
                 if (role.toString().equals("ADMIN"))
-                    return deviceRepository.findAll(pageable);
+                    id = (long) -1;
             }
-            return deviceRepository.findByUserId(id, pageable);
         }
+        return id;
     }
 
 }
