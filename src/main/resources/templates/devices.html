@@ -127,6 +127,14 @@
         </tr>
     </table>
     <hr>
+    <div class="paginationDiv">
+        <div th:if="${devices.totalPages > 1}" class="pagination"
+             th:each="pageNumber : ${pageNumbers}">
+            <a th:href="@{/devices(size=${devices.size}, page=${pageNumber})}"
+               th:text="${pageNumber + 1}"
+               th:class="${pageNumber==devices.number} ? active"></a>
+        </div>
+    </div>
 </main>
 
 <footer th:replace="~{fragments/fragments.html :: footer}"></footer>

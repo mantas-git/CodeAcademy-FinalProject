@@ -7,6 +7,8 @@ import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.repository.DeviceRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -93,4 +95,20 @@ public class DeviceService {
             return deviceRepository.findByUserId(id);
         }
     }
+
+    public Page<Device> findPaginated(User user, Pageable pageable) {
+        Long id = user != null ? user.getId() : 0;
+        if(id == 0) {
+            return deviceRepository.findByUserId(id, pageable);
+        }
+        else {
+            Set<Role> roles = user.getRoles();
+            for (Role role : roles) {
+                if (role.toString().equals("ADMIN"))
+                    return deviceRepository.findAll(pageable);
+            }
+            return deviceRepository.findByUserId(id, pageable);
+        }
+    }
+
 }

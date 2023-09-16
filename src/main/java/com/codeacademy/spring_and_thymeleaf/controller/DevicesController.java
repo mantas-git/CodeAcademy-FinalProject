@@ -1,12 +1,17 @@
 package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
+import com.codeacademy.spring_and_thymeleaf.model.Position;
 import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,6 +20,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Controller
 @RequestMapping("/devices")
@@ -35,13 +42,36 @@ public class DevicesController {
 //        return "devices";
 //    }
 
+//    @GetMapping
+//    public String showAllDevices(Device device, Model model, @AuthenticationPrincipal User user) {
+//        logger.info("User: {}", user);
+//        List<Device> devices = deviceService.getAllDevicesByUser(user);
+//        logger.info("Loaded Devices: {}", devices);
+//        model.addAttribute("devices", devices);
+//        model.addAttribute("locale", LocaleContextHolder.getLocale());
+//        return "devices";
+//    }
+
     @GetMapping
-    public String showAllUsersDevices(Device device, Model model, @AuthenticationPrincipal User user) {
+    public String showAllDevicesPageable(Device device, Model model,
+                                         @AuthenticationPrincipal User user,
+                                         @PageableDefault(size = 15)
+                                             Pageable pageable) {
         logger.info("User: {}", user);
-        List<Device> devices = deviceService.getAllDevicesByUser(user);
+//        List<Device> devices = deviceService.getAllDevicesByUser(user);
+        Page<Device> devices = deviceService.findPaginated(user, pageable);
         logger.info("Loaded Devices: {}", devices);
         model.addAttribute("devices", devices);
         model.addAttribute("locale", LocaleContextHolder.getLocale());
+
+        int totalPages = devices.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages-1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+
         return "devices";
     }
 

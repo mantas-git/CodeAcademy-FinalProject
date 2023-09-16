@@ -69,7 +69,7 @@ public class ThymeleafController {
         Page<Position> positions = positionService.findPaginated(device, pageable);
 
         model.addAttribute("device", device);
-        model.addAttribute("newDevice", new Device());
+        model.addAttribute("newDevice", new Device()); //?
         model.addAttribute("positions", positions);
 
         int totalPages = positions.getTotalPages();
