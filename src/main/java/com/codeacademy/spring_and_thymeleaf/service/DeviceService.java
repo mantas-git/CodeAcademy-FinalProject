@@ -41,7 +41,6 @@ public class DeviceService {
             infoMessage.setError(false);
             infoMessage.setMessageText("Pridėtas naujas įrenginys");
         }
-        System.out.println(infoMessage);
         return infoMessage;
 
     }

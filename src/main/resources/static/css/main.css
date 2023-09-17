@@ -9,9 +9,9 @@
 }
 
 body {
-    margin: 5px;
+    /*margin: 5px;*/
     padding: 0;
-    width: 99%;
+    /*width: 99%;*/
     height: 100%;
     /*overflow: hidden;*/
 
@@ -28,6 +28,8 @@ header {
     grid-area: h;
 
     display: block;
+    /*background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(128, 128, 128, 0.3), rgba(255, 255, 255, 0.3));*/
+    margin-bottom: 10px;
     /*height: var(--topMenuHeight);*/
 }
 
@@ -49,6 +51,7 @@ header ul {
 .topMenu {
     height: 50px;
     text-align: center;
+    background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(238, 238, 238, 0.3), rgba(255, 255, 255, 0.3));
 
 }
 
@@ -244,8 +247,29 @@ span.close:focus {
 /* End of Popup FORM */
 
 .upperDiv {
-    display: inline-block;
+    display: inline-block;;
     width: 100%;
+    position: relative;
+
+    & .upperForm {
+        float: left;
+        width: 70%;
+        display: inline;
+    }
+
+    & .searchForm {
+        width: 30%;
+        float: right;
+        text-align: right;
+
+        & input {
+            width: 50%;
+        }
+
+        & button {
+            width: 15%;
+        }
+    }
 }
 
 
@@ -253,25 +277,26 @@ span.close:focus {
 .upperDiv button {
     width: 15%;
 }
-.upperForm {
-    float: left;
-    width: 70%;
-    display: inline;
-}
+/*.upperForm {*/
+/*    margin-top: 50%;*/
+/*    float: left;*/
+/*    width: 70%;*/
+/*    display: inline;*/
+/*}*/
 
-.searchForm {
-    width: 30%;
-    float: right;
-    text-align: right;
+/*.searchForm {*/
+/*    width: 30%;*/
+/*    float: right;*/
+/*    text-align: right;*/
 
-    & input {
-        width: 50%;
-    }
+/*    & input {*/
+/*        width: 50%;*/
+/*    }*/
 
-    & button {
-        width: 15%;
-    }
-}
+/*    & button {*/
+/*        width: 15%;*/
+/*    }*/
+/*}*/
 
 
 /* Messages */

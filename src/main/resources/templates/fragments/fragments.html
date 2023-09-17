@@ -9,8 +9,8 @@
 <header th:fragment="header">
     <div class="setLanguage">
         <ul>
-            <li sec:authorize="isAuthenticated()" class="setLanguageElement"><a href="/logout" th:text="#{logout}"></a></li>
-            <li sec:authorize="!isAuthenticated()" class="setLanguageElement"><a href="/login" th:text="#{login}"></a></li>
+            <li sec:authorize="isAuthenticated()" class="setLanguageElement"><a href="/logout" th:text="#{Logout}"></a></li>
+            <li sec:authorize="!isAuthenticated()" class="setLanguageElement"><a href="/login" th:text="#{Login}"></a></li>
             <li><a>|</a></li>
             <li th:if="${locale != null}" class="activeLanguage" id="activeLang" th:locale="${locale}"></li>
             <li class="setLanguageElement"><a id="langLT">LT</a></li>
@@ -19,16 +19,16 @@
     </div>
     <nav class="topMenu">
         <ul>
-            <li class="topMenuElement"><a href="/" th:text="#{info}"></a></li>
-            <li class="topMenuElement"><a href="/devices" th:text="#{devices}"></a></li>
-            <li class="topMenuElement"><a href="/monitoring" th:text="#{monitoring}"></a></li>
-            <li sec:authorize="hasAuthority('ADMIN')" class="topMenuElement"><a href="/users" th:text="#{users}"></a></li>
+            <li class="topMenuElement"><a href="/" th:text="#{Info}"></a></li>
+            <li class="topMenuElement"><a href="/devices" th:text="#{Devices}"></a></li>
+            <li class="topMenuElement"><a href="/monitoring" th:text="#{Monitoring}"></a></li>
+            <li sec:authorize="hasAuthority('ADMIN')" class="topMenuElement"><a href="/users" th:text="#{Users}"></a></li>
         </ul>
     </nav>
 </header>
 
 <footer th:fragment="footer" class="py-3 my-4">
-    <div class="text-center text-muted">Kuriama 2023</div>
+    <div class="text-center text-muted" th:text="#{underConstruction}"></div>
 </footer>
 
 </body>

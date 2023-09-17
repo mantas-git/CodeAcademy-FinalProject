@@ -14,19 +14,22 @@
 <main>
     <hr>
     <div class="loginDiv">
-        <div th:if="${param.error}">
-            Invalid username and password.
-        </div>
-        <div th:if="${param.logout}">
-            You have been logged out.
-        </div>
+        <div th:if="${param.error}" th:text="#{invalidUserNameOrPass}"></div>
+        <div th:if="${param.logout}" th:text="#{youHaveBeenLoggedOut}"></div>
         <form class="loginForm" th:action="@{/login}" method="post">
-            <div><label> User Name : <input type="text" name="username"/> </label></div>
-            <div><label> Password: <input type="password" name="password"/> </label></div>
-            <div><input type="submit" value="Sign In"/></div>
+            <div>
+                <label for="username" th:text="#{UserName} + ':'"></label>
+                <input type="text" name="username" id="username"/>
+
+            </div>
+            <div>
+                <label for="password" th:text="#{Password} + ':'"></label>
+                <input type="password" name="password" id="password"/>
+            </div>
+            <div><input type="submit" th:value="#{SignIn}"/></div>
         </form>
 
-        <p>Registration <a th:href="@{/registration}">here</a></p>
+        <p><label th:text="#{Registration} + ' '"></label><a th:href="@{/registration}" th:text="#{here}"></a></p>
     </div>
     <hr>
 </main>

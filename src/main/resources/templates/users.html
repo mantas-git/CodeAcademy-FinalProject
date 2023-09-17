@@ -11,28 +11,54 @@
 <body>
 <header th:replace="~{fragments/fragments.html :: header}"></header>
 
+<div id="deviceEditDiv" class="modal">
+    <div class="modal-content">
+        <div class="edit-form">
+            <span class="close">&times;</span>
+
+            <form class="deviceEditForm" th:action="@{/users/update}" th:object="${user}" th:method="put">
+                <div >
+                    <h2 th:with="original_text=#{userInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
+                    <div>
+                        <input type="hidden" id="id" name="id"/>
+                        <span th:text="#{username} + ':'"></span>
+                        <input type="text" id="username" name="username"/>
+<!--                        <span th:text="#{roles} + ':'"></span>-->
+<!--                        <input type="text" id="roles" name="roles" placeholder="roles"/>-->
+                    </div>
+                    <button type="submit" th:text="#{Save}"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
 <main>
     <hr>
     <table class="tb">
         <tr>
             <th th:text="#{id}"></th>
             <th th:text="#{name}"></th>
-            <th th:text="#{role}"></th>
+            <th th:text="#{roles}"></th>
+            <th th:text="#{active}"></th>
             <th colspan="2" th:text="#{functions}"></th>
         </tr>
         <tr th:each="user: *{users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.username}"></td>
             <td th:text="${user.roles}"></td>
+            <td th:text="${user.active}"></td>
             <td>
-                <button th:id="${user.id}" th:text="#{edit}" class="deviceEditButton" data-modal="deviceEditDiv"
-                        th:paramName='${user.username}'>
+                <button th:id="${user.id}" th:text="#{Edit}" class="deviceEditButton" data-modal="deviceEditDiv"
+                        th:paramName='${user.username}'
+                        th:paramRoles='${user.roles}'>
                 </button>
             </td>
             <td>
                 <form action="#" th:action="@{'/users/delete/{id}' (id=${user.id})}" th:method="delete">
                     <input type="hidden" name="_method" value="delete">
-                    <button type="submit" th:text="#{delete}"></button>
+                    <button type="submit" th:text="#{Delete}"></button>
                 </form>
             </td>
         </tr>
@@ -41,5 +67,36 @@
 </main>
 
 <footer th:replace="~{fragments/fragments.html :: footer}"></footer>
+
+<script th:inline="javascript">
+    let modalButton = [...document.querySelectorAll(".deviceEditButton")];
+    modalButton.forEach(function (btn) {
+        btn.onclick = function () {
+            let modal = btn.getAttribute("data-modal");
+            let elementId = this.id;
+            document.getElementById("id").setAttribute("value", elementId);
+            document.getElementById("username").setAttribute("value", document.getElementById(elementId).getAttribute('paramName'));
+            // document.getElementById("roles").setAttribute("value", document.getElementById(elementId).getAttribute('paramRoles'));
+            document.getElementById(modal).style.display = "block";
+        };
+    });
+    let closeButton = [...document.querySelectorAll(".close")];
+    closeButton.forEach(function (btn) {
+        btn.onclick = function () {
+            let modal = btn.closest(".modal");
+            modal.style.display = "none";
+        };
+    });
+    window.onclick = function (event) {
+        if (event.target.className === "modal") {
+            event.target.style.display = "none";
+        }
+    };
+
+    // console.log(document.getElementById("infoMessageH2"));
+    if (document.getElementById("infoMessageH2") != null) {
+        document.getElementById("infoMessageDiv").style.display = "block";
+    }
+</script>
 </body>
 </html>

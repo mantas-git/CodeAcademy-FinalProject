@@ -16,11 +16,11 @@
         <form class="upperForm" th:action="@{/monitoring/run}" method="get">
             <span th:text="#{deviceId} + ':'"></span>
             <input type="text" th:name="deviceId" required/>
-            <button type="submit" th:text="#{watch}"></button>
+            <button type="submit" th:text="#{Watch}"></button>
         </form>
     </div>
     <hr>
-    <div th:text="${device.transportNr} != null ? 'Stebimas transposrto numeris ' + ${device.transportNr} : ''"></div>
+    <div th:text="${device.transportNr} != null ? #{monitoringDevice} + ' ' + ${device.transportNr} : ''"></div>
     <table class="tb">
         <tr>
             <th th:text="#{id}"></th>

@@ -107,11 +107,18 @@ public class ThymeleafController {
     }
 
     @GetMapping("/users")
-    public String showUsers(Model model) {
+    public String showUsers(User user, Model model) {
         List<User> users = userService.getAllUsers();
         model.addAttribute("users", users);
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "users";
+    }
+
+    @PutMapping("/users/update")
+    public String updateUsers(User user, RedirectAttributes redirectAttributes) {
+        logger.info("User update. New users data: {}", user);
+        redirectAttributes.addFlashAttribute("infoMessage", userService.updateUser(user));
+        return "redirect:/users";
     }
 
     @DeleteMapping("/users/delete/{id}")
