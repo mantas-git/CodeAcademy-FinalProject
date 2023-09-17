@@ -172,19 +172,25 @@ h2 {
     color: #999;
 }
 
-.deviceEditForm {
-    display: flex;
+.deviceEditForm,
+.infoMessageForm {
+
     padding: 25px;
     margin: 25px;
     box-shadow: 0 2px 5px #f5f5f5;
     background: #eee;
 }
 
+.deviceEditForm {
+    display: flex;
+
+}
+
 .column {
     float: left;
     width: 50%;
     padding: 10px;
-    /*height: 300px; !* Should be removed. Only for demonstration *!*/
+    /*height: 600px;*/
 }
 
 .deviceEditForm span {

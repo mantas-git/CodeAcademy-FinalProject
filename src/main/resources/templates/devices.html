@@ -47,15 +47,12 @@
     </div>
 </div>
 
-<div id="infoMessageDiv" class="modal">
+<div th:if="${infoMessage != null}" id="infoMessageDiv" class="modal">
     <div class="modal-content">
-        <div class="edit-form">
-            <div class="deviceEditForm">
-                <h2 id="infoMessageH2" th:if="${infoMessage != null}" th:class="${infoMessage.error}"
-                    th:text="${infoMessage.messageText}"></h2>
-                <br>
-                <button class="close" th:text="#{OK}"></button>
-            </div>
+        <div class="infoMessageForm">
+            <h2 id="infoMessageH2" th:class="${infoMessage.error}"
+                th:text="${infoMessage.messageText}"></h2>
+            <button class="close" th:text="#{OK}"></button>
         </div>
     </div>
 </div>
@@ -70,16 +67,17 @@
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
             <input type="text" th:field="*{comment}"/>
-            <input sec:authorize="isAuthenticated()" type="hidden" name="userId" th:value="${#authentication.getPrincipal().id}"/>
+            <input sec:authorize="isAuthenticated()" type="hidden" name="userId"
+                   th:value="${#authentication.getPrincipal().id}"/>
             <button type="submit" th:text="#{Add}"></button>
 
 
-<!--            <h3>All errors in place:</h3>-->
-<!--            <div th:if="${#fields.hasAnyErrors()}">-->
-<!--                <ul>-->
-<!--                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>-->
-<!--                </ul>-->
-<!--            </div>-->
+            <!--            <h3>All errors in place:</h3>-->
+            <!--            <div th:if="${#fields.hasAnyErrors()}">-->
+            <!--                <ul>-->
+            <!--                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>-->
+            <!--                </ul>-->
+            <!--            </div>-->
         </form>
         <form class="searchForm" th:action="@{/devices/search}" method="get">
             <input type="text" th:placeholder="#{Search} + '...'" th:name="search" th:value="${search}">
