@@ -16,6 +16,7 @@ function markActive() {
             let elementHref = child[0].href.split("/").reverse()[0];
             if (elementHref === href) {
                 element.classList.add('activeMenuElement');
+                document.getElementById("menuA").textContent = document.getElementsByClassName('activeMenuElement')[0].firstChild.textContent;
                 marked = true;
             }
         }
