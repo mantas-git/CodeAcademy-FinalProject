@@ -76,12 +76,24 @@ public class DevicesController {
     @PostMapping("/add")
     public String addDevice(@Valid Device device,
                             BindingResult errors,
+                            @AuthenticationPrincipal User user,
+                            @PageableDefault(size = 15) Pageable pageable,
                             RedirectAttributes redirectAttributes,
                             Model model) {
         if (errors.hasErrors()) {
-            List<Device> devices = deviceService.getAllDevices();
+            logger.info("User: {}", user);
+            Page<Device> devices = deviceService.findPaginated(user, pageable);
+            logger.info("Loaded Devices: {}", devices);
             model.addAttribute("devices", devices);
             model.addAttribute("locale", LocaleContextHolder.getLocale());
+
+            int totalPages = devices.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages-1)
+                        .boxed()
+                        .collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
             logger.info("BindingResult errors: {}", errors);
             return "devices";
         }
