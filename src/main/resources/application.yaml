@@ -13,6 +13,42 @@ spring:
 
   # kelias į DB (in memory, ram'uose).
   datasource:
+    url: "jdbc:postgresql://localhost:5432/postgres"
+    # default user
+    username: admin
+    # default password
+    password: password
+
+
+  # jeigu kas nors netinka duombazeje - tegu Hibernate pataiso automatiskai. Jei viskas OK - tegu neliecia
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+
+# Disable whitelabel error pages
+server:
+  error:
+    whitelabel:
+      enabled: false
+
+---
+spring:
+  config:
+    activate:
+      on-profile: testProfile
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+
+  # kelias į DB (in memory, ram'uose).
+  datasource:
     url: "jdbc:h2:mem:h2_db"
     # default user
     username: admin
@@ -44,22 +80,7 @@ server:
   error:
     whitelabel:
       enabled: false
-custom:
-  properties:
-    email: my@email.com
-    age: 30
 
-my.custom.environment.property: "default property value"
-
-#logging:
-#  level:
-#    root: info
----
-spring:
-  config:
-    activate:
-      on-profile: testProfile
-my.custom.environment.property: "testProfile property value"
 
 ---
 spring:

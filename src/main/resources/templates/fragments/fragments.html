@@ -59,25 +59,12 @@
                     <a th:href="@{''(deviceId=${filteredDevice?.deviceId}, size=${pagedObject.getSize()}, page=${pagedObject.getTotalPages()})}">&raquo;</a>
                 </li>
             </ul>
-
-            <!--            <p class="text-muted small">-->
-            <!--                Showing page <span th:text="${pagedObject.getNumber() +1}"></span> of <span-->
-            <!--                    th:text="${pagedObject.getTotalPages()}"></span>.-->
-            <!--                Total: <span th:text="${pagedObject.getTotalElements()}"></span>.-->
-
-            <!--            </p>-->
         </div>
-
-
-<!--        <div th:if="${pagedObject.getTotalElements() ==0}">-->
-<!--            <div class="alert alert-warning" role="alert">-->
-<!--                <span>No items available.</span>-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
 
 
 </th:block>
+
 
 </body>
 </html>

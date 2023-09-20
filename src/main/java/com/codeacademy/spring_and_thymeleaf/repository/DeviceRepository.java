@@ -22,4 +22,8 @@ public interface DeviceRepository extends JpaRepository<Device, Long>, PagingAnd
     Page<Device> findByUserId(Long id, Pageable pageable);
 
     List<Device> findByDeviceIdAndUserId(Long deviceId, Long userId);
+
+    Page<Device> findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(String searchText, String searchText1, Pageable pageable);
+
+    Page<Device> findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseAndUserIdOrderByTransportNrAsc(String searchText, String searchText1, Long id, Pageable pageable);
 }

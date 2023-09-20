@@ -53,6 +53,16 @@ public class DeviceService {
         return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(searchText, searchText);
     }
 
+    public Page<Device> findFilteredDevicesPaginated(User user, Pageable pageable, String searchText) {
+        Long id = getUserId(user);
+        if (id == -1) {
+            return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseOrderByTransportNrAsc(searchText, searchText, pageable);
+        } else {
+            return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseAndUserIdOrderByTransportNrAsc(searchText, searchText, id, pageable);
+        }
+//        return deviceRepository.findByCommentContainingIgnoreCaseOrTransportNrContainingIgnoreCaseAndUserIdOrderByTransportNrAsc(searchText, searchText, id, pageable);
+    }
+
     public void deleteDevice(Long id) {
         deviceRepository.deleteById(id);
     }

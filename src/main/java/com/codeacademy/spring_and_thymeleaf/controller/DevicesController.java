@@ -102,11 +102,33 @@ public class DevicesController {
     }
 
     @GetMapping("/search")
-    public String showFilteredDevices(@RequestParam String search, Device device, Model model) {
-        List<Device> devices = deviceService.getFilteredDevices(search);
-        model.addAttribute("devices", devices);
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
-        return "devices";
+    public String showFilteredDevices(@RequestParam String search,
+                                      @AuthenticationPrincipal User user,
+                                      @PageableDefault(size = 15) Pageable pageable,
+                                      Device device,
+                                      Model model) {
+//        List<Device> devices = deviceService.getFilteredDevices(search);
+//        model.addAttribute("devices", devices);
+//        model.addAttribute("locale", LocaleContextHolder.getLocale());
+
+        logger.info("User: {}", user);
+        logger.info("Search text {}", search);
+        if(!search.isEmpty()) {
+            Page<Device> devices = deviceService.findFilteredDevicesPaginated(user, pageable, search);
+            logger.info("Loaded Devices: {}", devices);
+            model.addAttribute("devices", devices);
+            model.addAttribute("locale", LocaleContextHolder.getLocale());
+
+            int totalPages = devices.getTotalPages();
+            if (totalPages > 0) {
+                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
+                        .boxed()
+                        .collect(Collectors.toList());
+                model.addAttribute("pageNumbers", pageNumbers);
+            }
+            return "devices";
+        }
+        return "redirect:/devices";
     }
 
 
