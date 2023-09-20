@@ -9,8 +9,10 @@
 <header th:fragment="header">
     <div class="setLanguage">
         <ul>
-            <li sec:authorize="isAuthenticated()" class="setLanguageElement"><a href="/logout" th:text="#{Logout}"></a></li>
-            <li sec:authorize="!isAuthenticated()" class="setLanguageElement"><a href="/login" th:text="#{Login}"></a></li>
+            <li sec:authorize="isAuthenticated()" class="setLanguageElement"><a href="/logout" th:text="#{Logout}"></a>
+            </li>
+            <li sec:authorize="!isAuthenticated()" class="setLanguageElement"><a href="/login" th:text="#{Login}"></a>
+            </li>
             <li><a>|</a></li>
             <li th:if="${locale != null}" class="activeLanguage" id="activeLang" th:locale="${locale}"></li>
             <li class="setLanguageElement"><a id="langLT">LT</a></li>
@@ -18,13 +20,14 @@
         </ul>
     </div>
     <nav class="topMenu">
-            <label for="touch"><a class="menuA" id="menuA"></a></label>
-            <input type="checkbox" id="touch">
+        <label for="touch"><a class="menuA" id="menuA"></a></label>
+        <input type="checkbox" id="touch">
         <ul class="topMenuList">
             <li class="topMenuElement"><a href="/" th:text="#{Info}"></a></li>
             <li class="topMenuElement"><a href="/devices" th:text="#{Devices}"></a></li>
             <li class="topMenuElement"><a href="/monitoring" th:text="#{Monitoring}"></a></li>
-            <li sec:authorize="hasAuthority('ADMIN')" class="topMenuElement"><a href="/users" th:text="#{Users}"></a></li>
+            <li sec:authorize="hasAuthority('ADMIN')" class="topMenuElement"><a href="/users" th:text="#{Users}"></a>
+            </li>
         </ul>
     </nav>
 </header>
@@ -32,6 +35,49 @@
 <footer th:fragment="footer" class="py-3 my-4">
     <div class="text-center text-muted" th:text="#{underConstruction}"></div>
 </footer>
+
+<th:block th:fragment="pagination(pagedObject, filteredDevice)">
+    <div th:if="${pagedObject != null}" class="paginationDiv">
+        <div th:if="${pagedObject.getTotalPages() != 1}" class="pagination">
+            <ul>
+                <li th:classappend="${pagedObject.getNumber() == 0} ? disabled">
+                    <a th:href="@{''(deviceId=${filteredDevice?.deviceId}, size=${pagedObject.getSize()}, page=0)}">&laquo;</a>
+                </li>
+                <li th:classappend="${pagedObject.getNumber() == 0} ? disabled">
+                    <a th:href="@{''(deviceId=${filteredDevice?.deviceId}, size=${pagedObject.getSize()}, page=${pagedObject.getNumber() -1})}">&larr;</a>
+                </li>
+                <li th:classappend="${pagedObject.getNumber() == (page  )} ? 'active pointer-disabled'"
+                    th:each="page : ${#numbers.sequence(0, pagedObject.getTotalPages() -1)}">
+                    <a th:href="@{''(deviceId=${filteredDevice?.deviceId}, size=${pagedObject.getSize()}, page=${page})}"
+                       th:text="${page + 1}"
+                       th:class="${page==pagedObject.number} ? active"></a>
+                </li>
+                <li th:classappend="${pagedObject.getNumber() + 1 == pagedObject.getTotalPages()} ? disabled">
+                    <a th:href="@{''(deviceId=${filteredDevice?.deviceId}, size=${pagedObject.getSize()}, page=${pagedObject.getNumber() + 1})}">&rarr;</a>
+                </li>
+                <li th:classappend="${pagedObject.getNumber() + 1 == pagedObject.getTotalPages()} ? disabled">
+                    <a th:href="@{''(deviceId=${filteredDevice?.deviceId}, size=${pagedObject.getSize()}, page=${pagedObject.getTotalPages()})}">&raquo;</a>
+                </li>
+            </ul>
+
+            <!--            <p class="text-muted small">-->
+            <!--                Showing page <span th:text="${pagedObject.getNumber() +1}"></span> of <span-->
+            <!--                    th:text="${pagedObject.getTotalPages()}"></span>.-->
+            <!--                Total: <span th:text="${pagedObject.getTotalElements()}"></span>.-->
+
+            <!--            </p>-->
+        </div>
+
+
+<!--        <div th:if="${pagedObject.getTotalElements() ==0}">-->
+<!--            <div class="alert alert-warning" role="alert">-->
+<!--                <span>No items available.</span>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+
+
+</th:block>
 
 </body>
 </html>

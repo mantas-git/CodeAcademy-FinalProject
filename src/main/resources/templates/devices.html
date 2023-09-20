@@ -63,6 +63,7 @@
               method="post">
             <span th:text="#{deviceId}"></span>
             <input type="text" th:field="*{deviceId}"/>
+<!--            <div th:each="err : ${#fields.errors('deviceId')}" th:text="${err}" class="error"></div>-->
             <span th:text="#{vehicleNr}"></span>
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
@@ -70,14 +71,7 @@
             <input sec:authorize="isAuthenticated()" type="hidden" name="userId"
                    th:value="${#authentication.getPrincipal().id}"/>
             <button type="submit" th:text="#{Add}"></button>
-
-
-            <!--            <h3>All errors in place:</h3>-->
-            <!--            <div th:if="${#fields.hasAnyErrors()}">-->
-            <!--                <ul>-->
-            <!--                    <li th:each="err : ${#fields.allErrors()}" th:text="${err}"/>-->
-            <!--                </ul>-->
-            <!--            </div>-->
+            <div th:each="err : ${#fields.errors('deviceId')}" th:text="${err}" class="error"></div>
         </form>
         <form class="searchForm" th:action="@{/devices/search}" method="get">
             <input type="text" th:placeholder="#{Search} + '...'" th:name="search" th:value="${search}">
@@ -126,14 +120,7 @@
         </tr>
     </table>
     <hr>
-    <div class="paginationDiv">
-        <div th:if="${devices.totalPages > 1}" class="pagination"
-             th:each="pageNumber : ${pageNumbers}">
-            <a th:href="@{/devices(size=${devices.size}, page=${pageNumber})}"
-               th:text="${pageNumber + 1}"
-               th:class="${pageNumber==devices.number} ? active"></a>
-        </div>
-    </div>
+    <th:block th:replace="~{fragments/fragments.html :: pagination(${devices}, null)}"></th:block>
 </main>
 
 <footer th:replace="~{fragments/fragments.html :: footer}"></footer>

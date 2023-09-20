@@ -40,16 +40,10 @@
         </tr>
     </table>
     <hr>
-    <div class="paginationDiv">
-        <div th:if="${positions.totalPages > 1}" class="pagination"
-             th:each="pageNumber : ${pageNumbers}">
-            <a th:href="@{/monitoring/run(deviceId=${device.deviceId}, size=${positions.size}, page=${pageNumber})}"
-               th:text="${pageNumber + 1}"
-               th:class="${pageNumber==positions.number} ? active"></a>
-        </div>
-    </div>
+    <th:block th:replace="~{fragments/fragments.html :: pagination(${positions}, ${device})}"></th:block>
 </main>
 
 <footer th:replace="~{fragments/fragments.html :: footer}"></footer>
+
 </body>
 </html>

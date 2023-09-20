@@ -1,8 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,10 +18,10 @@ public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @DecimalMin(value="1000", message="{tooShortDevId}")
+    @NotNull(message = "{canNotBeEmpty}")
     @Column(unique=true)
-    @DecimalMin(value = "1000", message = "'Device ID' negali būti < 1000")
     private Long deviceId;
-    @NotBlank(message = "transporto nr tuscias")
     private String transportNr;
     private String comment;
     private LocalDate createDate;
