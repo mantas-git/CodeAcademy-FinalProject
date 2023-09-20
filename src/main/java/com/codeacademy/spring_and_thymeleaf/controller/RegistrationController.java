@@ -3,6 +3,8 @@ package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,7 @@ import jakarta.validation.Valid;
 @RequestMapping("/registration")
 public class RegistrationController {
     private final UserService userService;
+    private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
 
     public RegistrationController(UserService userService) {
         this.userService = userService;
@@ -29,12 +32,15 @@ public class RegistrationController {
     }
     @PostMapping
     public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
-        if (!userService.addUser(user)) {
-            model.addAttribute("locale", LocaleContextHolder.getLocale());
-            model.addAttribute("usernameError", "User exists!");
+        logger.info("BindingResult errors: {}", bindingResult);
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
+        if (bindingResult.hasErrors()) {
             return "registration";
         }
-
+        if(!userService.addUser(user)){
+            model.addAttribute("validUser", false);
+            return "registration";
+        }
         return "redirect:/login";
     }
 }

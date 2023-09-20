@@ -1,6 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,10 +17,14 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Username cannot be empty")
+    @NotBlank(message = "{UserName}" + " " + "{canNotBeEmpty}")
     private String username;
-    @NotBlank(message = "Password cannot be empty")
+    @NotBlank(message = "{Password}" + " " + "{canNotBeEmpty}")
     private String password;
+    @NotBlank(message = "{Email}" + " " + "{canNotBeEmpty}")
+    @Email
+    private String email;
+
     private boolean active;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

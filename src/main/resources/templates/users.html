@@ -40,6 +40,7 @@
         <tr>
             <th th:text="#{id}"></th>
             <th th:text="#{name}"></th>
+            <th th:text="#{email}"></th>
             <th th:text="#{roles}"></th>
             <th th:text="#{active}"></th>
             <th colspan="2" th:text="#{functions}"></th>
@@ -47,6 +48,7 @@
         <tr th:each="user: *{users}">
             <td th:text="${user.id}"></td>
             <td th:text="${user.username}"></td>
+            <td th:text="${user.email}"></td>
             <td th:text="${user.roles}"></td>
             <td th:text="${user.active}"></td>
             <td>

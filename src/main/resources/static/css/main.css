@@ -26,11 +26,8 @@ body {
 
 header {
     grid-area: h;
-
     display: block;
-    /*background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), rgba(128, 128, 128, 0.3), rgba(255, 255, 255, 0.3));*/
-    /*margin-bottom: 50px;*/
-    /*height: var(--topMenuHeight);*/
+    margin-top: 5px;
 }
 
 header ul {
@@ -430,5 +427,12 @@ footer {
     min-width: 300px;
 }
 
+.errorMessage {
+    color: red;
+}
+
+.confirmMessage {
+    color: green;
+}
 
 

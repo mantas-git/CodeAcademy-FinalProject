@@ -1,6 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf;
 
 import com.codeacademy.spring_and_thymeleaf.model.Position;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 
 import java.sql.*;
@@ -13,6 +14,7 @@ public class PositionSimulator {
     private final Timer timer = new Timer();
 
     public void runSimulator() {
+
         timer.schedule(new RunSimulator(), 0, 5000);
     }
 

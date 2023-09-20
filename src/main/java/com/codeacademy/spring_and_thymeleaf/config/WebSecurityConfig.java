@@ -33,6 +33,7 @@ public class WebSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/registration")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/devices")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/monitoring/**")).permitAll()
+                        .requestMatchers(new AntPathRequestMatcher("/positions/add")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users")).hasAuthority("ADMIN")
                         .requestMatchers(new AntPathRequestMatcher("/h2")).hasAuthority("ADMIN")
                         .anyRequest().authenticated())

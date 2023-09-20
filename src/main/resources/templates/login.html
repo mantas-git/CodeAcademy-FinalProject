@@ -14,8 +14,8 @@
 <main>
     <hr>
     <div class="loginDiv">
-        <div th:if="${param.error}" th:text="#{invalidUserNameOrPass}"></div>
-        <div th:if="${param.logout}" th:text="#{youHaveBeenLoggedOut}"></div>
+        <div th:if="${param.error}" th:text="#{invalidUserNameOrPass}" class="errorMessage"></div>
+        <div th:if="${param.logout}" th:text="#{youHaveBeenLoggedOut}" class="confirmMessage"></div>
         <form class="loginForm" th:action="@{/login}" method="post">
             <div>
                 <label for="username" th:text="#{UserName} + ':'"></label>
