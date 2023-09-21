@@ -18,7 +18,7 @@ public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @DecimalMin(value="1000", message="{tooShortDevId}")
+    @DecimalMin(value="1000", message="{DeviceId}" + " " + "{canNotBeEmpty}")
     @NotNull(message = "{canNotBeEmpty}")
     @Column(unique=true)
     private Long deviceId;

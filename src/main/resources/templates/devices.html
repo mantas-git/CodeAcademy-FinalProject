@@ -71,7 +71,7 @@
             <input sec:authorize="isAuthenticated()" type="hidden" name="userId"
                    th:value="${#authentication.getPrincipal().id}"/>
             <button type="submit" th:text="#{Add}"></button>
-            <div th:each="err : ${#fields.errors('deviceId')}" th:text="${err}" class="error"></div>
+            <div th:each="err : ${#fields.errors('deviceId')}" th:text="${err}" class="errorMessage"></div>
         </form>
         <form class="searchForm" th:action="@{/devices/search}" method="get">
             <input type="text" th:placeholder="#{Search} + '...'" th:name="search" th:value="${search}">
