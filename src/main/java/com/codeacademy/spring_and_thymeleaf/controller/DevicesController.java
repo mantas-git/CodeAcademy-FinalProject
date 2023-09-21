@@ -1,6 +1,7 @@
 package com.codeacademy.spring_and_thymeleaf.controller;
 
 import com.codeacademy.spring_and_thymeleaf.model.Device;
+import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
 import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
 import jakarta.validation.Valid;
@@ -54,7 +55,7 @@ public class DevicesController {
     public String showAllDevicesPageable(Device device, Model model,
                                          @AuthenticationPrincipal User user,
                                          @PageableDefault(size = 15)
-                                             Pageable pageable) {
+                                         Pageable pageable) {
         logger.info("User: {}", user);
 //        List<Device> devices = deviceService.getAllDevicesByUser(user);
         Page<Device> devices = deviceService.findPaginated(user, pageable);
@@ -64,7 +65,7 @@ public class DevicesController {
 
         int totalPages = devices.getTotalPages();
         if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages-1)
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
                     .boxed()
                     .collect(Collectors.toList());
             model.addAttribute("pageNumbers", pageNumbers);
@@ -80,8 +81,14 @@ public class DevicesController {
                             @PageableDefault(size = 15) Pageable pageable,
                             RedirectAttributes redirectAttributes,
                             Model model) {
+        if (!user.isVerified()) {
+            InfoMessage infoMessage = new InfoMessage(true, "Jūsų el. paštas dar nepatvirtintas");
+            redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
+            return "redirect:/devices";
+        }
+
         if (errors.hasErrors()) {
-            logger.info("User: {}", user);
+            logger.info("Add Device User: {}", user);
             Page<Device> devices = deviceService.findPaginated(user, pageable);
             logger.info("Loaded Devices: {}", devices);
             model.addAttribute("devices", devices);
@@ -89,7 +96,7 @@ public class DevicesController {
 
             int totalPages = devices.getTotalPages();
             if (totalPages > 0) {
-                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages-1)
+                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
                         .boxed()
                         .collect(Collectors.toList());
                 model.addAttribute("pageNumbers", pageNumbers);
@@ -99,6 +106,7 @@ public class DevicesController {
         }
         redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
         return "redirect:/devices";
+
     }
 
     @GetMapping("/search")
@@ -113,7 +121,7 @@ public class DevicesController {
 
         logger.info("User: {}", user);
         logger.info("Search text {}", search);
-        if(!search.isEmpty()) {
+        if (!search.isEmpty()) {
             Page<Device> devices = deviceService.findFilteredDevicesPaginated(user, pageable, search);
             logger.info("Loaded Devices: {}", devices);
             model.addAttribute("devices", devices);

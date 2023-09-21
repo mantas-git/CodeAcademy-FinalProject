@@ -53,26 +53,6 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public boolean addUser(User user) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
-
-        if (userFromDb != null) {
-            return false;
-        }
-
-//        user.setActive(true);
-        user.setRoles(Collections.singleton(Role.USER));
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-
-        userRepository.save(user);
-
-        return true;
-    }
-
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
-
     public InfoMessage updateUser(User user) {
         logger.info("User update. Data for user update: {}", user);
         InfoMessage infoMessage = new InfoMessage();
@@ -92,6 +72,26 @@ public class UserService implements UserDetailsService {
 //        }
         return infoMessage;
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+//    public boolean addUser(User user) {
+//        User userFromDb = userRepository.findByUsername(user.getUsername());
+//
+//        if (userFromDb != null) {
+//            return false;
+//        }
+//
+////        user.setActive(true);
+//        user.setRoles(Collections.singleton(Role.USER));
+//        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//
+//        userRepository.save(user);
+//
+//        return true;
+//    }
 
     public boolean register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException {
         User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
