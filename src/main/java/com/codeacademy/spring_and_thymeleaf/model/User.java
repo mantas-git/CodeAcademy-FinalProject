@@ -28,12 +28,12 @@ public class User implements UserDetails {
     @Email
     private String email;
 
-    private boolean enabled;
+    private boolean verified;
 
     @Column(name = "verification_code", length = 64)
     private String verificationCode;
 
-//    private boolean active;
+    private boolean active;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -54,10 +54,10 @@ public class User implements UserDetails {
         return true;
     }
 
-//    @Override
-//    public boolean isEnabled() {
-//        return isActive();
-//    }
+    @Override
+    public boolean isEnabled() {
+        return isActive();
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -93,17 +93,23 @@ public class UserService implements UserDetailsService {
         return infoMessage;
     }
 
-    public void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException {
-        String encodedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encodedPassword);
+    public boolean register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException {
+        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
+        if (userFromDb != null) {
+            return false;
+        }
 
+        user.setActive(true);
+        user.setRoles(Collections.singleton(Role.USER));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
-        user.setEnabled(false);
-
+        user.setVerified(false);
         userRepository.save(user);
 
         sendVerificationEmail(user, siteURL);
+
+        return true;
     }
 
     private void sendVerificationEmail(User user, String siteURL)
@@ -139,11 +145,11 @@ public class UserService implements UserDetailsService {
     public boolean verify(String verificationCode) {
         User user = userRepository.findByVerificationCode(verificationCode);
 
-        if (user == null || user.isEnabled()) {
+        if (user == null || user.isVerified()) {
             return false;
         } else {
             user.setVerificationCode(null);
-            user.setEnabled(true);
+            user.setVerified(true);
             userRepository.save(user);
 
             return true;

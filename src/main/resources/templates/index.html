@@ -21,6 +21,10 @@
         <h2 th:text="#{username} + ': ' + ${#authentication.getPrincipal().username}"></h2>
         <h2 th:text="#{email} + ': ' + ${#authentication.getPrincipal().email}"></h2>
         <h2 th:text="#{roles} + ': ' + ${#authentication.getPrincipal().roles}"></h2>
+        <h2 th:if="${#authentication.getPrincipal().verified} == true"
+            th:text="#{Verified} + ': ' + ${#authentication.getPrincipal().verified}" class="confirmMessage"></h2>
+        <h2 th:if="${#authentication.getPrincipal().verified} == false"
+            th:text="#{Verified} + ': ' + ${#authentication.getPrincipal().verified}" class="errorMessage"></h2>
 
     </div>
     <hr>

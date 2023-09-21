@@ -15,7 +15,7 @@
     <div class="loginDiv">
         <form class="loginForm" action="#" th:action="@{/registration}" th:object="${user}"
               method="post">
-            <section th:if="${validUser} != null" th:text="${!validUser} ? #{userExists}"></section>
+            <section th:if="${validUser} != null" th:text="${!validUser} ? #{userExists}" class="errorMessage"></section>
             <div>
                 <ul>
                     <li th:each="err : ${#fields.errors('username')}" th:text="${err}" class="errorMessage"/>

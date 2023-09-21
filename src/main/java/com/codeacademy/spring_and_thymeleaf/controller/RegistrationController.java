@@ -36,24 +36,21 @@ public class RegistrationController {
         return "registration";
     }
 
-//    @PostMapping
-//    public String addUser(@Valid User user, BindingResult bindingResult, Model model) {
-//        logger.info("BindingResult errors: {}", bindingResult);
-//        model.addAttribute("locale", LocaleContextHolder.getLocale());
-//        if (bindingResult.hasErrors()) {
-//            return "registration";
-//        }
-//        if(!userService.addUser(user)){
-//            model.addAttribute("validUser", false);
-//            return "registration";
-//        }
-//        return "redirect:/login";
-//    }
-
     @PostMapping()
-    public String processRegister(User user, HttpServletRequest request)
+    public String processRegister(@Valid User user,
+                                  BindingResult bindingResult,
+                                  HttpServletRequest request,
+                                  Model model)
             throws UnsupportedEncodingException, MessagingException {
-        userService.register(user, getSiteURL(request));
+        logger.info("Registration process BindingResult errors: {}", bindingResult);
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
+        if (bindingResult.hasErrors()) {
+            return "registration";
+        }
+        if(!userService.register(user, getSiteURL(request))){
+            model.addAttribute("validUser", false);
+            return "registration";
+        }
         return "register_success";
     }
 
@@ -70,6 +67,5 @@ public class RegistrationController {
             return "verify_fail";
         }
     }
-
 
 }
