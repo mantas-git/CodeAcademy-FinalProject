@@ -14,6 +14,12 @@ import java.util.Set;
 @Data
 @Table(name="users")
 public class User implements UserDetails {
+
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+    private boolean enabled;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

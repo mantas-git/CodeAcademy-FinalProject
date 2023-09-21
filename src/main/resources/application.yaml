@@ -75,12 +75,26 @@ spring:
       # H2 web konsolės adresas (URL)
       path: /h2
 
+
+  mail:
+    host: mail.inbox.lt
+    port: 587
+    username: mantas.sasnauskas@inbox.lt
+    password: 6KPdWDw7r4
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+
 # Disable whitelabel error pages
 server:
   error:
     whitelabel:
       enabled: false
-
 
 ---
 spring:

@@ -1,18 +1,23 @@
 package com.codeacademy.spring_and_thymeleaf.service;
 
-import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.InfoMessage;
-import com.codeacademy.spring_and_thymeleaf.repository.UserRepository;
 import com.codeacademy.spring_and_thymeleaf.model.Role;
 import com.codeacademy.spring_and_thymeleaf.model.User;
+import com.codeacademy.spring_and_thymeleaf.repository.UserRepository;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,6 +26,9 @@ public class UserService implements UserDetailsService {
     private static final Logger logger = LoggerFactory.getLogger(DeviceService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private JavaMailSender mailSender;
 
     public UserService(UserRepository userRepo, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepo;
@@ -83,4 +91,49 @@ public class UserService implements UserDetailsService {
 //        }
         return infoMessage;
     }
+
+    public void register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException {
+        String encodedPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(encodedPassword);
+
+//        String randomCode = RandomString.make(64);
+        String randomCode = "testas";
+        user.setVerificationCode(randomCode);
+        user.setEnabled(false);
+
+        userRepository.save(user);
+
+        sendVerificationEmail(user, siteURL);
+    }
+
+    private void sendVerificationEmail(User user, String siteURL)
+            throws MessagingException, UnsupportedEncodingException {
+        String toAddress = user.getEmail();
+        String fromAddress = "mantas.sasnauskas@inbox.lt";
+        String senderName = "Mantas";
+        String subject = "Please verify your registration";
+        String content = "Dear [[name]],<br>"
+                + "Please click the link below to verify your registration:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
+                + "Thank you,<br>"
+                + "Your company name.";
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message);
+        logger.info("Sending mail from {}", fromAddress);
+        helper.setFrom(fromAddress, senderName);
+        helper.setTo(toAddress);
+        helper.setSubject(subject);
+
+        content = content.replace("[[name]]", user.getUsername());
+        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
+
+        content = content.replace("[[URL]]", verifyURL);
+
+        helper.setText(content, true);
+
+        mailSender.send(message);
+
+    }
+
 }
