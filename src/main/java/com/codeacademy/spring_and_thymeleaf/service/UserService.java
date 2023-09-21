@@ -6,6 +6,7 @@ import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.repository.UserRepository;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import net.bytebuddy.utility.RandomString;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class UserService implements UserDetailsService {
             return false;
         }
 
-        user.setActive(true);
+//        user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER));
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
@@ -83,7 +84,7 @@ public class UserService implements UserDetailsService {
         logger.info("User update. Existing user: {}", existingUser);
         existingUser.setUsername(user.getUsername());
 //        existingUser.setRoles(user.getRoles());
-        existingUser.setActive(user.isActive());
+//        existingUser.setActive(user.isActive());
         userRepository.save(existingUser);
         infoMessage.setError(false);
         infoMessage.setMessageText("Įrenginys atnaujintas");
@@ -96,8 +97,7 @@ public class UserService implements UserDetailsService {
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);
 
-//        String randomCode = RandomString.make(64);
-        String randomCode = "testas";
+        String randomCode = RandomString.make(64);
         user.setVerificationCode(randomCode);
         user.setEnabled(false);
 
@@ -126,13 +126,28 @@ public class UserService implements UserDetailsService {
         helper.setSubject(subject);
 
         content = content.replace("[[name]]", user.getUsername());
-        String verifyURL = siteURL + "/verify?code=" + user.getVerificationCode();
+        String verifyURL = siteURL + "/registration/verify?code=" + user.getVerificationCode();
 
         content = content.replace("[[URL]]", verifyURL);
 
         helper.setText(content, true);
 
         mailSender.send(message);
+
+    }
+
+    public boolean verify(String verificationCode) {
+        User user = userRepository.findByVerificationCode(verificationCode);
+
+        if (user == null || user.isEnabled()) {
+            return false;
+        } else {
+            user.setVerificationCode(null);
+            user.setEnabled(true);
+            userRepository.save(user);
+
+            return true;
+        }
 
     }
 

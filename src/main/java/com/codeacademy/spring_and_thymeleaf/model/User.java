@@ -14,25 +14,26 @@ import java.util.Set;
 @Data
 @Table(name="users")
 public class User implements UserDetails {
-
-    @Column(name = "verification_code", length = 64)
-    private String verificationCode;
-
-    private boolean enabled;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @NotBlank(message = "{UserName}" + " " + "{canNotBeEmpty}")
     private String username;
+
     @NotBlank(message = "{Password}" + " " + "{canNotBeEmpty}")
     private String password;
+
     @NotBlank(message = "{Email}" + " " + "{canNotBeEmpty}")
     @Email
     private String email;
 
-    private boolean active;
+    private boolean enabled;
 
+    @Column(name = "verification_code", length = 64)
+    private String verificationCode;
+
+//    private boolean active;
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
@@ -53,11 +54,10 @@ public class User implements UserDetails {
         return true;
     }
 
-    @Override
-    public boolean isEnabled() {
-        return isActive();
-    }
-
+//    @Override
+//    public boolean isEnabled() {
+//        return isActive();
+//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
