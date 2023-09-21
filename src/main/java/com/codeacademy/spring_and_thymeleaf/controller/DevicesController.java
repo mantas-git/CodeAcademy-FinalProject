@@ -32,45 +32,13 @@ public class DevicesController {
         this.deviceService = deviceService;
     }
 
-//      @GetMapping("/devices")
-//    public String showAllDevices(Device device, Model model) {
-//        List<Device> devices = deviceService.getAllDevices();
-//        logger.info("Loaded Devices: {}", devices);
-//        model.addAttribute("devices", devices);
-//        model.addAttribute("locale", LocaleContextHolder.getLocale());
-//        return "devices";
-//    }
-
-//    @GetMapping
-//    public String showAllDevices(Device device, Model model, @AuthenticationPrincipal User user) {
-//        logger.info("User: {}", user);
-//        List<Device> devices = deviceService.getAllDevicesByUser(user);
-//        logger.info("Loaded Devices: {}", devices);
-//        model.addAttribute("devices", devices);
-//        model.addAttribute("locale", LocaleContextHolder.getLocale());
-//        return "devices";
-//    }
-
     @GetMapping
     public String showAllDevicesPageable(Device device, Model model,
                                          @AuthenticationPrincipal User user,
                                          @PageableDefault(size = 15)
                                          Pageable pageable) {
-        logger.info("User: {}", user);
-//        List<Device> devices = deviceService.getAllDevicesByUser(user);
-        Page<Device> devices = deviceService.findPaginated(user, pageable);
-        logger.info("Loaded Devices: {}", devices);
-        model.addAttribute("devices", devices);
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
-
-        int totalPages = devices.getTotalPages();
-        if (totalPages > 0) {
-            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
-                    .boxed()
-                    .collect(Collectors.toList());
-            model.addAttribute("pageNumbers", pageNumbers);
-        }
-
+        logger.info("All Devices for User: {}", user);
+        getAllDevices(user, pageable, model);
         return "devices";
     }
 
@@ -86,21 +54,9 @@ public class DevicesController {
             redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
             return "redirect:/devices";
         }
-
         if (errors.hasErrors()) {
             logger.info("Add Device User: {}", user);
-            Page<Device> devices = deviceService.findPaginated(user, pageable);
-            logger.info("Loaded Devices: {}", devices);
-            model.addAttribute("devices", devices);
-            model.addAttribute("locale", LocaleContextHolder.getLocale());
-
-            int totalPages = devices.getTotalPages();
-            if (totalPages > 0) {
-                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
-                        .boxed()
-                        .collect(Collectors.toList());
-                model.addAttribute("pageNumbers", pageNumbers);
-            }
+            getAllDevices(user, pageable, model);
             logger.info("BindingResult errors: {}", errors);
             return "devices";
         }
@@ -115,36 +71,17 @@ public class DevicesController {
                                       @PageableDefault(size = 15) Pageable pageable,
                                       Device device,
                                       Model model) {
-//        List<Device> devices = deviceService.getFilteredDevices(search);
-//        model.addAttribute("devices", devices);
-//        model.addAttribute("locale", LocaleContextHolder.getLocale());
-
-        logger.info("User: {}", user);
+        logger.info("Search User: {}", user);
         logger.info("Search text {}", search);
         if (!search.isEmpty()) {
             Page<Device> devices = deviceService.findFilteredDevicesPaginated(user, pageable, search);
-            logger.info("Loaded Devices: {}", devices);
-            model.addAttribute("devices", devices);
-            model.addAttribute("locale", LocaleContextHolder.getLocale());
-
-            int totalPages = devices.getTotalPages();
-            if (totalPages > 0) {
-                List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
-                        .boxed()
-                        .collect(Collectors.toList());
-                model.addAttribute("pageNumbers", pageNumbers);
-            }
+            logger.info("Loaded Devices when searching {}: {}", search, devices);
+            pageableList(model, devices);
             return "devices";
         }
         return "redirect:/devices";
     }
 
-
-//    @PostMapping("/devices/add")
-//    public String addDevice(Device device, RedirectAttributes redirectAttributes) {
-//        redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
-//        return "redirect:/devices";
-//    }
 
     @PutMapping("/update")
     public String updateDevice(Device device, RedirectAttributes redirectAttributes) {
@@ -154,9 +91,26 @@ public class DevicesController {
 
     @DeleteMapping("/delete/{id}")
     public String deleteDevice(@PathVariable Long id) {
-        logger.info(">>>>> Trying delete Device with ID {}", id);
+        logger.info("Trying delete Device with ID {}", id);
         deviceService.deleteDevice(id);
         return "redirect:/devices";
     }
 
+    private void getAllDevices(@AuthenticationPrincipal User user, @PageableDefault(size = 15) Pageable pageable, Model model) {
+        Page<Device> devices = deviceService.findPaginated(user, pageable);
+        logger.info("Loaded Devices: {}", devices);
+        pageableList(model, devices);
+    }
+
+    private void pageableList(Model model, Page<Device> devices) {
+        model.addAttribute("devices", devices);
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
+        int totalPages = devices.getTotalPages();
+        if (totalPages > 0) {
+            List<Integer> pageNumbers = IntStream.rangeClosed(0, totalPages - 1)
+                    .boxed()
+                    .collect(Collectors.toList());
+            model.addAttribute("pageNumbers", pageNumbers);
+        }
+    }
 }
