@@ -36,6 +36,8 @@ public class Device {
     @Transient
     public String getPhotosImagePath() {
         if (photos == null || id == null) return null;
-        return "/users-img/" + deviceId + "/" + photos;
+        String photosImagePath = "/users-img/" + deviceId + "/" + photos;
+        System.out.printf("Loading photo from %s\n", photosImagePath);
+        return photosImagePath;
     }
 }

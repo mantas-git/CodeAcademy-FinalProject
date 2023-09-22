@@ -30,6 +30,23 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: true
 
+  mail:
+    host: mail.inbox.lt
+    port: 587
+    username: mantas.sasnauskas@inbox.lt
+    password: 6KPdWDw7r4
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+
+  servlet:
+    multipart:
+      max-file-size: 2MB
+      max-request-size: 2MB
 
 # Disable whitelabel error pages
 server:

@@ -38,7 +38,6 @@ public class WebSecurityConfig {
                         .requestMatchers(new AntPathRequestMatcher("/verify-success")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/h2/**")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/users")).hasAuthority("ADMIN")
-
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")

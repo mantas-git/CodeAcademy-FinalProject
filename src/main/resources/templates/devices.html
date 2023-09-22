@@ -20,13 +20,10 @@
                   method="post" enctype="multipart/form-data">
                 <div class="column">
                     <div class="formPhotoDiv">
-                        <img th:src="@{/img/logo.png}" alt="LOGO">
+                        <img th:id="photos" th:src="@{/img/logo.png}" alt="LOGO" class="devLogo">
                     </div>
-                    <label>Photos: </label>
-                    <input type="file" name="image" accept="image/png, image/jpeg"/>
-                    <!--                    <label for="files" class="button">Pasirinkti</label>-->
-                    <!--                    <input id="files" style="visibility:hidden;" type="file">-->
-                    <!--                    <button th:text="#{Delete}"></button>-->
+                    <input id="photosDir" type="file" name="image" accept="image/png, image/jpeg"/>
+                    <button type="button" th:text="#{Delete}" onclick="deleteLogo()">Add Segment</button>
                 </div>
                 <div class="column">
                     <h2 th:with="original_text=#{deviceInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
@@ -38,7 +35,7 @@
                         <span th:text="#{vehicleNr} + ':'"></span>
                         <input type="text" id="transportNr" name="transportNr"/>
                         <span th:text="#{createDate} + ':'"></span>
-                        <input type="text" id="createDate" name="createDate"/>
+                        <input type="text" id="createDate" name="createDate" contenteditable="false"/>
                     </div>
                     <span th:text="#{comment} + ':'"></span>
                     <div>
@@ -97,7 +94,7 @@
         <tr th:each="device: *{devices}">
             <td sec:authorize="hasAuthority('ADMIN')" th:text="${device.id}"></td>
             <td>
-                <img th:src="${device.photosImagePath} != null ? @{${device.photosImagePath}} : @{/img/logo.png}"
+                <img class="devLogo" th:src="${device.photosImagePath} == null ? @{/img/logo.png} : @{${device.photosImagePath}}"
                      height="50" width="50">
             </td>
             <td th:text="${device.deviceId}"></td>
@@ -111,7 +108,8 @@
                         th:paramTransportNr='${device.transportNr}'
                         th:paramCreateDate='${device.createDate}'
                         th:paramComment='${device.comment}'
-                        th:paramUserId='${device.userId}'>
+                        th:paramUserId='${device.userId}'
+                        th:paramPhotos='${device.photosImagePath}'>
                 </button>
             </td>
             <td>
@@ -147,6 +145,12 @@
             document.getElementById("createDate").setAttribute("value", document.getElementById(elementId).getAttribute('paramCreateDate'));
             document.getElementById("comment").textContent = document.getElementById(elementId).getAttribute('paramComment');
             document.getElementById("userId").setAttribute("value", document.getElementById(elementId).getAttribute('paramUserId'));
+            let photosrc = document.getElementById(elementId).getAttribute('paramPhotos');
+            if (photosrc != null) {
+                console.log(photosrc);
+                document.getElementById("photos").setAttribute("src", photosrc);
+                document.getElementById("photosDir").setAttribute("value", "old");
+            }
             document.getElementById(modal).style.display = "block";
         };
     });
@@ -155,16 +159,35 @@
         btn.onclick = function () {
             let modal = btn.closest(".modal");
             modal.style.display = "none";
+            deleteLogo();
         };
     });
     window.onclick = function (event) {
         if (event.target.className === "modal") {
             event.target.style.display = "none";
+            deleteLogo();
         }
     };
 
     if (document.getElementById("infoMessageH2") != null) {
         document.getElementById("infoMessageDiv").style.display = "block";
+    }
+
+    const imgInput = document.getElementById('photosDir')
+    const imgEl = document.getElementById('photos')
+    imgInput.addEventListener('change', () => {
+        if (imgInput.files && imgInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imgEl.src = e.target.result;
+            }
+            reader.readAsDataURL(imgInput.files[0]);
+        }
+    })
+
+    function deleteLogo() {
+        document.getElementById('photosDir').value= null;
+        document.getElementById('photos').src= "/img/logo.png";
     }
 </script>
 

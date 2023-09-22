@@ -101,7 +101,6 @@ public class DevicesController {
         logger.info("Photo uploaded: {}",  fileName);
         redirectAttributes.addFlashAttribute("infoMessage", deviceService.updateDevice(device, fileName));
         if(!fileName.isEmpty()){
-//            String uploadDir = "src/main/resources/static/users-img/" + device.getUserId();
             String uploadDir = "src/main/resources/static/users-img/" + device.getDeviceId();
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
         }

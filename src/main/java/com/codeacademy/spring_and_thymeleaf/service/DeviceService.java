@@ -98,8 +98,9 @@ public class DeviceService {
             existingDevice.setTransportNr(device.getTransportNr());
             existingDevice.setComment(device.getComment());
             existingDevice.setCreateDate(device.getCreateDate());
-            if (!fileName.isEmpty())
-                existingDevice.setPhotos(fileName);
+            System.out.println(fileName);
+            if(!fileName.equals("old"))
+                existingDevice.setPhotos(fileName.isEmpty() ? null : fileName);
             deviceRepository.save(existingDevice);
             infoMessage.setError(false);
             infoMessage.setMessageText("Įrenginys atnaujintas");
