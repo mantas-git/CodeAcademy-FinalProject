@@ -32,4 +32,10 @@ public class Device {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "device", orphanRemoval = true)
     private List<Position> positions = new ArrayList<>();
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || id == null) return null;
+        return "/users-img/" + deviceId + "/" + photos;
+    }
 }
