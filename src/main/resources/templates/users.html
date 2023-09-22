@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Users</title>
-    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
@@ -43,6 +42,7 @@
             <th th:text="#{email}"></th>
             <th th:text="#{roles}"></th>
             <th th:text="#{active}"></th>
+            <th th:text="#{verified}"></th>
             <th colspan="2" th:text="#{functions}"></th>
         </tr>
         <tr th:each="user: *{users}">
@@ -51,6 +51,7 @@
             <td th:text="${user.email}"></td>
             <td th:text="${user.roles}"></td>
             <td th:text="${user.enabled}"></td>
+            <td th:text="${user.verified}"></td>
             <td>
                 <button th:id="${user.id}" th:text="#{Edit}" class="deviceEditButton" data-modal="deviceEditDiv"
                         th:paramName='${user.username}'

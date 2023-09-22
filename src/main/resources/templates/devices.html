@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Main</title>
-    <link rel="shortcut icon" href="#">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
     <link th:href="@{/css/main.css}" rel="stylesheet"/>
     <script type="text/javascript" th:src="@{/js/main.js}" defer></script>
@@ -17,12 +16,17 @@
         <div class="edit-form">
             <span class="close">&times;</span>
 
-            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}" th:method="put">
+            <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}"
+                  method="post" enctype="multipart/form-data" >
                 <div class="column">
                     <div class="formPhotoDiv">
                         <img th:src="@{/img/logo.png}" alt="LOGO">
                     </div>
-                    <button>Įkelti</button>
+                    <label>Photos: </label>
+                    <input type="file" name="image" accept="image/png, image/jpeg" />
+<!--                    <label for="files" class="button">Pasirinkti</label>-->
+<!--                    <input id="files" style="visibility:hidden;" type="file">-->
+<!--                    <button th:text="#{Delete}"></button>-->
                 </div>
                 <div class="column">
                     <h2 th:with="original_text=#{deviceInfoEdit}" th:text="${#strings.capitalize(original_text)}"></h2>
@@ -30,11 +34,11 @@
                         <input type="hidden" id="id" name="id"/>
                         <input type="hidden" id="userId" name="userId"/>
                         <span th:text="#{deviceId} + ':'"></span>
-                        <input type="text" id="deviceId" name="deviceId" placeholder="Įrenginio nr"/>
+                        <input type="text" id="deviceId" name="deviceId" required/>
                         <span th:text="#{vehicleNr} + ':'"></span>
-                        <input type="text" id="transportNr" name="transportNr" placeholder="Transporto numeris"/>
+                        <input type="text" id="transportNr" name="transportNr"/>
                         <span th:text="#{createDate} + ':'"></span>
-                        <input type="text" id="createDate" name="createDate" placeholder="Įvedimo data"/>
+                        <input type="text" id="createDate" name="createDate"/>
                     </div>
                     <span th:text="#{comment} + ':'"></span>
                     <div>
@@ -63,7 +67,7 @@
               method="post">
             <span th:text="#{deviceId}"></span>
             <input type="text" th:field="*{deviceId}"/>
-<!--            <div th:each="err : ${#fields.errors('deviceId')}" th:text="${err}" class="error"></div>-->
+            <!--            <div th:each="err : ${#fields.errors('deviceId')}" th:text="${err}" class="error"></div>-->
             <span th:text="#{vehicleNr}"></span>
             <input type="text" th:field="*{transportNr}"/>
             <span th:text="#{comment}"></span>
