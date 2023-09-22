@@ -19,13 +19,16 @@ public class Device {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @DecimalMin(value="1000", message="{DeviceId}" + " " + "{canNotBeEmpty}")
-    @NotNull(message = "{canNotBeEmpty}")
+    @NotNull(message="{DeviceId}" + " " + "{canNotBeEmpty}")
     @Column(unique=true)
     private Long deviceId;
     private String transportNr;
     private String comment;
     private LocalDate createDate;
     private Integer userId;
+
+    @Column(nullable = true, length = 64)
+    private String photos;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "device", orphanRemoval = true)
     private List<Position> positions = new ArrayList<>();

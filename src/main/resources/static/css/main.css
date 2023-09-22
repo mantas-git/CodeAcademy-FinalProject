@@ -255,6 +255,11 @@ h2 {
     width: 50%;
     padding: 10px;
     /*height: 600px;*/
+
+    & label[for="files"] {
+        width: 100%;
+        font-family: Lucida Console;
+    }
 }
 
 .deviceEditForm span {
@@ -285,7 +290,8 @@ textarea {
     outline: none;
 }
 
-button {
+button,
+.button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -296,7 +302,8 @@ button {
     border-radius: 30px;
 }
 
-button:hover {
+button:hover,
+.button:hover {
     background: #45c7be;
 }
 
@@ -347,28 +354,6 @@ span.close:focus {
 .upperDiv button {
     width: 15%;
 }
-
-/*.upperForm {*/
-/*    margin-top: 50%;*/
-/*    float: left;*/
-/*    width: 70%;*/
-/*    display: inline;*/
-/*}*/
-
-/*.searchForm {*/
-/*    width: 30%;*/
-/*    float: right;*/
-/*    text-align: right;*/
-
-/*    & input {*/
-/*        width: 50%;*/
-/*    }*/
-
-/*    & button {*/
-/*        width: 15%;*/
-/*    }*/
-/*}*/
-
 
 /* Messages */
 h2.true {

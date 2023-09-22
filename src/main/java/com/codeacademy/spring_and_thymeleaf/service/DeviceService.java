@@ -74,10 +74,9 @@ public class DeviceService {
     public Device getDeviceByDeviceIdAndUser(Long deviceId, User user) {
         Long userId = getUserId(user);
         List<Device> devices = new ArrayList<>();
-        if(userId == -1) {
+        if (userId == -1) {
             devices = deviceRepository.findByDeviceId(deviceId);
-        }
-        else {
+        } else {
             devices = deviceRepository.findByDeviceIdAndUserId(deviceId, userId);
         }
         if (!devices.isEmpty()) {
@@ -87,7 +86,7 @@ public class DeviceService {
         }
     }
 
-    public InfoMessage updateDevice(Device device) {
+    public InfoMessage updateDevice(Device device, String fileName) {
         logger.info("Device update. Data for device update: {}", device);
         InfoMessage infoMessage = new InfoMessage();
         if (!device.getId().equals(deviceRepository.findByDeviceId(device.getDeviceId()).get(0).getId())) {
@@ -99,6 +98,8 @@ public class DeviceService {
             existingDevice.setTransportNr(device.getTransportNr());
             existingDevice.setComment(device.getComment());
             existingDevice.setCreateDate(device.getCreateDate());
+            if (!fileName.isEmpty())
+                existingDevice.setPhotos(fileName);
             deviceRepository.save(existingDevice);
             infoMessage.setError(false);
             infoMessage.setMessageText("Įrenginys atnaujintas");

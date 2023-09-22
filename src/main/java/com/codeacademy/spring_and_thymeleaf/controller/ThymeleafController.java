@@ -48,6 +48,7 @@ public class ThymeleafController {
 
     @GetMapping("/")
     public String showIndex(Model model) {
+        logger.info("Opening Index page");
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "index";
     }

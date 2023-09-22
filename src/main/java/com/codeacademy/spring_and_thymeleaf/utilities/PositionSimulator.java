@@ -1,4 +1,4 @@
-package com.codeacademy.spring_and_thymeleaf;
+package com.codeacademy.spring_and_thymeleaf.utilities;
 
 import com.codeacademy.spring_and_thymeleaf.model.Position;
 import org.springframework.context.annotation.Profile;
