@@ -88,23 +88,4 @@ public class ThymeleafController {
 
     }
 
-    @PostMapping("/positions/add")
-    public ResponseEntity<?> addPosition(@RequestParam("deviceId") Long deviceId,
-                                         @RequestParam("latitude") Double latitude,
-                                         @RequestParam("longitude") Double longitude,
-                                         @RequestParam("speed") Integer speed) {
-        Device device = deviceService.getDeviceByDeviceId(deviceId);
-        Position position = new Position();
-        position.setDevice(device);
-        position.setDate(LocalDateTime.now());
-        position.setLatitude(latitude);
-        position.setLongitude(longitude);
-        position.setSpeed(speed);
-        positionService.addPostion(position);
-        Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("error", false);
-        responseMap.put("message", "Position created successfully");
-        return ResponseEntity.ok(responseMap);
-    }
-
 }
