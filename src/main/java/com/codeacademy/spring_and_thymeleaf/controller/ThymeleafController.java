@@ -38,12 +38,10 @@ public class ThymeleafController {
     private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
     private final DeviceService deviceService;
     private final PositionService positionService;
-    private final UserService userService;
 
-    public ThymeleafController(DeviceService deviceService, PositionService positionService, UserService userService) {
+    public ThymeleafController(DeviceService deviceService, PositionService positionService) {
         this.deviceService = deviceService;
         this.positionService = positionService;
-        this.userService = userService;
     }
 
     @GetMapping("/")
@@ -109,25 +107,4 @@ public class ThymeleafController {
         return ResponseEntity.ok(responseMap);
     }
 
-    @GetMapping("/users")
-    public String showUsers(User user, Model model) {
-        List<User> users = userService.getAllUsers();
-        model.addAttribute("users", users);
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
-        return "users";
-    }
-
-    @PutMapping("/users/update")
-    public String updateUsers(User user, RedirectAttributes redirectAttributes) {
-        logger.info("User update. New users data: {}", user);
-        redirectAttributes.addFlashAttribute("infoMessage", userService.updateUser(user));
-        return "redirect:/users";
-    }
-
-    @DeleteMapping("/users/delete/{id}")
-    public String detelteUser(@PathVariable Long id) {
-        logger.info(">>>>> Trying delete User with ID {}", id);
-        userService.deleteUser(id);
-        return "redirect:/users";
-    }
 }
