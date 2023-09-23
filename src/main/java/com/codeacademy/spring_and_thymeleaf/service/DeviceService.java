@@ -34,12 +34,12 @@ public class DeviceService {
         InfoMessage infoMessage = new InfoMessage();
         if (deviceRepository.existsDeviceByDeviceId(device.getDeviceId())) {
             infoMessage.setError(true);
-            infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nPridėjimas negalimas.");
+            infoMessage.setMessageText("deviceIdExists");
         } else {
             device.setCreateDate(LocalDate.now());
             deviceRepository.save(device);
             infoMessage.setError(false);
-            infoMessage.setMessageText("Pridėtas naujas įrenginys");
+            infoMessage.setMessageText("addedNewDevice");
         }
         return infoMessage;
 
@@ -91,7 +91,7 @@ public class DeviceService {
         InfoMessage infoMessage = new InfoMessage();
         if (!device.getId().equals(deviceRepository.findByDeviceId(device.getDeviceId()).get(0).getId())) {
             infoMessage.setError(true);
-            infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nAtnaujinimas negalimas.");
+            infoMessage.setMessageText("deviceIdExistsUpdate");
         } else {
             Device existingDevice = getDevice(device.getId());
             existingDevice.setDeviceId(device.getDeviceId());
@@ -104,7 +104,7 @@ public class DeviceService {
                 existingDevice.setPhotos(null);
             deviceRepository.save(existingDevice);
             infoMessage.setError(false);
-            infoMessage.setMessageText("Įrenginys atnaujintas");
+            infoMessage.setMessageText("deviceUpdated");
         }
         return infoMessage;
     }

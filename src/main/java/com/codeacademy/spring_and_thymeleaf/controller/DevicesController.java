@@ -42,7 +42,7 @@ public class DevicesController {
     @GetMapping
     public String showAllDevicesPageable(Device device, Model model,
                                          @AuthenticationPrincipal User user,
-                                         @PageableDefault(size = 15)
+                                         @PageableDefault(sort = {"id"}, size = 15)
                                          Pageable pageable) {
         getAllDevices(user, pageable, model);
         return "devices";
@@ -52,11 +52,11 @@ public class DevicesController {
     public String addDevice(@Valid Device device,
                             BindingResult errors,
                             @AuthenticationPrincipal User user,
-                            @PageableDefault(size = 15) Pageable pageable,
+                            @PageableDefault(sort = {"id"}, size = 15) Pageable pageable,
                             RedirectAttributes redirectAttributes,
                             Model model) {
         if (!user.isVerified()) {
-            InfoMessage infoMessage = new InfoMessage(true, "Jūsų el. paštas dar nepatvirtintas");
+            InfoMessage infoMessage = new InfoMessage(true, "emailNotVerified");
             redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
             return "redirect:/devices";
         }
@@ -73,11 +73,9 @@ public class DevicesController {
     @GetMapping("/search")
     public String showFilteredDevices(@RequestParam String search,
                                       @AuthenticationPrincipal User user,
-                                      @PageableDefault(size = 15) Pageable pageable,
+                                      @PageableDefault(sort = {"id"}, size = 15) Pageable pageable,
                                       Device device,
                                       Model model) {
-        logger.info("Search User: {}", user);
-        logger.info("Search text {}", search);
         if (!search.isEmpty()) {
             Page<Device> devices = deviceService.findFilteredDevicesPaginated(user, pageable, search);
             logger.info("Loaded Devices when searching {}: {}", search, devices);
@@ -94,8 +92,6 @@ public class DevicesController {
                                @RequestParam("resetPhoto") Boolean resetPhoto,
                                RedirectAttributes redirectAttributes) throws IOException {
         logger.info("Device update process:");
-        logger.info("multipartFile: {}", multipartFile);
-        logger.info("resetPhoto: {}", resetPhoto);
         if (errors.hasErrors()) {
             logger.info("BindingResult errors: {}", errors);
             return "devices";

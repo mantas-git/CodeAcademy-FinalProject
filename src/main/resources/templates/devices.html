@@ -53,7 +53,7 @@
     <div class="modal-content">
         <div class="infoMessageForm">
             <h2 id="infoMessageH2" th:class="${infoMessage.error}"
-                th:text="${infoMessage.messageText}"></h2>
+                th:text="#{${infoMessage.messageText}}"></h2>
             <button class="close" th:text="#{OK}"></button>
         </div>
     </div>
