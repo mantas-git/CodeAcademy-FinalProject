@@ -91,15 +91,18 @@ public class DevicesController {
     public String updateDevice(@Valid Device device,
                                BindingResult errors,
                                @RequestParam("image") MultipartFile multipartFile,
+                               @RequestParam("resetPhoto") Boolean resetPhoto,
                                RedirectAttributes redirectAttributes) throws IOException {
-        logger.info("Device update process: {} and {}",  device, multipartFile);
+        logger.info("Device update process:");
+        logger.info("multipartFile: {}", multipartFile);
+        logger.info("resetPhoto: {}", resetPhoto);
         if (errors.hasErrors()) {
             logger.info("BindingResult errors: {}", errors);
             return "devices";
         }
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        logger.info("Photo uploaded: {}",  fileName);
-        redirectAttributes.addFlashAttribute("infoMessage", deviceService.updateDevice(device, fileName));
+        logger.info("Photo fileName: {}",  fileName);
+        redirectAttributes.addFlashAttribute("infoMessage", deviceService.updateDevice(device, fileName, resetPhoto));
         if(!fileName.isEmpty()){
             String uploadDir = "src/main/resources/static/users-img/" + device.getDeviceId();
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);

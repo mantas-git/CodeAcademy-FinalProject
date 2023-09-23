@@ -86,7 +86,7 @@ public class DeviceService {
         }
     }
 
-    public InfoMessage updateDevice(Device device, String fileName) {
+    public InfoMessage updateDevice(Device device, String fileName, Boolean resetPhoto) {
         logger.info("Device update. Data for device update: {}", device);
         InfoMessage infoMessage = new InfoMessage();
         if (!device.getId().equals(deviceRepository.findByDeviceId(device.getDeviceId()).get(0).getId())) {
@@ -98,9 +98,10 @@ public class DeviceService {
             existingDevice.setTransportNr(device.getTransportNr());
             existingDevice.setComment(device.getComment());
             existingDevice.setCreateDate(device.getCreateDate());
-            System.out.println(fileName);
-            if(!fileName.equals("old"))
-                existingDevice.setPhotos(fileName.isEmpty() ? null : fileName);
+            if(!fileName.isEmpty())
+                existingDevice.setPhotos(fileName);
+            if(resetPhoto)
+                existingDevice.setPhotos(null);
             deviceRepository.save(existingDevice);
             infoMessage.setError(false);
             infoMessage.setMessageText("Įrenginys atnaujintas");

@@ -12,7 +12,7 @@ public class FileUploadUtil {
     private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
      
     public static void saveFile(String uploadDir, String fileName,
-            MultipartFile multipartFile) throws IOException {
+                                MultipartFile multipartFile) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
          
         if (!Files.exists(uploadPath)) {

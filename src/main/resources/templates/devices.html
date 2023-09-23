@@ -19,6 +19,7 @@
             <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}"
                   method="post" enctype="multipart/form-data">
                 <div class="column">
+                    <input type="hidden" id="resetPhoto" name="resetPhoto" value="false"/>
                     <div class="formPhotoDiv">
                         <img th:id="photos" th:src="@{/img/logo.png}" alt="LOGO" class="devLogo">
                     </div>
@@ -159,13 +160,13 @@
         btn.onclick = function () {
             let modal = btn.closest(".modal");
             modal.style.display = "none";
-            deleteLogo();
+            restLogoPreview();
         };
     });
     window.onclick = function (event) {
         if (event.target.className === "modal") {
             event.target.style.display = "none";
-            deleteLogo();
+            restLogoPreview();
         }
     };
 
@@ -180,15 +181,22 @@
             const reader = new FileReader();
             reader.onload = (e) => {
                 imgEl.src = e.target.result;
+                document.getElementById('resetPhoto').value= false;
             }
             reader.readAsDataURL(imgInput.files[0]);
         }
     })
 
     function deleteLogo() {
+        document.getElementById('resetPhoto').value= true;
+        restLogoPreview();
+    }
+
+    function restLogoPreview() {
         document.getElementById('photosDir').value= null;
         document.getElementById('photos').src= "/img/logo.png";
     }
+
 </script>
 
 </body>

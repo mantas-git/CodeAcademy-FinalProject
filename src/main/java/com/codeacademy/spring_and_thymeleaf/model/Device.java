@@ -37,7 +37,6 @@ public class Device {
     public String getPhotosImagePath() {
         if (photos == null || id == null) return null;
         String photosImagePath = "/users-img/" + deviceId + "/" + photos;
-        System.out.printf("Loading photo from %s\n", photosImagePath);
         return photosImagePath;
     }
 }
