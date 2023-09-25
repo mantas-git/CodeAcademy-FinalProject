@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
+import static org.springframework.web.bind.annotation.RequestMethod.PUT;
 
 @Controller
 @RequestMapping("/devices")
@@ -85,7 +85,7 @@ public class DevicesController {
         return "redirect:/devices";
     }
 
-    @RequestMapping(path = "/update", method = POST, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
+    @RequestMapping(path = "/update", method = PUT, consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
     public String updateDevice(@Valid Device device,
                                BindingResult errors,
                                @RequestParam("image") MultipartFile multipartFile,

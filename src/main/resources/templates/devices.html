@@ -17,7 +17,7 @@
             <span class="close">&times;</span>
 
             <form class="deviceEditForm" th:action="@{/devices/update}" th:object="${device}"
-                  method="post" enctype="multipart/form-data">
+                  th:method="put" enctype="multipart/form-data">
                 <div class="column">
                     <input type="hidden" id="resetPhoto" name="resetPhoto" value="false"/>
                     <div class="formPhotoDiv">
