@@ -12,6 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @WebMvcTest(ThymeleafController.class)
 class ThymeleafControllerTest {
@@ -24,9 +25,19 @@ class ThymeleafControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
     @Test
-    void showIndex() throws Exception {
+    void showIndexTest() throws Exception {
         mockMvc.perform(get("/"))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(view().name("index"));
+    }
+
+    @Test
+    void showMonitoringTest() throws Exception {
+        mockMvc.perform(get("/monitoring"))
+                .andExpect(status().isOk())
+                .andExpect(view().name("monitoring"));
+
     }
 }
