@@ -42,12 +42,14 @@ public class RegistrationController {
                                   HttpServletRequest request,
                                   Model model)
             throws UnsupportedEncodingException, MessagingException {
-        logger.info("Registration process BindingResult errors: {}", bindingResult);
+        logger.info("Registration process started for User {}", user.getUsername());
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         if (bindingResult.hasErrors()) {
+            logger.info("Registration process BindingResult errors: {}", bindingResult);
             return "registration";
         }
         if(!userService.register(user, getSiteURL(request))){
+            logger.info("User with email or username already exists {} {}", user.getUsername(), user.getEmail());
             model.addAttribute("validUser", false);
             return "registration";
         }
@@ -61,9 +63,12 @@ public class RegistrationController {
 
     @GetMapping("/verify")
     public String verifyUser(@Param("code") String code) {
+        logger.info("Verification with code {}", code);
         if (userService.verify(code)) {
+            logger.info("Verification success");
             return "verify_success";
         } else {
+            logger.info("Verification fail");
             return "verify_fail";
         }
     }

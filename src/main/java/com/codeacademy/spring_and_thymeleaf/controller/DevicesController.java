@@ -55,6 +55,7 @@ public class DevicesController {
                             @PageableDefault(sort = {"id"}, size = 15) Pageable pageable,
                             RedirectAttributes redirectAttributes,
                             Model model) {
+        logger.info("User {} adding new device: {}", user.getUsername(), device);
         if (!user.isVerified()) {
             InfoMessage infoMessage = new InfoMessage(true, "emailNotVerified");
             redirectAttributes.addFlashAttribute("infoMessage", infoMessage);
@@ -62,10 +63,11 @@ public class DevicesController {
         }
         if (errors.hasErrors()) {
             getAllDevices(user, pageable, model);
-            logger.info("BindingResult errors: {}", errors);
+            logger.info("Founded BindingResult errors: {}", errors);
             return "devices";
         }
         redirectAttributes.addFlashAttribute("infoMessage", deviceService.addDevice(device));
+        logger.info("Device {} successfully added", device);
         return "redirect:/devices";
 
     }
@@ -76,9 +78,10 @@ public class DevicesController {
                                       @PageableDefault(sort = {"id"}, size = 15) Pageable pageable,
                                       Device device,
                                       Model model) {
+        logger.info("Searching for {} in Device List", search);
         if (!search.isEmpty()) {
             Page<Device> devices = deviceService.findFilteredDevicesPaginated(user, pageable, search);
-            logger.info("Loaded Devices when searching {}: {}", search, devices);
+            logger.info("Found {} Devices", devices.getContent().size());
             pageableList(model, devices);
             return "devices";
         }
@@ -91,17 +94,19 @@ public class DevicesController {
                                @RequestParam("image") MultipartFile multipartFile,
                                @RequestParam("resetPhoto") Boolean resetPhoto,
                                RedirectAttributes redirectAttributes) throws IOException {
-        logger.info("Device update process:");
+        logger.info("Updating Device ID {}", device.getId());
         if (errors.hasErrors()) {
-            logger.info("BindingResult errors: {}", errors);
+            logger.info("Found BindingResult errors: {}", errors);
             return "devices";
         }
         String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
         logger.info("Photo fileName: {}",  fileName);
         redirectAttributes.addFlashAttribute("infoMessage", deviceService.updateDevice(device, fileName, resetPhoto));
+        logger.info("Device updated");
         if(!fileName.isEmpty()){
             String uploadDir = "src/main/resources/static/users-img/" + device.getDeviceId();
             FileUploadUtil.saveFile(uploadDir, fileName, multipartFile);
+            logger.info("Photo uploaded");
         }
         return "redirect:/devices";
     }
@@ -110,13 +115,14 @@ public class DevicesController {
     public String deleteDevice(@PathVariable Long id) {
         logger.info("Trying delete Device with ID {}", id);
         deviceService.deleteDevice(id);
+        logger.info("Device deleted");
         return "redirect:/devices";
     }
 
     private void getAllDevices(@AuthenticationPrincipal User user, @PageableDefault(size = 15) Pageable pageable, Model model) {
-        logger.info("All Devices for User: {}", user);
+        logger.info("All Devices for User: {}", user.getUsername());
         Page<Device> devices = deviceService.findPaginated(user, pageable);
-        logger.info("Loaded Devices: {}", devices.getContent());
+        logger.info("Loaded Devices count: {}", devices.getContent().size());
         pageableList(model, devices);
     }
 

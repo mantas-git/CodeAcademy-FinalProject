@@ -18,8 +18,6 @@ import java.util.Set;
 
 @Service
 public class DeviceService {
-
-    private static final Logger logger = LoggerFactory.getLogger(DeviceService.class);
     private DeviceRepository deviceRepository;
 
     public DeviceService(DeviceRepository deviceRepository) {
@@ -87,7 +85,6 @@ public class DeviceService {
     }
 
     public InfoMessage updateDevice(Device device, String fileName, Boolean resetPhoto) {
-        logger.info("Device update. Data for device update: {}", device);
         InfoMessage infoMessage = new InfoMessage();
         if (!device.getId().equals(deviceRepository.findByDeviceId(device.getDeviceId()).get(0).getId())) {
             infoMessage.setError(true);

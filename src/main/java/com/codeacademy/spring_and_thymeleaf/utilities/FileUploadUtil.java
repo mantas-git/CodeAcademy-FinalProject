@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
  
 public class FileUploadUtil {
-    private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
      
     public static void saveFile(String uploadDir, String fileName,
                                 MultipartFile multipartFile) throws IOException {

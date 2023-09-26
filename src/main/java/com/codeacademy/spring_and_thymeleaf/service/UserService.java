@@ -24,7 +24,6 @@ import java.util.List;
 
 @Service
 public class UserService implements UserDetailsService {
-    private static final Logger logger = LoggerFactory.getLogger(DeviceService.class);
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
@@ -54,7 +53,6 @@ public class UserService implements UserDetailsService {
     }
 
     public InfoMessage updateUser(User user) {
-        logger.info("User update. Data for user update: {}", user);
         InfoMessage infoMessage = new InfoMessage();
         if (userExists(user)) {
             infoMessage.setError(true);
@@ -62,12 +60,10 @@ public class UserService implements UserDetailsService {
         }
         else {
             User existingUser = userRepository.findById(user.getId()).get();
-            logger.info("User update. Existing user: {}", existingUser);
             existingUser.setUsername(user.getUsername());
             userRepository.save(existingUser);
             infoMessage.setError(false);
             infoMessage.setMessageText("Įrenginys atnaujintas");
-            logger.info("User update. User after update: {}", existingUser);
         }
         System.out.println(infoMessage);
         return infoMessage;
@@ -133,7 +129,6 @@ public class UserService implements UserDetailsService {
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
-        logger.info("Sending mail from {}", fromAddress);
         helper.setFrom(fromAddress, senderName);
         helper.setTo(toAddress);
         helper.setSubject(subject);

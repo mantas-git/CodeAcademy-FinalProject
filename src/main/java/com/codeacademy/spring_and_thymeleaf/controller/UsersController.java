@@ -28,6 +28,7 @@ public class UsersController {
     @GetMapping
     public String showUsers(User user, Model model) {
         List<User> users = userService.getAllUsers();
+        logger.info("Found Users {}", users.size());
         model.addAttribute("users", users);
         model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "users";
@@ -37,14 +38,16 @@ public class UsersController {
     public String updateUsers(User user, RedirectAttributes redirectAttributes) {
         logger.info("User update. New users data: {}", user);
         redirectAttributes.addFlashAttribute("infoMessage", userService.updateUser(user));
+        logger.info("User updated.");
         return "redirect:/users";
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{id}")
     public String deleteUser(@PathVariable Long id) {
-        logger.info(">>>>> Trying delete User with ID {}", id);
+        logger.info("Trying delete User with ID {}", id);
         userService.deleteUser(id);
+        logger.info("User deleted");
         return "redirect:/users";
     }
 
