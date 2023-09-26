@@ -24,10 +24,9 @@ import java.util.Set;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -122,16 +121,13 @@ class DevicesControllerTest {
                 .andExpect(redirectedUrl("/devices"));
     }
 
-
     @Test
-    void showFilteredDevices() {
-    }
+    void deleteDevice_nonLoggedInUser_redirectedToLogin() throws Exception {
+        mockMvc.perform(delete("/devices/delete/1"))
+                .andDo(print())
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrlPattern("**/login"));
 
-    @Test
-    void updateDevice() {
-    }
-
-    @Test
-    void deleteDevice() {
+        verify(deviceService, times(0)).deleteDevice(any());
     }
 }
