@@ -56,20 +56,20 @@ public class UserService implements UserDetailsService {
     public InfoMessage updateUser(User user) {
         logger.info("User update. Data for user update: {}", user);
         InfoMessage infoMessage = new InfoMessage();
-//        if (!user.getId().equals(userRepository.findById(user.getId()).get(0).getId())) {
-//            infoMessage.setError(true);
-//            infoMessage.setMessageText("Įrenginys su tokiu įrenginio ID jau egzistuoja.\nAtnaujinimas negalimas.");
-//        } else {
-        User existingUser = userRepository.findById(user.getId()).get();
-        logger.info("User update. Existing user: {}", existingUser);
-        existingUser.setUsername(user.getUsername());
-//        existingUser.setRoles(user.getRoles());
-//        existingUser.setActive(user.isActive());
-        userRepository.save(existingUser);
-        infoMessage.setError(false);
-        infoMessage.setMessageText("Įrenginys atnaujintas");
-        logger.info("User update. User after update: {}", existingUser);
-//        }
+        if (userExists(user)) {
+            infoMessage.setError(true);
+            infoMessage.setMessageText("Vartotojo atnaujinti nepavyko");
+        }
+        else {
+            User existingUser = userRepository.findById(user.getId()).get();
+            logger.info("User update. Existing user: {}", existingUser);
+            existingUser.setUsername(user.getUsername());
+            userRepository.save(existingUser);
+            infoMessage.setError(false);
+            infoMessage.setMessageText("Įrenginys atnaujintas");
+            logger.info("User update. User after update: {}", existingUser);
+        }
+        System.out.println(infoMessage);
         return infoMessage;
     }
 
@@ -94,8 +94,7 @@ public class UserService implements UserDetailsService {
 //    }
 
     public boolean register(User user, String siteURL) throws UnsupportedEncodingException, MessagingException {
-        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
-        if (userFromDb != null) {
+        if (userExists(user)) {
             return false;
         }
 
@@ -112,6 +111,11 @@ public class UserService implements UserDetailsService {
         return true;
     }
 
+    private boolean userExists(User user){
+        User userFromDb = userRepository.findByUsernameOrEmail(user.getUsername(), user.getEmail());
+        return userFromDb != null;
+    }
+
     private void sendVerificationEmail(User user, String siteURL)
             throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
@@ -121,8 +125,11 @@ public class UserService implements UserDetailsService {
         String content = "Dear [[name]],<br>"
                 + "Please click the link below to verify your registration:<br>"
                 + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Your company name.";
+                + "Thank you,<br>";
+        content += "Mielas [[name]],<br>"
+                + "Prašau paspausdi nuorodą, kad patvirtinti registraciją:<br>"
+                + "<h3><a href=\"[[URL]]\" target=\"_self\">PATVIRTINTI</a></h3>"
+                + "Ačiū,<br>";
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);

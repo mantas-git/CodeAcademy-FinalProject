@@ -5,6 +5,8 @@ import com.codeacademy.spring_and_thymeleaf.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -38,8 +40,9 @@ public class UsersController {
         return "redirect:/users";
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/delete/{id}")
-    public String detelteUser(@PathVariable Long id) {
+    public String deleteUser(@PathVariable Long id) {
         logger.info(">>>>> Trying delete User with ID {}", id);
         userService.deleteUser(id);
         return "redirect:/users";
