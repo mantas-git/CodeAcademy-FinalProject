@@ -51,7 +51,5 @@ Taip pat Role, InfoMessage, PositionDTO
       "message": "Position created successfully"
     }
 ---
-# Sukūrė
----
-- Mantas 2023m.
+
 
