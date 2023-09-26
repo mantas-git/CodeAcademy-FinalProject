@@ -4,6 +4,7 @@ import com.codeacademy.spring_and_thymeleaf.model.Device;
 import com.codeacademy.spring_and_thymeleaf.model.Role;
 import com.codeacademy.spring_and_thymeleaf.model.User;
 import com.codeacademy.spring_and_thymeleaf.service.DeviceService;
+import com.codeacademy.spring_and_thymeleaf.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -34,6 +35,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class DevicesControllerTest {
     @MockBean
     private DeviceService deviceService;
+    @MockBean
+    private UserService userService;
     @Autowired
     private MockMvc mockMvc;
 

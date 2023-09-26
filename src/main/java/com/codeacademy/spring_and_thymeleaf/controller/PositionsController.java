@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/positions")
+@RequestMapping("/api")
 public class PositionsController {
     private static final Logger logger = LoggerFactory.getLogger(ThymeleafController.class);
     private final DeviceService deviceService;
@@ -30,7 +30,7 @@ public class PositionsController {
         this.positionService = positionService;
     }
 
-    @PostMapping("/add")
+    @PostMapping("/positions/add")
     public ResponseEntity<?> addPosition(@RequestParam("deviceId") Long deviceId,
                                          @RequestParam("latitude") Double latitude,
                                          @RequestParam("longitude") Double longitude,
@@ -48,7 +48,7 @@ public class PositionsController {
         return ResponseEntity.ok(responseMap);
     }
 
-    @GetMapping("/getLast/{deviceId}")
+    @GetMapping("/positions/getLast/{deviceId}")
     public ResponseEntity<?> getLastPosition(@PathVariable Long deviceId) {
         try {
             PositionDTO positionDTO = null;
