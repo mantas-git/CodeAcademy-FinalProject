@@ -96,8 +96,8 @@ spring:
   mail:
     host: mail.inbox.lt
     port: 587
-    username: mantas.sasnauskas@inbox.lt
-    password: 6KPdWDw7r4
+    username: your@email.lt
+    password: yourPassword
     properties:
       mail:
         smtp:

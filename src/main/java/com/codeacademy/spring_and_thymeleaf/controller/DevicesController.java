@@ -120,7 +120,7 @@ public class DevicesController {
     }
 
     private void getAllDevices(@AuthenticationPrincipal User user, @PageableDefault(size = 15) Pageable pageable, Model model) {
-        logger.info("All Devices for User: {}", user.getUsername());
+        logger.info("All Devices for User: {}", user);
         Page<Device> devices = deviceService.findPaginated(user, pageable);
         logger.info("Loaded Devices count: {}", devices.getContent().size());
         pageableList(model, devices);
